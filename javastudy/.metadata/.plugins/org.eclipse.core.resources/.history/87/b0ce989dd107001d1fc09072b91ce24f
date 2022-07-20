@@ -1,0 +1,18 @@
+package ex04_condition;
+
+public class Ex03 {
+
+	public static void main(String[] args) {
+		
+		// 조건 연산자
+		// 조건을 만족하는 경우와 그렇지 않은 경우 모두를 처리하는 연산
+		// 형식
+		//   조건 ? 만족하는 경우 : 만족하지 않는 경우 
+		
+		int score = 20;
+		String result = (score >= 60) ? " 합격 " : " 불합격 ";
+		System.out.println(result);
+
+	}
+
+}
