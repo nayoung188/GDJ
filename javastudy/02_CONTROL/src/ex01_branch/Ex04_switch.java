@@ -168,6 +168,45 @@ public class Ex04_switch {
 		}
 	
 		System.out.println(right);
+		
+		
+		int mon = 8;
+		
+		switch (mon) {
+		case 1 :
+		case 3 : 
+		case 5 : 
+		case 7 :
+		case 9 :
+		case 10 :
+		case 12 : System.out.println("31일까지 입니다.");break;
+		case 2 : System.out.println("28일까지 입니다.");break;
+		default : System.out.println("30일까지 입니다.");
+					
+		}
+		
+		//연습
+		// 점수에 따른 학점
+		// score    grade
+		// 100 ~ 90 : A
+		// 89 ~ 80 : B
+		// 79 ~ 70 : C
+		// 69 ~ 60 : D
+		// 59 ~ 0 : F
+		
+		int score1 = 48;
+		String grade1;
+		
+		switch (score1 / 10) {
+		case 10 : 
+		case 9 : grade1 = "A"; break;
+		case 8 : grade1 = "B"; break;
+		case 7 : grade1 = "C"; break;
+		case 6 : grade1 = "D"; break;
+		default : grade1 = "F";
+		}
+		System.out.println(score1 + "점은 " + grade1 + "등급입니다.");
+
 
 
 	}
