@@ -8,7 +8,7 @@ public class Ex01_System {
 		// 1970-01-01 0:00 부터 1/1000초마다 증가하는 long타입의 정수값
 		long timestamp = System.currentTimeMillis();
 		System.out.println(timestamp);
-		//중요함
+		//중요함,  파일명의 중복 회피 수단으로도 활용 가능
 		
 		
 		// 2. 나노타임 (nanotime)
