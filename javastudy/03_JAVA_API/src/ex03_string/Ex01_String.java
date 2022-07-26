@@ -166,6 +166,8 @@ public class Ex01_String {
 		System.out.println(fullname.substring(0,5));
 		System.out.println(fullname.substring(5));
 		*/
+		
+		
 		String fullname = "apple.jpg";
 		String fileName = "";  //apple
 		String extName = "";   // jpg
@@ -175,6 +177,7 @@ public class Ex01_String {
 		System.out.println(fileName);
 		System.out.println(extName);
 		
+	
 		
 		
 		// 연습  문자열 "abc12345def67890ghijk"에서 
@@ -191,15 +194,15 @@ public class Ex01_String {
 		System.out.println(st);
 		*/
 		
-
-		for(int i=0; i < str.length(); i++) {
-			char ch = str.charAt(i);
-			if(ch >= '0' && ch <= '9') {
-				continue;
+		
+		for(int i = 0; i < str.length();i++) {
+			char ch = str.charAt(i); {
+				if(ch >='0' && ch <='9') {
+					continue;
+				}
 			}
 			System.out.println(ch);
-		} 
-		
+		}
 		
 	}
 
