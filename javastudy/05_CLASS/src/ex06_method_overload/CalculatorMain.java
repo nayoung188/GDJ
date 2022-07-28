@@ -11,6 +11,13 @@ public class CalculatorMain {
 		System.out.println(calculator.add(1, 1, 1));
 		System.out.println(calculator.add(1, 1, 1, 1));
 
+		
+		int[] arr = { 1, 2, 3, 4, 5};
+		System.out.println(calculator.add(arr));   // 15
+		
+		
+		
+		
 	}
 
 }

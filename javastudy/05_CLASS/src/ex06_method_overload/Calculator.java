@@ -17,4 +17,13 @@ public class Calculator {
 		return a + b + c + d;
 	}
 
+	int add ( int[] arr ) {
+		int total = 0;
+		for ( int n : arr ) {
+			total += n;
+		}
+		return total;
+	}
+	
+	
 }

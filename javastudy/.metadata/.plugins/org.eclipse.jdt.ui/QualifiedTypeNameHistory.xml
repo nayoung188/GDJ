@@ -11,4 +11,10 @@
     <fullyQualifiedTypeName name="java.lang.StringBuilder"/>
     <fullyQualifiedTypeName name="java.util.Arrays"/>
     <fullyQualifiedTypeName name="java.util.Scanner"/>
+    <fullyQualifiedTypeName name="ex01_field.User"/>
+    <fullyQualifiedTypeName name="ex02_field.School"/>
+    <fullyQualifiedTypeName name="ex02_field.Student"/>
+    <fullyQualifiedTypeName name="ex03_method.Calculator"/>
+    <fullyQualifiedTypeName name="ex04_method.VendingMachine"/>
+    <fullyQualifiedTypeName name="ex06_method_overload.Calculator"/>
 </qualifiedTypeNameHistroy>
