@@ -17,4 +17,11 @@
     <fullyQualifiedTypeName name="ex03_method.Calculator"/>
     <fullyQualifiedTypeName name="ex04_method.VendingMachine"/>
     <fullyQualifiedTypeName name="ex06_method_overload.Calculator"/>
+    <fullyQualifiedTypeName name="ex07_constructor.Computer"/>
+    <fullyQualifiedTypeName name="ex08_access_modifier.User"/>
+    <fullyQualifiedTypeName name="ex09_this.Student"/>
+    <fullyQualifiedTypeName name="java.lang.Math"/>
+    <fullyQualifiedTypeName name="ex01_is_a.Student"/>
+    <fullyQualifiedTypeName name="ex02_is_a.Hybrid"/>
+    <fullyQualifiedTypeName name="ex03_has_a.Soldier"/>
 </qualifiedTypeNameHistroy>
