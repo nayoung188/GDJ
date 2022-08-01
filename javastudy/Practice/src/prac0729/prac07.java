@@ -5,29 +5,19 @@ import java.util.Scanner;
 public class prac07 {
 
 	public static void main(String[] args) {
+		/*
 		
 		
-		
-		Scanner sc = new Scanner(System.in);
-		System.out.println("강아지님 시작하려면 <Enter>를 누르세요.");
-		sc.nextLine();
-		System.out.println("=== 시작 시간(초) : " + System.currentTimeMillis());
-		System.out.println("10초가 된 것 같으면 <Enter>를 누르세요.");
-		sc.nextLine();
-		System.out.println("=== 종료 시간(초) : " + System.currentTimeMillis());
-		System.out.println("고양이님 시작하려면 <Enter>를 누르세요.");
-		sc.nextLine();
-		System.out.println("=== 시작 시간(초) : " + System.currentTimeMillis());
-		System.out.println("10초가 된 것 같으면 <Enter>를 누르세요.");
-		sc.nextLine();
-		System.out.println("=== 종료 시간(초) : " + System.currentTimeMillis());
-		
-		
-		
-		
-		System.out.println();
+		Player p1 = new Player("강아지");
+		Player p2 = new Player("고양이");
 
+		double res1 = p1.turn();
+		double res2 = p2.turn();
 		
+		if( Math.abs((res1 -10) < Math.abs(res2 - 10)) {
+			System.out.println(p1.getName() + "님 승리." + res1 + "초 소요");
+		}
+		*/
 	}
 
 }
