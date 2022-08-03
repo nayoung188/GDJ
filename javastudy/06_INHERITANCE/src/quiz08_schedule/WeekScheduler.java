@@ -138,17 +138,9 @@ public class WeekScheduler {
 			case 0 : System.out.println("스케쥴러를 종료합니다."); return;
 			default : System.out.println("인식할 수 없는 명령입니다.");
 			}
-			
-			
-		}
-		
-		
-		
-		
+					
+		}		
 		
 	}
-	
-	
-	
-	
+		
 }
