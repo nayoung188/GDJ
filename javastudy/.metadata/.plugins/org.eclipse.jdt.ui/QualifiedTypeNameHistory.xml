@@ -1,17 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="ex02_is_a.Hybrid"/>
-    <fullyQualifiedTypeName name="ex03_has_a.Soldier"/>
-    <fullyQualifiedTypeName name="prac0729.Watch"/>
-    <fullyQualifiedTypeName name="prac0729.BankAccount"/>
-    <fullyQualifiedTypeName name="prac0729.Bank"/>
-    <fullyQualifiedTypeName name="prac0729.Soldier"/>
-    <fullyQualifiedTypeName name="prac0729.Gun"/>
-    <fullyQualifiedTypeName name="ex05_constructor.Student"/>
-    <fullyQualifiedTypeName name="ex06_constructor.Alba"/>
-    <fullyQualifiedTypeName name="ex06_constructor.Student"/>
-    <fullyQualifiedTypeName name="ex07_override.Espresso"/>
-    <fullyQualifiedTypeName name="ex07_override.CafeLatte"/>
     <fullyQualifiedTypeName name="ex08_override.Rectangle"/>
     <fullyQualifiedTypeName name="ex08_override.Square"/>
     <fullyQualifiedTypeName name="overridePrac0801.Espresso"/>
@@ -36,8 +24,6 @@
     <fullyQualifiedTypeName name="java.io.File"/>
     <fullyQualifiedTypeName name="java.io.FileReader"/>
     <fullyQualifiedTypeName name="java.lang.Integer"/>
-    <fullyQualifiedTypeName name="java.lang.Exception"/>
-    <fullyQualifiedTypeName name="javax.management.RuntimeErrorException"/>
     <fullyQualifiedTypeName name="lombok.AllArgsConstructor"/>
     <fullyQualifiedTypeName name="lombok.NoArgsConstructor"/>
     <fullyQualifiedTypeName name="lombok.Setter"/>
@@ -51,13 +37,27 @@
     <fullyQualifiedTypeName name="ex06_exception_class.ParkingLot"/>
     <fullyQualifiedTypeName name="quiz03_bank.BankException"/>
     <fullyQualifiedTypeName name="quiz04_employee.Employee"/>
-    <fullyQualifiedTypeName name="java.util.Scanner"/>
-    <fullyQualifiedTypeName name="java.lang.RuntimeException"/>
     <fullyQualifiedTypeName name="quiz04_employee.Company"/>
-    <fullyQualifiedTypeName name="java.util.InputMismatchException"/>
     <fullyQualifiedTypeName name="java.lang.System"/>
     <fullyQualifiedTypeName name="quiz04_employee.Regular"/>
     <fullyQualifiedTypeName name="quiz04_employee.Temporary"/>
     <fullyQualifiedTypeName name="java.lang.Override"/>
     <fullyQualifiedTypeName name="quiz04_employee.EmployeeException"/>
+    <fullyQualifiedTypeName name="java.lang.Exception"/>
+    <fullyQualifiedTypeName name="quiz01_library.LibraryException"/>
+    <fullyQualifiedTypeName name="quiz01_library.Library"/>
+    <fullyQualifiedTypeName name="quiz01_library.Book"/>
+    <fullyQualifiedTypeName name="javax.management.RuntimeErrorException"/>
+    <fullyQualifiedTypeName name="java.util.InputMismatchException"/>
+    <fullyQualifiedTypeName name="java.lang.RuntimeException"/>
+    <fullyQualifiedTypeName name="com.sun.tools.classfile.Opcode.Set"/>
+    <fullyQualifiedTypeName name="java.util.Arrays"/>
+    <fullyQualifiedTypeName name="java.util.Scanner"/>
+    <fullyQualifiedTypeName name="java.util.Set"/>
+    <fullyQualifiedTypeName name="java.util.HashSet"/>
+    <fullyQualifiedTypeName name="java.util.HashMap"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.util.Map"/>
+    <fullyQualifiedTypeName name="java.util.Map.Entry"/>
 </qualifiedTypeNameHistroy>
