@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="ex02_field.School"/>
-    <fullyQualifiedTypeName name="ex02_field.Student"/>
-    <fullyQualifiedTypeName name="ex03_method.Calculator"/>
-    <fullyQualifiedTypeName name="ex04_method.VendingMachine"/>
-    <fullyQualifiedTypeName name="ex06_method_overload.Calculator"/>
-    <fullyQualifiedTypeName name="ex07_constructor.Computer"/>
-    <fullyQualifiedTypeName name="ex08_access_modifier.User"/>
-    <fullyQualifiedTypeName name="ex09_this.Student"/>
-    <fullyQualifiedTypeName name="ex01_is_a.Student"/>
     <fullyQualifiedTypeName name="ex02_is_a.Hybrid"/>
     <fullyQualifiedTypeName name="ex03_has_a.Soldier"/>
     <fullyQualifiedTypeName name="prac0729.Watch"/>
@@ -34,7 +25,6 @@
     <fullyQualifiedTypeName name="ques04_cart.Customer"/>
     <fullyQualifiedTypeName name="library.Book"/>
     <fullyQualifiedTypeName name="java.lang.Math"/>
-    <fullyQualifiedTypeName name="java.lang.Override"/>
     <fullyQualifiedTypeName name="ex16_interface.Pet"/>
     <fullyQualifiedTypeName name="quiz08_schedule.WeekScheduler"/>
     <fullyQualifiedTypeName name="quiz08_schedule.Day"/>
@@ -47,17 +37,27 @@
     <fullyQualifiedTypeName name="java.io.FileReader"/>
     <fullyQualifiedTypeName name="java.lang.Integer"/>
     <fullyQualifiedTypeName name="java.lang.Exception"/>
-    <fullyQualifiedTypeName name="java.util.InputMismatchException"/>
     <fullyQualifiedTypeName name="javax.management.RuntimeErrorException"/>
-    <fullyQualifiedTypeName name="java.lang.RuntimeException"/>
     <fullyQualifiedTypeName name="lombok.AllArgsConstructor"/>
     <fullyQualifiedTypeName name="lombok.NoArgsConstructor"/>
     <fullyQualifiedTypeName name="lombok.Setter"/>
     <fullyQualifiedTypeName name="lombok.Getter"/>
     <fullyQualifiedTypeName name="lombok.Builder"/>
     <fullyQualifiedTypeName name="lombok.ToString"/>
-    <fullyQualifiedTypeName name="java.util.Scanner"/>
     <fullyQualifiedTypeName name="parking.ParkingLot"/>
     <fullyQualifiedTypeName name="parking.Car"/>
+    <fullyQualifiedTypeName name="java.lang.IndexOutOfBoundsException"/>
+    <fullyQualifiedTypeName name="ex06_exception_class.MyException"/>
+    <fullyQualifiedTypeName name="ex06_exception_class.ParkingLot"/>
+    <fullyQualifiedTypeName name="quiz03_bank.BankException"/>
+    <fullyQualifiedTypeName name="quiz04_employee.Employee"/>
+    <fullyQualifiedTypeName name="java.util.Scanner"/>
+    <fullyQualifiedTypeName name="java.lang.RuntimeException"/>
+    <fullyQualifiedTypeName name="quiz04_employee.Company"/>
+    <fullyQualifiedTypeName name="java.util.InputMismatchException"/>
     <fullyQualifiedTypeName name="java.lang.System"/>
+    <fullyQualifiedTypeName name="quiz04_employee.Regular"/>
+    <fullyQualifiedTypeName name="quiz04_employee.Temporary"/>
+    <fullyQualifiedTypeName name="java.lang.Override"/>
+    <fullyQualifiedTypeName name="quiz04_employee.EmployeeException"/>
 </qualifiedTypeNameHistroy>
