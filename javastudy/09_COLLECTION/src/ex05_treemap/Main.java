@@ -51,6 +51,7 @@ public class Main {
 		map.put(35,  "제임스");
 		map.put(95,  "사만다");
 	
+		
 	
 		// 정렬 변경 : descendingMap() 메소드 호출
 		// 오름차순 정렬 ↔ 내림차순 정렬
@@ -72,7 +73,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 	
-		m2();	
+		m1();	
 	}
 
 }
