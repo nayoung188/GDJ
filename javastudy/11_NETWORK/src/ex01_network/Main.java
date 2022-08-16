@@ -23,7 +23,7 @@ public class Main {
 		// 2. 정형화된 자원의 경로
 		// 3. 웹 주소를 의미
 		// 4. 구성
-		//	   프로토콜://    호스트      /  서버경로  ?파라미터=값&파라미터=값&
+		//	   프로토콜://  호스트 :포트번호  /  서버경로  ?파라미터=값&파라미터=값&
 		//		  https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=%EB%82%A0%EC%94%A8
 		//     1) https : secure http, 하이퍼텍스트 전송 프로토콜 (통신규약)
 		//     2) 호스트 : 서버주소
