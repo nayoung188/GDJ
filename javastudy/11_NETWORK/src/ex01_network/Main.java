@@ -5,9 +5,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 public class Main {
 	
@@ -126,9 +130,34 @@ public class Main {
 		
 	}
 	
+	public static void m4() {
+		
+		// 인코딩 : UTF-8 방식으로 암호화
+		// 디코딩 : UTF-8 방식으로 복호화
+		// 원본데이터 -> 인코딩 -> 전송 -> 디코딩 -> 원본데이터
+		
+		try {
+			
+			// 원본데이터
+			String str = "한글 english 12345 !@#$+";
+			
+			// 인코딩
+			String encode = URLEncoder.encode(str, "UTF-8");
+			System.out.println(encode);
+			
+			// 디코딩
+			String decode = URLDecoder.decode(encode, StandardCharsets.UTF_8);
+			System.out.println(decode);
+			
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} 		
+		
+	}
+	
 	
 	public static void main(String[] args) {
-		m3();
+		m4();
 	}
 
 }
