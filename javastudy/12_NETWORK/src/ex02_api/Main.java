@@ -1,6 +1,9 @@
 package ex02_api;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
@@ -8,6 +11,15 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 
 public class Main {
@@ -47,26 +59,6 @@ public class Main {
 		      apiURL += "&WEIGHTED_ENVLP_MTHD=" + URLEncoder.encode("소각용","UTF-8");
 		      apiURL += "&WEIGHTED_ENVLP_PRPOS=" + URLEncoder.encode("생활쓰레기","UTF-8");
 		      apiURL += "&WEIGHTED_ENVLP_TRGET=" + URLEncoder.encode("기타","UTF-8");
-		      /*
-		      apiURL += "&PRICE_1=" + URLEncoder.encode("0","UTF-8");
-		      apiURL += "&PRICE_1_HALF=" + URLEncoder.encode("0","UTF-8");
-		      apiURL += "&PRICE_2=" + URLEncoder.encode("0","UTF-8");
-		      apiURL += "&PRICE_2_HALF=" + URLEncoder.encode("0","UTF-8");
-		      apiURL += "&PRICE_3=" + URLEncoder.encode("0","UTF-8");
-		      apiURL += "&PRICE_5=" + URLEncoder.encode("160","UTF-8");
-		      apiURL += "&PRICE_10=" + URLEncoder.encode("310","UTF-8");
-		      apiURL += "&PRICE_20=" + URLEncoder.encode("0","UTF-8");
-		      apiURL += "&PRICE_30=" + URLEncoder.encode("0","UTF-8");
-		      apiURL += "&PRICE_50=" + URLEncoder.encode("0","UTF-8");
-		      apiURL += "&PRICE_60=" + URLEncoder.encode("0","UTF-8");
-		      apiURL += "&PRICE_75=" + URLEncoder.encode("0","UTF-8");
-		      apiURL += "&PRICE_100=" + URLEncoder.encode("3060","UTF-8");		      apiURL += "&PRICE_120=" + URLEncoder.encode("0","UTF-8");
-		      apiURL += "&PRICE_125=" + URLEncoder.encode("0","UTF-8");
-		      */
-		     //apiURL += "&CHRG_DEPT_NM=" + URLEncoder.encode("청결지도팀","UTF-8");
-		     // apiURL += "&PHONE_NUMBER=" + URLEncoder.encode("032-450-5464","UTF-8");
-		     // apiURL += "&REFERENCE_DATE=" + URLEncoder.encode("2020-02-01","UTF-8");
-		     // apiURL += "&instt_code=" + URLEncoder.encode("B551295","UTF-8");
 		      apiURL += "&serviceKey=" + URLEncoder.encode(serviceKey,"UTF-8");
 
 			
@@ -117,8 +109,60 @@ public class Main {
 			System.out.println("API 응답 실패");
 		}
 		
+		// API로부터 전달받은 xml 데이터
 		String response = sb.toString();
-		System.out.println(response);
+		
+		// File 생성
+		File file = new File("C:\\storage", "api1.xml");
+		try {
+		
+			BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+			bw.write(response);
+			bw.close();
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		// xml분석
+		try {
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			Document doc = builder.parse(file);
+			
+			Element root = doc.getDocumentElement();   // 최상위 태그 : <response>
+			System.out.println(root.getNodeName());
+			
+			NodeList nodeList = root.getChildNodes();  // <response>의 자식 태그 확인 (<header>, <body>	)
+			for ( int i = 0; i < nodeList.getLength(); i++) {
+				Node node = nodeList.item(i);			// <header>, <body>				
+				System.out.println(node.getNodeName());		// <header>의 자식 태그(<resultCode> , <resultMsg>), <body>의 자식 태그 ( <items>, <numOfRows>, <pageNo>) <body>의 
+				
+				NodeList nodeList2 = node.getChildNodes();
+				for (int j = 0 ; j < nodeList2.getLength(); j++) {
+					Node node2 = nodeList2.item(j);
+					System.out.println("     " + node2.getNodeName());
+					if(node2.getNodeName().equals("items")) {   // <items> 태그 대상
+						
+						NodeList items = node2.getChildNodes();	// <items>의 자식 태그 (<item>)
+						for ( int k = 0; k < items.getLength(); k++) {
+							Node item = items.item(k);
+							System.out.println("      " + item.getNodeName());
+							
+							NodeList itemChildren = item.getChildNodes(); // <item>의 자식 태그
+							for ( int l = 0; l < itemChildren.getLength(); l++) {
+								Node itemChild = itemChildren.item(l);
+								System.out.println("       " + itemChild.getNodeName() + " : " + itemChild.getTextContent());
+							}
+						}
+					}
+				}
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 		
 		// 접속 종료
 		con.disconnect();
