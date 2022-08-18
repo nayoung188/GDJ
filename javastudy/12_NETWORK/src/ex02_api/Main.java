@@ -169,7 +169,6 @@ public class Main {
 		
 	}
 	
-	
 	public static void m2() {
 
 		// 보건복지부_코로나 19 감염현황 조회 서비스
@@ -244,7 +243,6 @@ public class Main {
 		}
 		
 	}
-	
 	
 	public static void m3() {
 		
@@ -390,7 +388,6 @@ public class Main {
 			NodeList items = root.getElementsByTagName("item");
 			for (int i = 0; i < items.getLength(); i++) {
 				Element item = (Element)items.item(i);     	// Node -> Element 타입으로 다운캐스팅 
-				NodeList categories = item.getElementsByTagName("category");
 				Node category = item.getElementsByTagName("category").item(0);
 				Node obsrValue = item.getElementsByTagName("obsrValue").item(0);
 				String strCategory = null;
@@ -413,9 +410,153 @@ public class Main {
 		
 	}
 	
+	public static void m7() {
+		
+		// 기상청 RSS
+		
+		
+		// 제주특별자치도 서귀포시 중문동
+		String apiURL = "http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=5013061000";
+		
+		// 접속	
+		URL url = null;
+		HttpURLConnection con = null;
+		
+		try {
+			
+			url = new URL(apiURL);
+			con = (HttpURLConnection)url.openConnection();
+		
+		}catch (IOException e) {
+			System.out.println("접속 실패");
+		}
+		
+		
+		// 응답 스트림 생성 및 응답 데이터 받기
+		BufferedReader reader = null;
+		StringBuilder sb = new StringBuilder();
+		
+		try {
+			if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
+				reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+			} else {
+				reader = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+			}
+			
+			String line = null;
+			while ((line = reader.readLine()) != null) {
+				sb.append(line + "\n");
+			}
+			reader.close();
+		} catch (IOException e) {
+			System.out.println("응답 실패");
+		}
+		
+		
+		// XML 파일 생성
+	
+		File file = new File ("C:\\storage", "api4.xml");
+		
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+			writer.write(sb.toString());
+			writer.close();
+					
+		}catch(IOException e) {
+			System.out.println("파일 생성 실패");
+		}
+		
+	}
 
+	public static void m8() {
+		
+		// 지역, 날짜 추출
+		
+		
+	}
+	
+	public static void m9( ) {
+		
+try {
+			
+			// 접속
+			String apiURL = "https://kma.go.kr/XML/weather/sfc_web_map.xml";
+			URL url = new URL(apiURL);
+			HttpURLConnection con = (HttpURLConnection)url.openConnection();
+			
+			// 접속 확인 코드
+			if (con.getResponseCode() != HttpURLConnection.HTTP_OK) {
+				System.out.println("API 접속 실패");
+				return;			
+			}
+			
+			
+			// 바이트 입력 스트림 -> 문자 입력 스트림 -> 버퍼 추가
+			BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+			File file = new File ("C:\\storage", "sfc_web_map.xml");
+			BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+			
+			
+			// readLine() 메소드를 이용한 복사
+			String line = null;
+			
+			while((line = br.readLine()) != null) {
+				bw.write(line + "\n");
+			}
+			
+			// 닫기
+			bw.close();
+			br.close();
+			con.disconnect();
+		}catch(MalformedURLException e) {
+			System.out.println("API 주소 오류");
+		}catch (IOException e) {
+			System.out.println("API 서버 오류");
+		}
+		
+	}
+	
+	public static void m10() {
+		
+		File file = new File ("C:\\storage", "sfc_web_map.xml");
+		
+		try {
+			
+			StringBuilder sb = new StringBuilder();
+			
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			Document doc = builder.parse(file);
+			
+			Element root = doc.getDocumentElement();   // <current xmlns ="current"> 태그
+			
+			Element weather = (Element) root.getElementsByTagName("weather").item(0);   // <weather year="2022" month="08" day="18" hour="15">
+			sb.append(weather.getAttribute("year") + "년");
+			sb.append(weather.getAttribute("month") + "월");
+			sb.append(weather.getAttribute("day") + "일");
+			sb.append(weather.getAttribute("hour" + "시\n"));
+			
+			NodeList locals = root.getElementsByTagName("local");
+			for (int i = 0; i < locals.getLength(); i++) {
+				Element local = (Element)locals.item(i);
+				sb.append(local.getTextContent() + " : ");   // 지역이름
+				sb.append(local.getAttribute("ta") + "℃");
+				sb.append(local.getAttribute("desc") + "\n");
+			}
+			
+			System.out.println(sb.toString());
+			
+		} catch ( Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+		
+
+	
 	public static void main(String[] args) {
-		m6();
+		m10();
 	}
 
 }
