@@ -394,7 +394,6 @@ public class Main2_JSON {
 				}		
 		return sb.toString();
 	}
-	A
 	public static void m8() {
 		
 		// XML 문서를 JSONObject로 변환
