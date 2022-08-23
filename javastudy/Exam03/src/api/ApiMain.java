@@ -1,9 +1,7 @@
 package api;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
@@ -21,7 +19,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import prac03.Movie;
 
 
 
@@ -115,14 +112,7 @@ public class ApiMain {
 				String dthDnvCnt = accident.getElementsByTagName("dthDnvCnt").item(0).getTextContent();
 				String injpsnCnt = accident.getElementsByTagName("injpsnCnt").item(0).getTextContent();
 				
-				Accident acc = Accident.builder();
-				.occrrncDt(occrrncDt)
-				.occrrncDayCd(occrrncDayCd)
-				.dthDnvCnt(dthDnvCnt)
-				.injpsnCnt(injpsnCnt)
-				.build();
 				
-				acc.add(Accs);
 			}
 			
 		} catch(Exception e) {
