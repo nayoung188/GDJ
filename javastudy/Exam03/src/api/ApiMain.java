@@ -11,19 +11,30 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
+import prac03.Movie;
 
 
 
 public class ApiMain {
 
-	public static void m1() {
+	public static void main(String[] args) {
 	
 		String serviceKey = "aJcw6UfRa/b1KW7wJ0vYvM4xyNFeo9R08KH7EI7DVz6mzQsRueWfsu1e1yZfAKD5KSkw6aspN8JWFHPuHBGHLQ==";
 		StringBuilder urlBuilder = new StringBuilder();
 		
 		try {
 			
-			urlBuilder.append("http://apis.data.go.kr/B552061/AccidentDeath");
+			urlBuilder.append("http://apis.data.go.kr/B552061/AccidentDeath/getRestTrafficAccidentDeath");
 			urlBuilder.append("?serviceKey=").append(URLEncoder.encode(serviceKey, "UTF-8"));
 			urlBuilder.append("&searchYear=2021");
 			urlBuilder.append("&siDo=1100");
@@ -74,7 +85,8 @@ public class ApiMain {
 		
 		String response = sb.toString();
 		
-		File file = new File("accident.txt");
+		/*
+		File file = new File("C:\\storage","accident.txt");
 		
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(file));
@@ -83,11 +95,52 @@ public class ApiMain {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+		*/
 		con.disconnect();
+		
+		File file =  new File("C:\\storage","accident.txt");
+		List<Accident> Accs = new ArrayList<Accident>();
+		
+		try {
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			Document doc = builder.parse(file);
+			
+			NodeList accidentList = doc.getElementsByTagName("accident");
+			
+			for( int i = 0; i < accidentList.getLength(); i++) {
+				Element accident = (Element)accidentList.item(i);			
+				String occrrncDt = accident.getElementsByTagName("occrrncDt").item(0).getTextContent();
+				String occrrncDayCd = accident.getElementsByTagName("occrrncDayCd").item(0).getTextContent();
+				String dthDnvCnt = accident.getElementsByTagName("dthDnvCnt").item(0).getTextContent();
+				String injpsnCnt = accident.getElementsByTagName("injpsnCnt").item(0).getTextContent();
+				
+				Accident acc = Accident.builder();
+				.occrrncDt(occrrncDt)
+				.occrrncDayCd(occrrncDayCd)
+				.dthDnvCnt(dthDnvCnt)
+				.injpsnCnt(injpsnCnt)
+				.build();
+				
+				acc.add(Accs);
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		for(Accident acc : Accs) {
+			System.out.println(Accs);
+		}
+
+		
+		
+		
+		
 	}
-		public static void main(String[] args) {
-			m1();
-	}
+	
+	
+	
+	
 
 }
