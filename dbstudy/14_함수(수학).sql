@@ -66,12 +66,13 @@ SELECT
 SELECT
      CEIL(1.111*POWER(10,1)) / POWER(10,1)    -- 1.2
     ,CEIL(1.111*POWER(10,2)) / POWER(10,2)    -- 1.12
-    ,CEIL(1.111*POWER(10,-1)) / POWER(10,-1)  -- 11120
-    ,CEIL(1.111*POWER(10,-2)) / POWER(10,-2)  -- 11200
+    ,CEIL(11111*POWER(10,-1)) / POWER(10,-1)  -- 11120
+    ,CEIL(11111*POWER(10,-2)) / POWER(10,-2)  -- 11200
   FROM
     DUAL;
 
 -- 2. 원하는 자릿수로 내림
+--    CEIL 대신 FLOOR 함수를 사용하면 됨
 
 
 
