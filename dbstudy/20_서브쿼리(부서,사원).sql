@@ -94,6 +94,15 @@ COMMIT;
 
 */
 
+/*
+
+    WHERE절의 서브쿼리
+
+
+
+
+*/
+
 
 -- 1. 사원번호가 1001인 사원과 같은 직급(POSITION)을 가진 사원 조회하기
 SELECT EMP_NO, NAME, DEPART, GENDER, HIRE_DATE, SALARY
@@ -102,13 +111,174 @@ SELECT EMP_NO, NAME, DEPART, GENDER, HIRE_DATE, SALARY
                         FROM EMPLOYEE
                         WHERE EMP_NO = 1001);      -- EMP_NO는 PK이므로 단일 행 서브쿼리
 
+-- 2. 급여(SALARY)가 가장 높은 사원 조회하기
+SELECT EMP_NO, NAME, DEPART, GENDER, HIRE_DATE, SALARY
+    FROM EMPLOYEE 
+  WHERE SALARY = (SELECT MAX(SALARY)
+                    FROM EMPLOYEE);             -- 서브쿼리가 함수이므로 단일 행 서브쿼리
+                    
+-- 3. 부서번호가 1인 부서와 같은 지역에 있는 부서정보를 조회하기
+SELECT DEPT_NO, DEPT_NAME, LOCATION
+    FROM DEPARTMENT
+    WHERE LOCATION = (SELECT LOCATION
+                        FROM DEPARTMENT
+                        WHERE DEPI_NO = 1);   -- DEPT_NO 는 PK이므로 단일 행 서브쿼리
+
+-- 4. 평균급여 이상을 받는 사원 조회하기
+SELECT EMP_NO, NAME, DEPART, GENDER, HIRE_DATE, SALARY
+    FROM EMPLOYEE
+    WHERE SALARY >= (SELECT AVG(SALARY)
+                        FROM EMPLOYEE);       -- 서브쿼리가 함수이므로 단일 행 서브쿼리
+
+-- 5. 평균근속기간 이상을 근무한 사원 조회하기
+-- 근속기간 구하기
+-- 1) 일수 계산 : SYSDATE - HIRE_DATE
+-- 2) 개월 계산 : MONTHS_BETWEEN(SYSDATE, HIRE_DATE)
+SELECT EMP_NO, NAME, DEPART, GENDER, HIRE_DATE, SALARY
+    FROM EMPLOYEE
+    WHERE (SYSDATE - HIRE_DATE) >= (SELECT AVG(SYSDATE - HIRE_DATE)
+                                        FROM EMPLOYEE);
+
+SELECT EMP_NO, NAME, DEPART, GENDER, HIRE_DATE, SALARY
+    FROM EMPLOYEE
+    WHERE MONTHS_BETWEEN(SYSDATE , HIRE_DATE) >= (SELECT AVG (MONTHS_BETWEEN(SYSDATE , HIRE_DATE))
+                                        FROM EMPLOYEE);
+
+-- 6. 부서번호가 2인 부서에 근무하는 사원들의 직급과 일치하는 직급을 가진 사원 조회하기
+SELECT EMP_NO, NAME, DEPART, GENDER, HIRE_DATE, SALARY
+    FROM EMPLOYEE
+    WHERE POSITION IN (SELECT POSITION    -- 다중 행 서브쿼리의 동등 비교는 IN 연산으로 수행해야 함
+                        FROM EMPLOYEE
+                      WHERE DEPART = 2); -- DEPART가 PK/UNIQUE가 아니기 때문에 다중 행 서브 쿼리
+
+-- TIP) 단일 행 / 다중 행 상관 없이 동등 비교는 IN 연산으로 수행 가능
+
+-- 7. 부서명이 '영업부'인 부서에 근무하는 사원 조회하기
+SELECT EMP_NO, NAME, DEPART, GENDER, POSITION, HIRE_DATE, SALARY
+    FROM EMPLOYEE
+    WHERE DEPART IN ( SELECT DEPT_NO
+                        FROM DEPARTMENT
+                        WHERE DEPT_NAME = '영업부');      -- DEPT_NAME가 PK/UNIQUE가 아니기 때문에 다중 행 서브 쿼리
+                        
+                        
+                        
+SELECT E.EMP_NO, E.NAME, E.DEPART, E.GENDER, E.POSITION, E.HIRE_DATE, E.SALARY
+    FROM DEPARTMENT D INNER JOIN EMPLOYEE E
+    ON  D.DEPT_NO = E.DEPART
+   WHERE D.DEPT_NAME = '영업부';                         
+                        
+                        
+
+-- 8. 직급이 '과장'인 사원들이 근무하는 부서 조회하기
+SELECT DEPT_NO, DEPT_NAME, LOCATION
+    FROM DEPARTMENT
+    WHERE DEPT_NO IN ( SELECT DEPART
+                        FROM EMPLOYEE
+                        WHERE POSITION = '과장');     -- POSITION이 PK/UNIQUE가 아니기 때문에 다중 행 서브 쿼리
 
 
+-- 9. 부서번호가 1인 부서에 근무하는 사원들의 급여보다 더 많은 받는 급여를 받는 사원 조회하기
+-- 어떤 급여(2000000, 5000000)이든 하나의 급여보다 많이 받으면 조회하기
 
+SELECT EMP_NO, NAME, DEPART, GENDER, POSITION, HIRE_DATE, SALARY
+  FROM EMPLOYEE
+ WHERE SALARY > ANY(SELECT SALARY
+                      FROM EMPLOYEE
+                     WHERE DEPART = 1);  -- DEPART가 PK/UNIQUE가 아니기 때문에 다중 행 서브쿼리
 
+-- WHERE SALARY > ANY(2000000, 5000000)
+-- SALARY가 2000000보다 크거나, 5000000보다 크면 됨(OR 개념)
+-- 따라서 최소급여 2000000보다 크면 만족하는 상황임
+SELECT EMP_NO, NAME, DEPART, GENDER, POSITION, HIRE_DATE, SALARY
+  FROM EMPLOYEE
+ WHERE SALARY > (SELECT MIN(SALARY)
+                   FROM EMPLOYEE
+                  WHERE DEPART = 1);  -- 서브쿼리가 함수이므로 단일 행 서브쿼리
 
+-- 10. 부서번호가 1인 부서에 근무하는 사원들의 급여보다 더 많은 받는 급여를 받는 사원 조회하기
+-- 모든 급여(2000000, 5000000)와 비교해서 많이 받으면 조회하기
 
+SELECT EMP_NO, NAME, DEPART, GENDER, POSITION, HIRE_DATE, SALARY
+  FROM EMPLOYEE
+ WHERE SALARY > ALL(SELECT SALARY
+                      FROM EMPLOYEE
+                     WHERE DEPART = 1);  -- DEPART가 PK/UNIQUE가 아니기 때문에 다중 행 서브쿼리
 
+-- WHERE SALARY > ALL(2000000, 5000000)
+-- SALARY가 2000000보다 크고, 5000000보다 크면 됨(AND 개념)
+-- 따라서 최대급여 5000000보다 크면 만족하는 상황임
+SELECT EMP_NO, NAME, DEPART, GENDER, POSITION, HIRE_DATE, SALARY
+  FROM EMPLOYEE
+ WHERE SALARY > (SELECT MAX(SALARY)
+                   FROM EMPLOYEE
+                  WHERE DEPART = 1);  -- 서브쿼리가 함수이므로 단일 행 서브쿼리
+                  
+                  
+/* WHERE 절의 서브쿼리 */
 
+-- 1. 전체 사원의 인원수, 급여합계/평균/최대/최소 조회하기
+SELECT
+     (SELECT COUNT(*) FROM EMPLOYEE)
+    ,(SELECT SUM(SALARY) FROM EMPLOYEE)
+    ,(SELECT AVG(SALARY) FROM EMPLOYEE)
+    ,(SELECT MAX(SALARY) FROM EMPLOYEE)
+    ,(SELECT MIN(SALARY) FROM EMPLOYEE)
+  FROM 
+    DUAL;
+    
+-- 2. 부서번호가 1인 부서와 같은 지역에서 근무하는 사원 조회하기
+--    사원번호 (EMP_NO), 사원명(NAME), 부서번호(DEPART), 부서명(DEPT_NAME) 조회
+SELECT E.EMP_NO, E.NAME, E.DEPART, D.DEPT_NAME
+    FROM DEPARTMENT D INNER JOIN EMPLOYEE E
+    ON D.DEPT_NO = E.DEPART
+ WHERE D.LOCATION = (SELECT LOCATION
+                        FROM DEPARTMENT
+                        WHERE DEPT_NO = 1);
+ 
+-- 스칼라 서브쿼리 접근
+-- 스칼라 서브쿼리는 일치하지 않는 정보를 NULL로 처리함
+-- 따라서 스칼라 서브쿼리와 동일한 방식의 조인은 '외부조인'
+SELECT
+     E.EMP_NO
+    ,E.NAME
+    ,E.DEPART
+    ,(SELECT D.DEPT_NAME
+        FROM DEPARTMENT D
+        WHERE D.DEPT_NO = E.DEPART
+        AND D.DEPT_NO = 1)
+  FROM
+        EMPLOYEE E;
+                  
+ 
+-- 조인접근
+SELECT E.EMP_NO, E.NAME, E.DEPART, D.DEPT_NAME
+    FROM DEPARTMENT D RIGHT OUTER JOIN EMPLOYEE E
+    ON D.DEPT_NO = E.DEPART
+ WHERE D.LOCATION = (SELECT LOCATION
+                        FROM DEPARTMENT
+                        WHERE DEPT_NO = 1);
+                  
+/*   FROM절의 서브쿼리   */
+/*
 
+    인라인뷰
+    
+    1. InLine-View
+    2. FROM 절에서 사용하는 서브쿼리를 의미함
+    3. 인라인뷰는 테이블 형식임
+    4. 인라인뷰에 별명을 주고 사용함
+    5. 인라인뷰에서 조회한 칼럼만 메인쿼리에서 조회할 수 있음
+    6. SELECT 문의 실행순서를 바꿀 때 사용
+
+*/
+
+SELECT A.EMP_NO, A.NAME, A.POSITION    -- 인라인뷰가 조회한 칼럼만 작성할 수 있음
+    FROM (SELECT EMP_NO, NAME, POSITION
+            FROM EMPLOYEE
+            WHERE DEPART = 1) A;    -- 인라인뷰의 별명은 A임
+                  
+                  
+                  
+                  
+                  
 
