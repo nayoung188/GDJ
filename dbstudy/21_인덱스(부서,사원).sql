@@ -23,6 +23,11 @@ DESC USER_INDEXES;
 SELECT INDEX_NAME, TABLE_NAME
     FROM USER_INDEXES;
     
+-- 인덱스 칼럼 조회
+-- 사용자가 작성한 인덱스가 동작하는 칼럼 확인은 USER_IND_COLUMNS 데이터 사전에서 확인
+DESC
+    
+    
 -- 인덱스 생성
 CREATE INDEX IDX_NAME ON EMPLOYEE(NAME);
     
