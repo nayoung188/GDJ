@@ -171,10 +171,65 @@ EXECUTE MY_PROC(101);
 
 
 
+-- 사용자 함수
+-- 학생 아이디를 전달하면 해당 학생으 학번을 반환하는 함수 만들기
+-- 아이디 'jun123'을 전달하면 학번 '10101'이 반환되는지 확인
+-- 함수이름 GET_STUDENT
+
+CREATE OR REPLACE FUNCTION GET_STUDENT (UID STUDENT.USERID%TYPE)
+RETURN NUMBER  -- 반환하는 학번의 타입이 NUMBER(5)이므로
+IS
+    SNO STUDENT.STUDNO%TYPE;
+BEGIN
+    SELECT STUDNO
+    INTO SNO
+    FROM STUDENT
+    WHERE USERID = UID;
+  RETURN SNO;
+END GET_STUDENT;
+
+SELECT GET_STUDENT(USERID)
+  FROM STUDENT
+ WHERE USERID = 'Dals';
+
+SELECT DISTINCT GET_STUDENT('Dals')
+    FROM STUDENT;
 
 
 
+-- 트리거
+-- SAMPLE 테이블의 행을 갱신, 삭제 이후 'SampleTrg 동작' 서버메시지 출력하기
+CREATE OR REPLACE TRIGGER SampleTrg
+    AFTER
+    UPDATE OR DELETE
+    ON SAMPLE
+    FOR EACH ROW 
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('SampleTrg 동작');
+END SampleTrg;
 
 
+
+-- 학생명, 학과명, 담당교수명 조회하기 (쿼리문제)
+-- STUDENT      DEPARTMENT      PROFESSOR
+-- DEPTNO       DEPTNO          DEPTNO
+--              PROFNO          PROFNO
+
+
+-- ANSI (JOIN)
+SELECT  S.NAME
+       ,P.NAME
+       ,D.DNAME
+    FROM STUDENT S INNER JOIN DEPARTMENT D
+    ON S.DEPTNO = D.DEPTNO INNER JOIN PROFESSOR P
+    ON P.DEPTNO = D.DEPTNO;
+
+-- ORACLE (콤마)
+SELECT  S.NAME
+       ,P.NAME
+       ,D.DNAME
+  FROM STUDENT S, DEPARTMENT D, PROFESSOR P
+  WHERE S.DEPTNO = D.DEPTNO
+  AND P.DEPR = D.DEPTNO;
 
 
