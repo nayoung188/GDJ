@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<!-- 
+    1. <link> 태그를 이용한 구글 폰트 사용
+        1) <link> 태그를 복붙
+        2) CSS속성 font-family를 복분
+ -->
+
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
+    <style>
+        h1{
+            font-family: 'Single Day', cursive;
+        }
+    </style>
+<!-- 
+    2. @import를 이용한 구글 폰트 사용(*.css 파일 분리)
+        1) 05_webfont.css 파일 생성
+        2) css 파일에 @import + font-family 모두 복붙
+        3) <link> 태그를 이용해서 css 파일 포함
+ -->
+    <link rel="stylesheet" href="05_webfont.css">
+
+</head>
+<body>
+
+    <h1>Hello CSS</h1>
+    <p>만나서 반갑습니다</p>
+</body>
+</html>
+
+https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
