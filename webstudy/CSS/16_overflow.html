@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <style>
+        .box1{
+            width: 200px;
+            height: 50px;
+            border: 1px solid gray;
+            /* overflow: scroll -> 내용물이 영역을 벗어나면 스크롤 바를 생성 */
+            overflow: scroll;
+        }
+        .box2{
+            width: 200px;
+            height: 50px;
+            border: 1px solid gray;
+            /* overflow-x: scroll -> 가로 방향의 스크롤 바를 생성 */            
+            overflow-x: scroll;
+        }
+        .box3{
+            width: 200px;
+            height: 50px;
+            border: 1px solid gray;
+            /* overflow: hidden -> 영역을 벗어난 내용물을 모두 숨김 */                
+            overflow: hidden;
+        }
+    </style>
+    <div class="box1">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis efficitur urna blandit ligula fringilla, et condimentum justo dapibus. Vestibulum aliquam mauris at mauris facilisis varius. Suspendisse ex sem, maximus nec faucibus ac, consequat id metus. Morbi et erat rutrum, vulputate sapien quis, interdum mi. Quisque ut lacus placerat, luctus lectus vitae, congue quam. Nam ligula turpis, venenatis eu dolor in, ultricies sagittis magna. Suspendisse posuere, mauris vel auctor iaculis, sapien mi sollicitudin massa, sed cursus est nisl vel odio. Aenean vulputate velit vitae ex consequat dictum. Morbi in ultrices odio, non accumsan ligula. Curabitur vehicula, ipsum at tincidunt dignissim, ipsum turpis porttitor urna, malesuada rutrum sem enim sit amet nisi. Vestibulum laoreet est vel mauris porta, vitae fringilla felis pharetra. Suspendisse eu interdum odio.
+    </div>
+
+    <hr>
+
+    <div class="box2">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis efficitur urna blandit ligula fringilla, et condimentum justo dapibus. Vestibulum aliquam mauris at mauris facilisis varius. Suspendisse ex sem, maximus nec faucibus ac, consequat id metus. Morbi et erat rutrum, vulputate sapien quis, interdum mi. Quisque ut lacus placerat, luctus lectus vitae, congue quam. Nam ligula turpis, venenatis eu dolor in, ultricies sagittis magna. Suspendisse posuere, mauris vel auctor iaculis, sapien mi sollicitudin massa, sed cursus est nisl vel odio. Aenean vulputate velit vitae ex consequat dictum. Morbi in ultrices odio, non accumsan ligula. Curabitur vehicula, ipsum at tincidunt dignissim, ipsum turpis porttitor urna, malesuada rutrum sem enim sit amet nisi. Vestibulum laoreet est vel mauris porta, vitae fringilla felis pharetra. Suspendisse eu interdum odio.
+    </div>
+    
+    <hr>
+
+    <div class="box3">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis efficitur urna blandit ligula fringilla, et condimentum justo dapibus. Vestibulum aliquam mauris at mauris facilisis varius. Suspendisse ex sem, maximus nec faucibus ac, consequat id metus. Morbi et erat rutrum, vulputate sapien quis, interdum mi. Quisque ut lacus placerat, luctus lectus vitae, congue quam. Nam ligula turpis, venenatis eu dolor in, ultricies sagittis magna. Suspendisse posuere, mauris vel auctor iaculis, sapien mi sollicitudin massa, sed cursus est nisl vel odio. Aenean vulputate velit vitae ex consequat dictum. Morbi in ultrices odio, non accumsan ligula. Curabitur vehicula, ipsum at tincidunt dignissim, ipsum turpis porttitor urna, malesuada rutrum sem enim sit amet nisi. Vestibulum laoreet est vel mauris porta, vitae fringilla felis pharetra. Suspendisse eu interdum odio.
+    </div>
+
+    <hr>
+
+    <style>
+        .box4{
+            width: 200px;
+            height: 50px;
+            border: 1px solid gray;
+            overflow: hidden;
+        }
+        .box4 > div {
+            width: 150px;
+            height: 40px;
+            border: 1px solid gray;
+        }
+    </style>
+    <div class="box4">
+        <div>BOX1</div>
+        <div>BOX2</div>
+        <div>BOX3</div>
+    </div>
+
+</body>
+</html>

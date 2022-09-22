@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <style>
+        
+        * {     /* 모든 영역의 공백을 없앤다. */
+            padding: 0;
+            margin: 0;
+        }
+
+        a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        ul {
+            border-top: 1px solid gray;
+            border-bottom: 1px solid gray;
+            list-style: none;       /* 글머리 기호 없애기 */
+            display: flex;          /* 메뉴들의 수평 레이아웃 배치*/
+        }
+
+        ul > li {
+            width: 80px;            /* 너비 */
+            height: 50px;           /* 높이 */
+            text-align: center;     /* 가로 가운데 정렬 */
+            line-height: 50px;      /* 세로 가운데 정렬 */
+        }
+        
+        ul > li > a {
+            display: block;   /* 블록레벨의 요소만 너비/높이를 가질 수 있음 */
+            width: 80px;      /* 부모 요소 li와 같은 너비*/
+            height: 50px;     /* 부모 요소 li와 같은 높이*/
+        }
+
+        ul > li:hover {
+            height: 47px;      /* height와 border값을 합쳐서 원래 크기 50px을 만듬 */
+            border-bottom: 3px solid limegreen;
+        }
+        ul > li:hover > a{
+            color: limegreen;
+        }
+
+
+    </style>
+
+    <ul>
+        <li>
+            <a href="javascript:void(0)">사전</a>
+        </li>
+        <li>
+            <a href="javascript:void(0)">뉴스</a>
+        </li>
+        <li>
+            <a href="javascript:void(0)">증권</a>
+        </li>
+        <li>
+            <a href="javascript:void(0)">부동산</a>
+        </li>
+        <li>
+            <a href="javascript:void(0)">지도</a>
+        </li>
+        <li>
+            <a href="javascript:void(0)">VIBE</a>
+        </li>
+        <li>
+            <a href="javascript:void(0)">도서</a>
+        </li>
+        <li>
+            <a href="javascript:void(0)">웹툰</a>
+        </li>
+    </ul>
+
+    <hr>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        .box2 > table {
+            border: 1px solid #000;
+            border-collapse: collapse;
+        }
+        .box2 > table > thead > tr > td {
+            border: 1px solid #000;
+            text-align: center;
+        }
+        .box2 > table > tbody > tr > td {
+            border: 1px solid #000;
+            text-align: left;
+            vertical-align: top;
+        }
+        .box2 > table > thead > tr > td:first-of-type {width: 100px;}
+        .box2 > table > thead > tr > td:first-of-type {height: 50px;}
+        .box2 > table td:nth-of-type(n) {width: 100px;}
+        .box2 > table td:nth-of-type(n) {height: 100px;}
+        .box2 > table td:hover {
+            background-color: blanchedalmond;
+        }
+
+    </style>
+    <div class="main">20229September</div>
+    <div class="box2">
+        <table>
+            <thead>
+                <tr>
+                    <td style="color: red;">SUN</td>
+                    <td>MON</td>
+                    <td>TUE</td>
+                    <td>WED</td>
+                    <td>THU</td>
+                    <td>FRI</td>
+                    <td style="color: blue;">SAT</td>
+                </tr>
+            </thead>
+            <tbody>                
+                <tr>
+                    <td style="color: silver;">28</td>
+                    <td style="color: silver;">29</td>
+                    <td style="color: silver;">30</td>
+                    <td style="color: silver;">31</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td style="color: blue;">3</td>
+                </tr>
+                <tr>
+                    <td style="color: red;">4</td>
+                    <td>5</td>
+                    <td>6</td>
+                    <td>7</td>
+                    <td>8</td>
+                    <td style="color: red;">9</td>
+                    <td style="color: red;">10</td>
+                </tr>
+                <tr>
+                    <td style="color: red;">11</td>
+                    <td style="color: red;">12</td>
+                    <td>13</td>
+                    <td>14</td>
+                    <td>15</td>
+                    <td>16</td>
+                    <td style="color: blue;">17</td>
+                </tr>
+                <tr>
+                    <td style="color: red;">18</td>
+                    <td>19</td>
+                    <td>20</td>
+                    <td>21</td>
+                    <td>22</td>
+                    <td>23</td>
+                    <td style="color: blue;">24</td>
+                </tr>
+                <tr>
+                    <td style="color: red;">25</td>
+                    <td>26</td>
+                    <td>27</td>
+                    <td>28</td>
+                    <td>29</td>
+                    <td>30</td>
+                    <td style="color: silver;">1</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+    </div>
+
+</body>
+</html>
