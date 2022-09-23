@@ -113,5 +113,30 @@
         fixed position
     </div>
 
+    <hr>
+
+    <style>
+        /* help는 부모 */
+        .help {
+            color: teal;
+            cursor: help;
+            position: relative;
+        }
+        /* after는 help의 자식 */
+        .help:hover:after {
+            content: attr(deta-desc);       /* content: '메롱'; */
+            display: inline-block;
+            width: 80px;
+            border: 1px solid bisque;
+            border-radius: 5px;
+            background-color: beige;
+            color: gray;
+            position: absolute;
+            top: 30px;
+            left: 100px;
+        }
+    </style>
+    <p><span class="help" data-desc="메롱"> 여기</span>를 선택하시오. </p>
+
 </body>
 </html>
