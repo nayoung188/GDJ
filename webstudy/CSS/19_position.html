@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <style>
+        /* 
+            1. position: static
+                1) HTML 기본 흐름대로 배치
+                2) 상대적 위치 조정 (top, bottom, left, right) 불가
+                3) 디폴트
+            2. position: relative
+                1) HTML 기본 흐름대로 배치
+                2) 상대적 위치 조정 (top, bottom, left, right) 가능
+                3) 옵셋 기준 : 원래 자신의 위치
+            3. position: absolute
+                1) HTML 기본흐름을 깨고 배치
+                2) 상대적 위치 조정 (top, bottom, left, right) 가능
+                3) 옵셋 기준 : 부모 요소
+                4) 부모 요소가 position: static이라면 absolute 적용 불가
+                5) 대부분의 경우 부모 요소는 position: ralative, 자식 요소는 position: absolute 원하는 조정은 자식요소로 진행
+            4. position: fixed
+                1) HTML문서 특정 위치에 고정 (항상 보임)
+                2) 상대적 위치 조정 (top, bottom, left, right) 가능
+                3) 옵셋 기준 : 브라우저 화면 전체
+        */
+    </style>
+
+    <style>
+        .box1 {
+            position:static;
+            border: 1px solid gray;
+            top: 100px;         /* 적용 안됨*/
+            left: 100px;        /* 적용 안됨*/
+        }
+    </style>
+
+    <div class="box1">
+        static position
+    </div>
+
+    
+    <style>
+        .box2{
+            position: relative;
+            border: 1px solid gray;
+            top: 100px;         /* 적용 됨*/
+            left: 100px;        /* 적용 됨*/
+        }
+    </style>
+
+    <div class="box2">
+        relative position
+    </div>
+
+
+    <style>
+        .wrap {
+            margin-top: 150px;
+            width: 300px;
+            height: 300px;
+            border: 1px solid gray;
+            position: relative;
+        }
+        .wrap > div {
+            width: 100px;
+            height: 100px;
+            border: 1px solid gray;
+            position: absolute;
+        }
+        .spring {
+            top: 10px;
+            left: 10px;
+        }
+        .summer {
+            top: 10px;
+            right: 10px;
+        }
+        .autumn {
+            bottom: 10px;
+            right: 10px;
+        }
+        .winter {
+            bottom: 10px;
+            left: 10px;
+        }
+    </style>
+    <div class="wrap">
+        <div class="spring">봄</div>
+        <div class="summer">여름</div>
+        <div class="autumn">가을</div>
+        <div class="winter">겨울</div>
+    </div>
+
+    
+    <style>
+        .box3 {
+            position: fixed;
+            top: 300px;
+            right: 50px;
+            width: 100px;
+            height: 100px;
+            border: 1px solid gray;
+        }
+    </style>
+    
+    <div class="box3">
+        fixed position
+    </div>
+
+</body>
+</html>
