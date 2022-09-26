@@ -64,5 +64,64 @@
         a.href = 'https://www.naver.com';
     </script>
 
+    <div id="box1">
+        <h1>Hello World</h1>
+    </div>
+    <script>
+        var a = document.getElementById('box1');
+        console.log(a.textContent);
+        a.textContent = '안녕 세계';
+    </script>
+
+    <div id="box2">
+        <h1>Hello World</h1>
+    </div>
+    <script>
+        var a = document.getElementById('box2');
+        console.log(a.innerHTML);
+        // a.innerHTML = '<h3>안녕 세계</h3>';     <div id="box2"><h3>안녕 세계</h3></div>
+        a.innerHTML += '<h3>안녕 세계</h3>';    // <div id="box2"><h1>Hello World</h1><h3>안녕 세계</h3></div>
+
+         /* 글자만 수정하고 싶으면 textContent 태그까지 수정하고 싶으면 innerHTML */
+    </script>
+
+    <!-- 연습 : 구글로 이동하는 구글 로고 이미지 넣기 -->
+    <a id="google"></a>
+    <script>
+        var a = document.getElementById('google');
+        /*  내가 푼것
+        a.innerHTML += '<a href="https://www.google.com"><img src="../../images/google.png"></a>';
+        */
+        a.href = 'https://www.google.com';      // <a id="google" href="https://www.google.com"></a>
+        // a.textContent = '구글'                  <a id="google" href="https://www.google.com">구글</a>
+        a.innerHTML = '<img alt="구글로고" src="../../images/google.png">';
+    </script>
+
+    <!-- 연습 : 목록(JS) 추가하기 -->
+    <ul id="front">
+        <li>HTML</li>
+        <li>CSS</li>
+    </ul>
+    <script>
+        var a = document.getElementById('front');
+        a.innerHTML += '<li>JS</li>';     // 기존 innerHTML 뒤에 추가
+    </script>
+
+    <!-- 연습 : 봄,여름,가을,겨울 목록 만들기 -->
+    <ul id="season">        
+    </ul>
+    <script>
+        document.getElementById('season').innerHTML = '<li>봄</li><li>여름</li><li>가을</li><li>겨울</li>';
+    </script>
+
+    <div class="primary" id="area">텍스트영역</div>
+    <script>
+        // 모든 속성 확인하기
+        // 속성
+        //    1. HTML 태그 관점 : attribute
+        //    2. DOM 관점       : property 
+        // 개발자 도구 - Elements - Properties
+    </script>
+
 </body>
 </html>
