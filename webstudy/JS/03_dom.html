@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            DOM
+            
+            1. Document Object Model (문서 객체 모델)
+            2. HTML 문서 (Document)의 구성요소(Object)를 알아내고 사용할 수 있음
+            3. 문서 객체 : HTML문서의 구성요소를 의미함
+                1) document.getElementById('아이디')            : 변수
+                2) document.getElementsByClassName('클래스')    : 배열
+                3) document.getElementsByTagName('태그')        : 배열
+                4) document.querySelector('선택자')             : 변수
+                5) document.querySelectorAll('선택자')          : 배열
+            4. 문서 객체 속성 : HTML구성요소의 속성(Attribute)을 의미함
+                1) 객체.속성 방식으로 호출
+                2) 주요 속성
+                    (1) textContent : 태그 내부 텍스트
+                    (2) innerHTML : 태그 자체
+                    (3) style : CSS
+                3) 조작 방법
+                    (1) 속성을 직접 조작
+                    (2) getAttribute(), setAttribute() 메소드 활용
+                        ① 속성 알아내기 : getAttribute('속성')
+                        ② 속성 변경하기 : setAttribute('속성')
+        */
+    </script>
+    
+    <h1 id="hello">Hello World</h1>
+    <script>
+        // 1. 아이디로 인식하면 변수로 가지고 옴
+        var a = document.getElementById('hello');
+        console.log(a);
+        // 2. 태그로 인식하면 배열로 가지고 옴
+        var b = document.getElementsByTagName('h1');
+        console.log(b);
+    </script>
+
+    <h1 id="hi">Hi World</h1>
+    <script>
+        // 문서 객체
+        var a = document.getElementById('hi');
+        // 문서 객체 속성 알아내기
+        console.log(a.id);                      // 속성의 직접 호출
+        console.log(a.getAttribute('id'));      // getter를 이용한 호출
+        // 문서 객체 속성 변경하기 (조작)
+        a.id = 'heeheehee';                     // 속성의 직접 조작
+        a.setAttribute('id', 'hihihi');         // setter를 이용한 조작 
+    </script>
+
+    <!-- 연습 : 네이버로 바꿔서 연결 -->
+    <div>
+        <a id="naver" href="https://www.google.com">네이버</a>
+    </div>
+    <script>
+        var a = document.getElementById('naver');
+        a.href = 'https://www.naver.com';
+    </script>
+
+</body>
+</html>
