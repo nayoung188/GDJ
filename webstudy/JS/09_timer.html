@@ -53,14 +53,14 @@
     <script>
         // 5 4 3 2 1 발사 : 1초마다 출력하는 타이머 함수 구현하기
         // setTimeout 함수로 구현하기 (재귀함수 : recursive call - 자기가 자기를 호출)
-        var countDown = 5;
+        var countDown2 = 5;
         function launch(){
             setTimeout(function(){
-                if(countDown == 0){
+                if(countDown2 == 0){
                     document.getElementById('box2').textContent='발사';
                     return;
                 }
-                document.getElementById('box2').textContent = countDown--;
+                document.getElementById('box2').textContent = countDown2--;
                 launch();
             }, 1000);
         }
