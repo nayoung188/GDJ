@@ -41,5 +41,42 @@
         }
         console.log(now.getDayName());
     </script>
+
+    <style>
+        .over50{
+            color: red;
+        }
+    </style>
+    <div>
+        <h1>
+            <span id="hour"></span> : 
+            <span id="minute"></span> : 
+            <span id="second"></span>
+            <sapn id="ampm"></sapn>
+        </h1>
+    </div>
+    <script>
+        // 문제 : 초 시계
+        setInterval(function() {
+            var now = new Date();
+            var hour = now.getHours();
+            var minute = now.getMinutes();
+            var second = now.getSeconds();
+            document.getElementById('hour').textContent = appendZero(hour >= 13 ? hour - 12 : hour);
+            document.getElementById('minute').textContent = appendZero(minute);
+            document.getElementById('second').textContent = appendZero(second);
+            document.getElementById('ampm').textContent = hour < 12 ? 'AM' : 'PM';
+            if(second >= 50){
+                document.getElementById('second').className = 'over50';
+            } else {
+                document.getElementById('second').className = '';
+            }
+        }, 1000);
+
+        // 0 ~ 9 => 00 ~ 09
+        function appendZero(n){
+            return(n <= 9) ? '0' + n : '' + n;
+        }
+    </script>
 </body>
 </html>
