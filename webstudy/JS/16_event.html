@@ -137,5 +137,82 @@
        }
     </script>
 
+    <!-- 2. 표준 이벤트 모델 -->
+    <button id="btn2">클릭</button>
+    <script>
+        function fn1(){
+            alert('Hello');
+        }
+        function fn2(){
+            alert('안녕하세요');
+        }
+        /* 표준 이벤트 모델은 여러 개의 이벤트 리스너를 등록할 수 있다! */
+        document.getElementById('btn2').addEventListener('click',fn1);
+        document.getElementById('btn2').addEventListener('click',fn2);
+
+        document.getElementById('btn2').addEventListener('mouseover', function(){
+            fn1();
+            fn2();
+        });
+    </script>
+
+    <!-- 3. 인라인 이벤트 모델 -->
+    <button id="btn3" onclick="fn3()" onmouseover="fn3()">클릭</button> 
+
+    <script>
+        function fn1(){
+            alert('Hello');
+        }
+        function fn2(){
+            alert('안녕하세요');
+        }
+        function fn3(){
+        fn1();
+        fn2();
+       }
+    </script>
+
+    <hr>
+
+    <!-- 4. 이벤트 관련 용어 -->
+    <button id="btn4">클릭</button>
+    <script>
+        document.getElementById('btn4').onclick = function(event){
+            // 1. 이벤트 타입 : click
+            // 2. 이벤트 속성 : onclick
+            // 3. 이벤트 대상 : btn4 ( 
+            // ★★ 이벤트 대상 호출 방법 ★★ 매우중요
+            //      1. event.target
+            //      2. this
+            // 4. 이벤트 리스너 : function(event) { }
+            // 5. 이벤트 객체 : event
+
+            // 이벤트 대상 확인
+            console.log(event.target.textContent);
+            console.log(this.textContent);
+            // 위아래 같음
+
+            // 이벤트 대상 변경
+            event.target.textContent = '눌렀어?';
+            this.textContent = '또 눌렀어?';
+        }
+    </script>
+
+    <hr>
+
+    <!-- 5. load 이벤트 -->
+    <!-- 로드 위에 스크립트 생성 -->
+    <script>
+        // window 객체 
+        // JS의 최상위 객체
+        // 생략 가능 ( 대부분 생략함 )
+        window.onload = function(){         // 모든 코드를 읽은 후 진행
+            document.getElementById('btn5').onclick = function(event){
+                alert(event.target.textContent);
+            }
+        }
+    </script>
+    <button id="btn5">클릭</button>
+
 </body>
 </html>
