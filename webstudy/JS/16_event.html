@@ -57,5 +57,85 @@
     </script>
     <div id="box"></div>
 
+    <script>
+        /*
+            1. 이벤트 속성
+                1) 이벤트를 등록시키는 속성
+                2) 'on' + 이벤트 타입
+                    예시 ) onclick, onload, onmouseover 등
+            
+            2. 이벤트 모델 (이벤트 처리 방식)
+                1) 고전 이벤트 모델
+                    (1) 하나의 이벤트는 하나의 이벤트 리스너만 처리할 수 있음
+                    (2) 이벤트 등록 시 '이벤트 속성'을 사용
+                    (3) 처리 방식
+                        ① 선언적 함수
+                            function fn1() {
+
+                            }
+                            문서객체.onclick = fn1;        // 이벤트 리스너의 이름만 등록
+                        ② 익명 함수 ★★더 많이 쓰이므로 우선 습득★★
+                            문서객체.onclick = function(){
+
+                            }
+                2) 표준 이벤트 모델
+                    (1) 하나의 이벤트가 여러 개의 이벤트 리스너를 가질 수 있음
+                    (2) 이벤트 등록 시 '이벤트 타입'을 사용
+                    (3) 처리 방식
+                        ① 선언적 함수
+                            function fn1() {
+
+                            }
+                            function fn2() {
+
+                            }
+                            문서객체.addEventListener('click', fn1);
+                            문서객체.addEventListener('click', fn2);
+                        ② 익명 함수
+                            문서객체.addEventListener ('click',function(){
+
+                            });
+                3) 인라인 이벤트 모델 
+                    (1) HTML 구성요소에 직접 이벤트 속성을 추가하고 이벤트 리스너를 등록하는 방식
+                    (2) 간단하 작업의 경우 이벤트 리스너를 생략하고(함수 생략) 본문만 작성할 수 있음
+                    (3) 처리 방식
+                        ① 선언적 함수
+                            <button onclick="fn1()"></button>
+                            function fn1() {
+
+                            }
+                        ② 익명 함수
+                            <button onclick="function("{
+                               // 잘안씀 
+                            }">
+                        ③ 이벤트 리스너 생략
+                            <button onclick="alert('안녕');"></button>
+        */
+    </script>
+
+    <!-- 1. 고전 이벤트 모델 -->
+    <button id="btn1">클릭</button>
+    <script>
+        function fn1(){
+            alert('Hello');
+        }
+        function fn2(){
+            alert('안녕하세요');
+        }
+        /* 2개의 이벤트 리스너(fn1,fn2)는 등록되지 않는다
+        document.getElementById('btn1').onclick = fn1;
+        document.getElementById('btn1').onclick = fn2;      // fn1은 없어지고 fn2로 덮어쓰기 됨
+        */
+       function fn3(){
+        fn1();
+        fn2();
+       }
+       document.getElementById('btn1').onclick = fn3;
+
+       document.getElementById('btn1').onmouseover = function(){
+            fn3();
+       }
+    </script>
+
 </body>
 </html>
