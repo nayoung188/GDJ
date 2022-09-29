@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .member-wrapper {
+            margin: 0 auto;
+            min-width: 290px;
+            max-width: 460px;
+            padding: 0 4.35%;
+        }
+        .member-header{
+            width: 100%;
+            position: relative;
+        }
+        .member-logo{
+            width: 100%;
+            margin: 0 auto;
+            padding: 10.27% 0 0 ;
+        }
+        .member-logo-link{
+            display: block;
+            width: 43.83%;
+            max-width: 195px;
+            max-height: 46px;
+            padding-top: 10%;
+            margin: 0 auto;
+            background-image: url(https://static.coupangcdn.com/image/static/login/logo-coupang.x2.20201201.png);
+            background-size: cover;
+        }
+        .member-main{
+            width: 100%;
+        }
+        .member-join{
+            width: 100%;
+        }
+        .section-title{
+            padding: 20px 0 10px 0;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 1.29;          /* 배수 단위를 뜻함 원래 행 높이의 1.29배 */
+            color: #111;
+            /* 폰트 사이즈 작성시 em = 배수를 뜻함 */
+        }
+        .join-content{
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .section-body{
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="member-wrapper">
+        <header class="member-header">
+            <h1 class="member-logo">
+                <a href="http://www.coupang.com" class="member-logo-link">  
+                </a>
+            </h1>
+        </header>
+        <div class="member-main">
+            <div class="member-join">
+                <div class="section-title">
+                    회원정보를 입력해주세요.
+                </div>
+                <div class="join-content">
+                    <div class="section-body">
+                        <div class="member-field-wrap">
+                            <div class="member-input-field">
+                                <label class="member-input-wrap" for="join-email-input">
+                                    <span class="member-input-group-icon-label">
+                                        <i class="join-sprite join-sprite-email"></i>
+                                    </span>
+                                    <span class="member-input-group">
+                                        <input type="email" id="join-email-input" class="member-input" maxlength="80" placeholder="아이디(이메일)">
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
