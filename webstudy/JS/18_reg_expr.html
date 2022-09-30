@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            정규식 (regular expression)
+
+            1. 특정 문자열에서 원하는 패턴이 있는지 판단하기 위한 식
+            2. JS에서 정규식 선언
+                var regExp = /정규식/;
+            3. 정규식 검검 메소드
+                1) '문자열'.match(정규식)
+                    (1) null 반환 : 원하는 패턴 없음
+                    (2) not null 반환 : 원하는 패턴 있음
+                2) 정규식.test('문자열')
+                    (1) false 반환 : 원하는 패턴 없음
+                    (2) true 반환 : 원하는 패턴 있음
+            4. 정규식 메타 문자
+                1) a        : 문자 a를 의미함
+                2) a|b      : 문자 a 또는 b를 의미함
+                3) ^a       : 문자 a로 시작함
+                4) a$       : 문자 a로 끝남
+                5) a*       : 문자 a를 0개 이상 포함함 (없어도 됨)
+                6) a+       : 문자 a를 1개 이상 포함함 (있어야 함)
+                7) a{n}     : 문자 a를 n개 포함함
+                8) a{n,}    : 문자 a를 n개 이상 포함함
+                9) a{n,m}   : 문자 a를 n개 이상 m개 이하 포함함
+               10) .        : 모든 문자
+            5. 정규식 문자 클래스
+                1) [a]      : 문자 a를 의미함
+                2) [.]      : 문자 .를 의미함 (모든 문자를 의미하지 않음)
+                3) ^[a]     : 문자 a로 시작함
+                4) [a]$     : 문자 a로 끝남
+                5) [^a]     : 문자 a를 제외함
+                6) [ab]     : 문자 a 또는 문자 b를 의미함
+                7) [0-9]    : 숫자를 의미함
+                8) [a-z]    : 소문자를 의미함
+                9) [A-Z]    : 대문자를 의미함
+               10) [가-힣]  : 한글을 의미함
+            6. 정규식 이스케이프
+                1) \d       : 숫자를 의미함 (digit)
+                2) \D       : 숫자가 아님(not digit)
+                3) \w       : 문자를 의미함(word) [0-9a-zA-Z_]
+                4) \W       : 문자가 아님 (not word)
+                5) \s       : 공백문자를 의미함(space)
+                6) \S       : 공백문자가 아님(not space)
+        */
+    </script>
+
+    <!-- 1. 핸드폰 번호 검사 -->
+    <div>
+        <input type="text" id="tel"> 
+        <span id="msg_tel"></span> 
+    </div>
+    <script>
+        document.getElementById('tel').onkeyup = function(event){
+            var regTel = /^[0-9]{3}-[0-9]{3,4}-[0-9]{4}$/;
+            if(regTel.test(this.value)){
+                document.getElementById('msg_tel').textContent = '통과';
+            } else {
+                document.getElementById('msg_tel').textContent = '실패';
+            }
+        }
+    </script>
+
+</body>
+</html>

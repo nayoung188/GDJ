@@ -75,5 +75,79 @@
             }
         }
     </script>
+
+    <hr>
+
+    <!-- 3. 전체선택/개별선택 -->
+    <form id="frm4">
+        <label for="check_all" class="lbl_check_all">
+            <input type="checkbox" id="check_all">
+            <span>모두 동의합니다.</span>
+        </label>
+        <label for="service">
+            <input type="checkbox" id="service" class="check_one">
+            <span>이용약관 동의합니다.</span>
+        </label>
+        <label for="privacy">
+            <input type="checkbox" id="privacy" class="check_one">
+            <span>개인정보 동의합니다.</span>
+        </label>
+        <label for="location">
+            <input type="checkbox" id="location" class="check_one">
+            <span>위치정보 동의합니다.</span>
+        </label>
+        <label for="email">
+            <input type="checkbox" id="email" class="check_one">
+            <span>이메일수신 동의합니다.</span>
+        </label>
+    </form>
+    <style>
+        label {
+            display: block;
+            width: 500px;
+        }
+        .lbl_check_all {
+            padding-bottom: 10px;
+            border-bottom: 1px solid gray;
+        }
+    </style>
+    <script>
+        // 문서 객체
+        var checkall = document.getElementById('check_all');
+        var checkone = document.getElementsByClassName('check_one');      // 단일체크박스가 여러개이기 때문에 클래스로 부른다
+
+        // 전체선택 클릭 이벤트
+        checkall.onclick = function(event) {
+            /*
+            if(checkall.checked == true){
+                checkone[0].checked = true;
+                checkone[1].checked = true;
+                checkone[2].checked = true;
+                checkone[3].checked = true;
+            } else {
+                checkone[0].checked = false;
+                checkone[1].checked = false;
+                checkone[2].checked = false;
+                checkone[3].checked = false;
+            }
+            */
+            for(let i = 0; i < checkone.length; i++) {
+                checkone[i].checked = checkall.checked;
+            }
+        }
+
+        // 개별선택 클릭 이벤트
+        for(let i = 0; i <checkone.length; i++){
+            checkone[i].onclick = function(event){
+                let checkcount = 0;
+                for(let j = 0; j < checkone.length; j++){
+                    checkcount += checkone[j].checked;
+                }
+                checkall.checked = (checkcount == checkone.length);
+            }
+        }
+    </script>
+
+
 </body>
 </html>
