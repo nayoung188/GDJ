@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            AJAX
+
+            1. Asynchronous Javascript And Aml
+            2. 자바스크립트와 XML간 비동기 통신
+            3. 통신 방식
+                1) 동기 통신 
+                    (1) 순서대로 통신
+                    (2) 요청을 하고, 응답이 올 때까지 기다림
+                    (3) 느림
+                2) 비동기 통신
+                    (1) 순서를 지키지 않는 통신
+                    (2) 응답이 오지 않더라도 요청을 계속할 수 있음
+                    (3) 응답이 오면 해당 응답만 처리하면 됨
+            4. 페이지 전체를 로드하지 않고, 페이지 일부만 요청해서 처리하는 기능
+            5. 자바스크립트의 XMLHttpRequest 객체가 AJAX 처리를 담당함
+        */
+    </script>
+
+    <div id="box1"></div>   
+    <script>
+        // data.txt 파일이 서버가 보낸 데이터
+
+        // 1. XMLHttpRequest 객체 생성
+        var xhr = new XMLHttpRequest();
+
+        // 2. open()
+        //    open(HTTP메소드, 요청서버경로, 통신방식)
+        //    1) HTTP메소드
+        //      (1) GET : GET방식
+        //      (2) POST : POST방식
+        //    2) 요청서버경로
+        //      /컨텍스트패스/URLMapping
+        //    3) 통신 방식
+        //      (1) 동기 통신 : false
+        //      (2) 비동기 통신 : true
+        xhr.open('GET', 'data.txt', true);
+
+        // 3. send() - 요청하기
+        xhr.send();
+
+        // 4. 응답 처리 
+        //    응답이 오는지 점검하기 위한 readystatechange 이벤트가 필요
+        xhr.onreadystatechange = function(event) {
+            // 응답에 관련된 속성
+            // 1. readyState(통신 확인)
+            //      1) 0(OPENDED)
+            //      2) 1(UNSEND)
+            //      3) 2(HEADERS_RECEIVE)
+            //      4) 3(LOADING)
+            //      5) 4(DONE)  - 이것만 기억하면 됨
+            // 2. status (응답 코드)
+            //      1) 200 : 응답 성공  - 이것만 기억하면 됨
+            //      2) 40X : 요청 실패 (클라이언트 잘못)   
+            //      3) 50X : 서버 오류
+            if(xhr.readyState == 4 && xhr.status == 200) {
+                // 응답 데이터
+                // 1. 텍스트 형식 응답 : responseText
+                // 2. XML    형식 응답 : responseXML
+                // 3. JSON   형식 응답 : JSON.parse(responsText)
+                document.getElementById('box1').textContent = xhr.responseText;
+            }
+        }
+    </script>
+
+    <!-- 1. XML 읽기 -->
+    <!-- 시간이 걸리더라도 확실하게 습득해야함 -->
+    <div id="box2">
+        <table border="1">
+            <thead>
+                <tr>
+                    <td>제목</td>
+                    <td>저자</td>
+                    <td>가격</td>
+                </tr>
+            </thead>
+            <tbody class="book_list"></tbody>
+        </table>
+    </div>
+    <script>
+        var xhr = new XMLHttpRequest()
+        xhr.open('GET', 'books1.xml', true);
+        xhr.send();
+        xhr.onreadystatechange = function(event) {    // 상태변환을 감지하는 이벤트를 사용하여 응답 점검
+            if(xhr.readyState == 4 && xhr.status == 200 ) {
+                // XML응답은 reponseXML 속성으로 받아옴
+                var data = xhr.responseXML;
+                // <books> 태그 가져오기
+                var books = data.getElementsByTagName('books')[0];
+                // <book> 태그 가져오기 (3개)
+                var book = books.getElementsByTagName('book');
+                // book 배열 순회하며 <tr>...</tr> 3개 만들기
+                var bookList = '';
+                for(let i = 0; i < book.length; i++){
+                    bookList += '<tr>';
+                    bookList += '<td>' + book[i].getElementsByTagName('title')[0].textContent + '</td>';
+                    bookList += '<td>' + book[i].getElementsByTagName('author')[0].textContent + '</td>';
+                    bookList += '<td>' + book[i].getElementsByTagName('price')[0].textContent + '</td>';
+                    bookList += '</tr>';
+                }
+                // < tbody class="book_list"></tbody>에 booklist 추가
+                document.querySelector('#box2 .book_list').innerHTML = bookList;   //가지고오는 데이터가 변수인 경우
+                // document.querySelectorAll('#box2 .book_list')               // 가지고 오는 데이터가 배열인 경우
+            }
+        }
+    </script>
+
+
+
+</body>
+</html>

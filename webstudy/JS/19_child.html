@@ -8,5 +8,13 @@
 </head>
 <body>
     <h1 id="msg_child"></h1>
+    <div style="margin: 20px auto; text-align:center;">
+        <button id="btn">반사</button>
+    </div>
+    <script>
+        document.getElementById('btn').onclick = function(event){
+            opener.document.getElementById('msg_child').textContent = document.getElementById('msg_child').textContent;
+        }
+    </script>
 </body>
 </html>
