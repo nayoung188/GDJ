@@ -172,5 +172,205 @@
         }
     </script>
 
+    <!-- 3. XML 읽기 연습 - naver.search.xml -->
+    <div><button id="btn4">클릭</button></div>
+    <div id="box4">
+        <table border="1">
+            <thead>
+                <tr>
+                    <td>제목(title)</td>
+                    <td>썸네일(image+link)</td>
+                    <td>저자(author)</td>
+                    <td>정상가(price)</td>
+                    <td>할인가(discount)</td>
+                    <td>출판사(publisher)</td>
+                    <td>출판일(pubdate)</td>
+                    <td>ISBN(isbn)</td>
+                    <td>개요(description)</td>
+                </tr>
+            </thead>
+            <tbody id="search_list"></tbody>
+        </table>
+    </div>
+    <script>
+        document.getElementById('btn4').onclick = function(event){
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET','naver_search.xml',true);
+            xhr.send();
+            xhr.onreadystatechange = function(event) {
+                if(xhr.readyState == 4 && xhr.status == 200) {
+                    var data = xhr.responseXML;
+                    var item = data.getElementsByTagName('item');
+                    var itemList = '';
+                    for( let i = 0 ; i < item.length; i++){
+                        itemList += '<tr>';
+                        itemList += '<td>' + item[i].getElementsByTagName('title')[0].textContent + '</td>';
+                        itemList += '<td><a href="' + item[i].getElementsByTagName('link')[0].textContent + '"><img src="' + item[i].getElementsByTagName('image')[0].textContent + '" width="80px" height="120px"></td>';
+                        itemList += '<td>' + item[i].getElementsByTagName('author')[0].textContent + '</td>';
+                        itemList += '<td>' + item[i].getElementsByTagName('price')[0].textContent + '</td>';
+                        itemList += '<td>' + item[i].getElementsByTagName('discount')[0].textContent + '</td>';
+                        itemList += '<td>' + item[i].getElementsByTagName('publisher')[0].textContent + '</td>';
+                        itemList += '<td>' + item[i].getElementsByTagName('pubdate')[0].textContent + '</td>';
+                        itemList += '<td>' + item[i].getElementsByTagName('isbn')[0].textContent + '</td>';
+                        itemList += '<td>' + item[i].getElementsByTagName('description')[0].textContent + '</td>';
+                        itemList += '</tr>';    
+                    }
+                    document.getElementById('search_list').innerHTML = itemList;
+                }
+            }
+        }
+    </script>
+
+    <hr>
+
+    <!-- 4. XML 읽기 연습 - sfc_web_map.xml -->
+    <div><button id="btn5">클릭</button></div>
+    <div id = "box5">
+        <table border="1">
+            <thead>
+                <tr>
+                    <td>지역명(lacal)</td>
+                    <td>날씨(desc))</td>
+                    <td>온도(ta)</td>
+                </tr>
+            </thead>
+            <tbody id = weather></tbody>
+        </table>
+    </div>
+    <script>
+        document.getElementById('btn5').onclick = function(event){
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'sfc_web_map.xml', true);
+            xhr.send();
+            xhr.onreadystatechange = function(event){
+                if(xhr.readyState == 4 && xhr.status == 200){
+                    var data = xhr.responseXML;
+                    var local = data.getElementsByTagName('local');
+                    var weather = '';
+                    for(let i = 0 ; i < local.length; i++){
+                        weather += '<tr>'
+                        weather += '<td>' + local[i].textContent + '</td>';
+                        weather += '<td>' + local[i].getAttribute('desc') + '</td>';
+                        weather += '<td>' + local[i].getAttribute('ta') + '</td>';
+                        weather += '</tr>'
+                    }
+                    document.getElementById('weather').innerHTML = weather; 
+                }
+            }
+        }
+    </script>
+
+    <hr>
+
+    <!-- 6. JSON 읽기 -->
+    <div><button id="btn6">클릭</button></div>
+    <div id="box6">
+        <table border="1">
+            <thead>
+                <tr>
+                    <td>제목</td>
+                    <td>저자</td>
+                    <td>가격</td>
+                </tr>
+            </thead>
+            <tbody class="book_list"></tbody>
+        </table>
+    </div>
+    <script>
+        document.getElementById('btn6').onclick = function(event){
+            var xhr = new XMLHttpRequest();
+            xhr.open('get', 'books.json', true);
+            xhr.send();
+            xhr.onreadystatechange = function(event){
+                if(xhr.readyState == 4 && xhr.status == 200){
+                    var data = JSON.parse(xhr.responseText);
+                    var bookList = '';
+                    for (let i = 0; i < data.length; i++){
+                        // 1. 객체 속성
+                        //      1) data[i].title
+                        //      2) data[i]['title']
+                        // 2. 객체 순회
+                        //      1) 속성의 직접 지정
+                        //          data[i].title
+                        //          data[i].author
+                        //          data[i].price
+                        //      2) for-in 문을 이용한 객체 순회
+                        //          for(let prop in data[i]) {
+                        //              data[i][prop]                           
+                        //           }       for-in문에서는 대괄호 표기법만 사용 가능함
+                        bookList += '<tr>';
+                        bookList += '<td>' + data[i].title + '</td>';
+                        bookList += '<td>' + data[i].author + '</td>';
+                        bookList += '<td>' + data[i].price + '</td>';
+                        bookList += '</tr>';
+                    }
+                    document.querySelector('#box6 .book_list').innerHTML = bookList;
+                }
+            }
+        }
+    </script>
+
+    <hr>
+
+    <!-- 7. JSON 읽기 -->
+    <div><button id="btn7">클릭</button></div>
+    <script>
+        document.getElementById('btn7').onclick = function(event){
+            var xhr = new XMLHttpRequest();
+            xhr.open('get', 'car.json', true);
+            xhr.send();
+            xhr.onreadystatechange = function(event){
+                if(xhr.readyState == 4 && xhr.status == 200){
+                    var data = JSON.parse(xhr.responseText);
+                    console.log(data.model);
+                    console.log(data.maker);
+                    console.log(data.price);
+                    for (let i=0; i < data.option.length; i++){
+                        console.log(data.option[i]);
+                    }
+                    /* 위 for문은 아래를 만듬
+                    console.log(data.option[0]);
+                    console.log(data.option[1]);
+                    console.log(data.option[2]);
+                    */
+                   for (let prop in data.info){
+                    console.log(data.info[prop]);
+                   }
+                   /* 위 for문은 아래 코드를 만듬
+                   console.log(data.info.year);
+                   console.log(data.info.discount);
+                   */
+                }
+            }
+        }
+    </script>
+
+    <hr>
+
+    <!-- 8. JSON 읽기 연습 - cctv.json -->
+    <!-- 전체 cctv는 몇 대인가? (카메라대수 속성 이용)-->
+    <div><button id="btn8">클릭</button></div>
+    <div>
+        마포구 전체 CCTV 개수 : <span id="cctv_count"></span>대
+    </div>
+    <script>
+        document.getElementById('btn8').onclick = function(event){
+            var xhr = new XMLHttpRequest();
+            xhr.open('get', 'cctv.json', true);
+            xhr.send();
+            xhr.onreadystatechange = function(event){
+                if(xhr.readyState == 4 && xhr.status == 200){
+                    var data = JSON.parse(xhr.responseText);
+                    var totalCount = 0;  /
+                    for(let i = 0 ; i < data.length; i++){
+                        totalCount += Number(data[i].카메라대수);
+                    }
+                    document.getElementById('cctv_count').textContent = totalCount;
+                }
+            }
+        }
+    </script>
+
+
 </body>
 </html>

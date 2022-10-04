@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- https://jquery.com/ -->
+    
+    <!-- jquery 사용을 위해서 아래 2개 작업 중 반드시 1개 작업을 수행해야 함 -->
+    
+    <!-- 1. 다운로드 받은 jquery 라이브러리 포함하기 -->
+    <script src="jquery-3.6.1.min.js"></script>
+    
+    <!-- 2. jquery CDN(Content Delivery Network) 포함하기 -->
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <script>
+        /*
+            jquery wrapper
+
+            1. jquery wrapper로 감싼 대상이 jquery 기능을 사용할 수 있음
+            2. $()   -  jquery wrapper의 형태
+            3. $() == jQuery()   즉, $는 jQuery와 동일함 (jquery객체를 만드는 생성자 함수)
+        */
+    </script>
+
+    <script>
+        /*
+            jquery의 DOM처리
+
+            1. jquery wrapper와 selector를 사용
+            2. 예시
+                1) document.getElementById('box')            => $('#box')
+                2) document.getElementByClassName('box')     => $('.box')
+                3) documnet.getElementsByTagName('div')      => $('div')
+        */
+    </script>
+
+    <script>
+        /*
+            jquery 주요 메소드
+
+                jquery                  JS
+             ------------------------------------------------------------
+            1. text()                   DOM.textContent    
+               text('안녕')             DOM.textContent = '안녕'
+            2. html()                   DOM.innerHTML
+               html('<a href=""></a>')  DOM.innetHTML = "<a href=""></a>"
+            3. attr('src')              DOM.getAttribute('src')
+               attr('src','#')          DOM.setAttribute('src','#')
+            4. prop('src')              DOM.src
+               prop('src','#')          DOM.src = '#'
+
+        */
+    </script>
+
+    <div id="box1">Hello World</div>
+    <script>
+        console.log($('#box1').text());
+        $('#box1').text('안녕 제이쿼리');
+    </script>
+
+</body>
+</html>
