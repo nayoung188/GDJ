@@ -92,23 +92,29 @@
 
     <script>
 
-        var a;      // 초기화가 없으면 undifined 상태
+        a = 10;    // 변수 선언 키워드(var) 생략 가능
         console.log(a);
 
+        a = null;  // 강제로 저장된 값을 없앰
+        console.log(a);
+
+        var b;      // 초기화가 없으면 undifined 상태
         console.log(b);
-        var b = 1;      // 호이스팅 때문에 가능함 (항상 먼저 처리되는 코드)
 
-        var c = 10;     // 10을 저장하면서 number 타입을 가짐
-        console.log(c, typeof c);
+        console.log(c);
+        var c = 1;      // 호이스팅 때문에 가능함 (항상 먼저 처리되는 코드)
 
-        var c = 'hello';        // 같은 이름의 변수를 재선언할 수 있음
-        console.log(c, typeof c);
+        var d = 10;     // 10을 저장하면서 number 타입을 가짐
+        console.log(d, typeof d);
 
-        var c = Math.sqrt(-25); // 루트 -25를 의미함(실제로 존재하는 숫자가 아님)
-        console.log(c, typeof c);
+        var d = 'hello';        // 같은 이름의 변수를 재선언할 수 있음
+        console.log(d, typeof d);
 
-        var c = 10 / +0;
-        console.log(c, typeof c);
+        var d = Math.sqrt(-25); // 루트 -25를 의미함(실제로 존재하는 숫자가 아님)
+        console.log(d, typeof d);
+
+        var d = 10 / +0;
+        console.log(d, typeof d);
 
     </script>
 
@@ -127,6 +133,8 @@
                 1) String(100) : '100'
                 2) String(1.5) : '1.5'
         */
+
+        
 
        var a = '100';
        var b = Number(a);
@@ -149,6 +157,8 @@
        var e = '1.5';
        console.log(String(e));
 
+
+       
     </script>
 
 
