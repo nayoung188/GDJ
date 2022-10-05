@@ -218,5 +218,104 @@
 
     </script>
 
+    <div id="box9">
+        <ul id="movies">
+            <li id="alien">에일리언</li>
+            <li id="terminator">터미네이터</li>
+            <li id="avatar">아바타</li>
+        </ul>
+    </div>
+    <script>
+
+        // 1. 특정 요소 제거
+        $('#alien').remove();
+
+        // 2. 전체 제거
+        $('#movies').empty();           // #movies 내부가 비워짐, #movies는 남는다
+
+    </script>
+
+    <div id="box10">
+        Hello World
+    </div>
+    <style>
+        .bold_text {
+            font-weight: bold;
+        }
+        .red_text {
+            color: red;
+        }
+    </style>
+    <script>
+
+        // 1. class 속성 추가
+        // 1) 하나씩 추가
+        $('#box10').addClass('bold_text');
+        $('#box10').addClass('red_text');
+        // 2) 메소드 체이닝 이용
+        $('#box10').addClass('bold_text').addClass('red_text');
+        // 3) 한 번에 모두 추가
+        $('#box10').addClass('bold_text red_text');
+
+        // 2. class 속성 제거 (추가와 동일한 방법을 사용)
+        $('#box10').removeClass('red_text');
+
+        // 3. class 속성 토글(추가/제거)
+        $('#box10').toggleClass('bold_text');         // bold_text 클래스 속성 제거
+        $('#box10').toggleClass('bold_text');         // bold_text 클래스 속성 추가
+
+    </script>
+
+    <div id="box11">
+        <button id="btn1">버튼</button>
+    </div>
+    <script>
+        /*
+            jquery 이벤트
+
+            1. 예전 이벤트
+                1) bind()
+                2) live()
+                3) delegate()
+            2. 요즘 사용하는 이벤트
+                1) on()
+                    (1) 여러 이벤트 타입을 한 번에 등록할 수 있음
+                    (2) 동적으로 생성된 요소에 이벤트 등록 가능
+                    (3) 형식
+                        ① $(부모).on(이벤트타입, 이벤트대상, 이벤트리스너)
+                        ② $(이벤트대상).on(이벤트타입, 이벤트리스너)
+                2) one()
+                    (1) 한 번만 동작하는 이벤트를 등록
+                    (2) 형식
+                        ① $(이벤트대상).on(이벤트타입, 이벤트리스너)
+                3) off()
+                    (1) 이벤트 제거 기능
+                    (2) 형식
+                        ① $(이벤트대상).off(이벤트타입)
+        */
+    </script>
+    <script>
+        // 정적 요소에 이벤트 등록하기
+        // 1) on()메소드 이용
+        /*
+        $('#btn1').on('click',function(event){
+            alert('click');
+        });
+
+        */
+       // 2) 이벤트타입을 메소드로 이용
+       $('#btn1').click(function(event){
+        alert(click);
+       });
+
+        // 동적 요소 추가하기
+        $('#box11').append($('<button>').text('버튼2').attr('id','btn2'));
+        // 동적 요소에 이벤트 등록하기
+        $('#box11').on('click','#btn2', function(event){
+            alert('클릭');
+        });
+
+    </script>
+
 </body>
 </html>
