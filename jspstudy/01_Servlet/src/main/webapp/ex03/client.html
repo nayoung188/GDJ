@@ -8,17 +8,45 @@
 
 	<!-- 1. GET 방식 요청 : <a>태그 --> 
 	<div>
-		<a href="http://localhost:9090/01_Servlet/AnchorServlet">링크1</a>
+		<a href="http://localhost:9090/01_Servlet/AnchorServlet">정상링크1</a>
 	</div>
 	<div>
-		<a href="/01_Servlet/AnchorServlet">링크2</a>
+	<!-- 추천 -->
+		<a href="/01_Servlet/AnchorServlet">정상링크2(추천)</a>
 	</div>
 	<div>
-		<a href="/AnchorServlet">링크3</a>
+		<a href="/AnchorServlet">불량링크1(슬래시로 시작하면 ContextPath로 인식)</a>
 	</div>
 	<div>
-		<a href="01_Servlet/AnchorServlet">링크4</a>
+		<a href="01_Servlet/AnchorServlet">불량링크2 (ContextPath는 / 로 시작해야함)</a>
 	</div>
+	<div>
+		<a href="AnchorServlet">불량링크3 (URL Mapping으로 인식되지만 HTML문서의 경로에 따라 실행 여부가 다름)</a>
+	</div>
+	
+	<!-- 연습 -->
+	<!-- 응답결과 : 1 + 2 = 3 -->
+	<div>
+		<a href="/01_Servlet/AnchorServlet?a=1&b=2">더하기</a>
+	</div>
+	
+	<hr>
+	
+	<!-- 2. GET 방식 요청 : 자바스크립트 location -->
+	<div>
+		<button id="btn1">링크1</button>
+		<button id="btn2" data-name="홍길동">링크2</button>
+	</div>
+	<script src="../js/jquery-3.6.1.min.js"></script>
+	<script>
+		$('#btn1').on('click',function(event){
+			// location.href - '/01_Servlet/LocationServlet';
+			open('/01_Servlet/LocationServlet');		// open(url, [[name, features]])
+		});
+		$('#btn2').click(function(event){
+			location.href = '/01_Servlet/LocationServlet?param=' + $(this).data('name');
+		});
+	</script>
 
 
 </body>
