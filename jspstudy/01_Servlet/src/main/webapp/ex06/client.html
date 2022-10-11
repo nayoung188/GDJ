@@ -34,9 +34,14 @@
 	</div>
 	<script>
 		$('#btn1').on('click', function(event){
+			//fn_getXML();
+			fn_getJSON();
+		});
+		
+		function fn_getXML(){
 			$.ajax({
 				type: 'GET',
-				url: '/01_Servlet/MovieServlet',
+				url: '/01_Servlet/MovieXMLServlet',
 				data: 'query=' + $('#query').val() + '&display=' + $('#display').val(),
 				/* 응답 */
 				dataType: 'XML', 		// xml, json 가능
@@ -59,7 +64,37 @@
 					console.log('responseText : ' + jqXHR.responseText);
 				}
 			});
-		});
+
+		}
+		
+		function fn_getJSON(){
+			$.ajax({
+				type: 'GET',
+				url: '/01_Servlet/MovieJSONServlet',
+				data: 'query=' + $('#query').val() + '&display=' + $('#display').val(),
+				/* 응답 */
+				dataType: 'json', 		// xml, json 가능
+				success: function(resData){
+					console.log(resData);
+					$('#movies').empty();			// 기존 검색 결과를 지워준다
+					$.each(resData.items, function(i, item){
+						var tr = $('<tr>');
+						tr.append($('<td>').html(item.title));
+						tr.append($('<td>').html(item.subtitle));
+						tr.append($('<td>').html($('<a>').attr('href',item.link).html($('<img>').attr('width','80px').attr('height','120px').attr('src', item.image))));
+						tr.append($('<td>').html(item.pubDate));
+						tr.append($('<td>').html(item.director));
+						tr.append($('<td>').html(item.actor));
+						tr.append($('<td>').html(item.userRating));
+						tr.appendTo('#movies');
+					});
+				},
+				error: function(jqXHR){
+					console.log('status : ' + jqXHR.status);
+					console.log('responseText : ' + jqXHR.responseText);
+				}
+			});
+		}
 	</script>
 </body>
 </html>

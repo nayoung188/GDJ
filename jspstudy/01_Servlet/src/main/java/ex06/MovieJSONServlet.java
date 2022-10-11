@@ -18,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
-@WebServlet("/MovieServlet")
-public class MovieServlet extends HttpServlet {
+@WebServlet("/MovieJSONServlet")
+public class MovieJSONServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 
@@ -45,7 +45,7 @@ public class MovieServlet extends HttpServlet {
 		}
 		
 		// API 접속
-		String apiURL = "https://openapi.naver.com/v1/search/movie.xml?query=" + query + "&display=" + display;  // 중요한 부분 : .xml?query=" + query  => 파라미터
+		String apiURL = "https://openapi.naver.com/v1/search/movie.json?query=" + query + "&display=" + display;  // 중요한 부분 : .xml?query=" + query  => 파라미터
 		URL url = null;
 		HttpURLConnection con = null;
 		try {
@@ -108,7 +108,7 @@ public class MovieServlet extends HttpServlet {
 		}
 
 		// client.html로 API 응답 결과 보내기
-		response.setContentType("application/xml; charset=UTF-8");
+		response.setContentType("application/json; charset=UTF-8");
 		
 		PrintWriter out = response.getWriter();
 		out.println(sb.toString());
