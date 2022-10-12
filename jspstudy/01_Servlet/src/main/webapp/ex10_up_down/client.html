@@ -48,7 +48,7 @@
 			
 			// 2. 파일 크기 제한
 			var size = this.files[0].size;			// 파일의 크기 (단위 : 바이트)
-			var maxsize = 1024 * 1024 * 10;			// 첨부 가능한 최대 크기 (10MB)
+			var maxSize = 1024 * 1024 * 10;			// 첨부 가능한 최대 크기 (10MB)
 			if(size > maxSize){
 				alert('첨부파일의 최대 크기는 10MB입니다.');
 				this.value = '';
@@ -56,12 +56,11 @@
 			}
 			
 			// 첨부된 파일 크기 확인을 위한 프로퍼티 단계별 확인
-			console.log(this);
-			console.log(this.files);
-			console.log(this.files[0]);
-			console.log(this.files[0].size);
+			// console.log(this);
+			//console.log(this.files);
+			// console.log(this.files[0]);
+			// console.log(this.files[0].size);
 
-			
 		});
 	</script>
 

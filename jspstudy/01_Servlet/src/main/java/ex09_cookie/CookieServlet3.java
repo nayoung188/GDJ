@@ -1,4 +1,4 @@
-package ex08;
+package ex09_cookie;
 
 import java.io.IOException;
 import java.io.PrintWriter;

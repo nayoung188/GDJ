@@ -1,4 +1,4 @@
-package ex06;
+package ex07_naver_api;
 
 import java.io.BufferedReader;
 import java.io.IOException;

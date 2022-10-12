@@ -1,4 +1,4 @@
-package ex07;
+package ex08_binding;
 
 import java.io.IOException;
 import java.io.PrintWriter;

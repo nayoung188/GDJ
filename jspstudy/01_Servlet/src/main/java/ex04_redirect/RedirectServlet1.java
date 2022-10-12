@@ -1,4 +1,4 @@
-package ex09;
+package ex04_redirect;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,27 +8,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-@WebServlet("/UploadServlet")
-public class UploadServlet extends HttpServlet {
+@WebServlet("/RedirectServlet1")
+public class RedirectServlet1 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		/*
-		  	1. FileUpload를 위한 COS 라이브러리
-		  			1) http://servlet.com/
-		  			2) [COS File Upload Library] - [Download] - [cos-22.05.zip]
-		 
-		 
-		 
-		 */
+
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// redirect 하는 코드 (외우기)
+		response.sendRedirect("/01_Servlet/RedirectServlet2");
 		
 	}
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
