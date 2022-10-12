@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+    <!-- 고전이벤트 -->
+    <button id="btn">전송</button>
+    <script>
+        function fn1(){
+            alert('전송합니다.');
+        }
+        document.getElementById('btn1').onclick = fn1;
+    </script>
+    <!-- 표준이벤트 -->
+    <button id="btn">전송</button>
+    <script>
+        function fn2(){
+            alert('전송합니다.');
+        }
+        document.getElementById('btn2').addEventListener('click',fn2);
+    </script>
+    <!-- 인라인이벤트 -->
+    <button id="btn" onclick="alert('전송합니다.');">전송</button>
+
+    <hr>
+
+
+    <button id="to_site">이동</button>
+    <script>
+        document.getElementById('to_site').onclick = function(event){
+            location.replace('https://www.google.com')
+       }
+    </script>
+    
+
+    <hr>
+
+
+<!-- 다음은 네이버 검색엔진을 활용한 검색창을 구현한 HTML 태그와 자바스크립트 코드이다.
+
+검색어를 입력한 뒤 "네이버검색" 버튼을 클릭하면 사용자가 입력한 검색어를 경고창으로 보여준 뒤 검색하는 방식이다.
+
+무엇 때문에 검색되지 않는지 그 이유를 설명하고, 동작할 수 있도록 코드를 수정해서 전체 코드를 다시 제출하시오. (이유 설명과 동작 코드 둘 다 제출해야 합니다.)
+
+ 
+ -->
+
+<form id="frm" action="https://search.naver.com/search.naver">
+    <input type="text" name="query" id="query">
+    <input type="submit" value="네이버검색" id="btn6">
+</form>
+<script>
+    document.getElementById('btn6').onclick = function(event){
+        alert('검색어는 ' + document.getElementById('query').value  + '입니다.');
+    }
+</script>
+
+
+
+</body>
+</html>
