@@ -29,7 +29,7 @@ public class FileListServlet extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		for(int i=0; i<files.length; i++) {
-			out.println("<div><a href=\"/01_Servlet/DownloadServlet\">" + files[i].getName() + "</a></div>");
+			out.println("<div><a href=\"/01_Servlet/DownloadServlet?filename="+ files[i].getName() + "\">" + files[i].getName() + "</a></div>");
 		}
 		out.close();
 	}
