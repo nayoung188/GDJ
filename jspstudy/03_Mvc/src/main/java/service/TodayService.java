@@ -1,4 +1,5 @@
 package service;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -10,7 +11,7 @@ import common.ActionForward;
 public class TodayService implements MyService{
 	
 	@Override
-	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
 		// NodwService가 하는 일
 		Date date = new Date();

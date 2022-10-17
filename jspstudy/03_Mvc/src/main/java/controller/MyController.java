@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import common.ActionForward;
+import service.AdderService;
 import service.MyService;
 import service.NowService;
 import service.TodayService;
@@ -23,8 +24,9 @@ public class MyController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 요청확인
+		// 요청 & 응답 인코딩
 		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; chatset=UTF-8");
 		
 		// 요청확인 (/today.do 인지 /now.do 인지)
 		String requestURI = request.getRequestURI();    // requestURL : /03_Mvc/today.do  또는 /03_Mvc/now.do
@@ -49,6 +51,9 @@ public class MyController extends HttpServlet {
 		case "now.do" :
 			myService = new NowService();
 			break;
+		case "adder.do" :
+			myService = new AdderService();
+			break;
 		// 비지니스 로직이 필요 없는 단순이동의 경우
 		case "input.do" : 
 			actionForward = new ActionForward();
@@ -61,7 +66,9 @@ public class MyController extends HttpServlet {
 			actionForward = myService.execute(request, response);
 		}
 	
-		request.getRequestDispatcher(actionForward.getView()).forward(request, response);
+		if(actionForward != null ) {
+			request.getRequestDispatcher(actionForward.getView()).forward(request, response);			
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
