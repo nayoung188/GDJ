@@ -24,6 +24,7 @@ public class TodayService implements MyService{
 		// 어디로 갈 것인가? (응답 Jsp 명시)
 		ActionForward actionForward = new ActionForward();
 		actionForward.setView("views/result.jsp");
+		actionForward.setRedirect(false);
 		
 		// ActionForward 반환
 		return actionForward;
