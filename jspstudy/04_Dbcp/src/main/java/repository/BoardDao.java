@@ -80,5 +80,75 @@ public class BoardDao {
 		}
 		return boards;
 	}
+	
+	// 3. 상세보기
+	public Board selectBoardByNo(int board_no) {
+		Board board = null;
+		try {
+			con = dataSource.getConnection();
+			sql = "SELECT BOARD_NO, TITLE, CONTENT, CREATE_DATE FROM BOARD WHERE BOARD_NO = ?";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, board_no);				// 1번째 물음표(?)에 board_no 전달하기
+			rs = ps.executeQuery();				// SELECT 문은 executeQuery() 사용
+			if(rs.next()) {						// 상세보기는 if문
+				board = new Board();
+				board.setBoard_no(rs.getInt(1));		// rs.getInt("BOARD_NO")
+				board.setTitle(rs.getString(2));		// rs.getIString("TITLE")
+				board.setContent(rs.getString(3));		// rs.getString("CONTENT")
+				board.setCreate_date(rs.getDate(4));	// rs.getDate("CREATE_DATE")
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(con, ps, rs);
+		}
+		return board;
+	}
+	
+	
+	// 4. 게시글 삽입
+	public int insertBoard(Board board) {
+		int result = 0;
+		try {
+			con = dataSource.getConnection();
+			sql = "INSERT INTO BOARD VALUES(BOARD_SEQ.NEXTVAL, ?, ?, SYSDATE)";
+			ps = con.prepareStatement(sql);
+			ps.setString(1, board.getTitle());
+			ps.setString(2, board.getContent());
+			result = ps.executeUpdate();		// INSERT문은 executeUpdate() 메소드 사용 (정해진것임)
+		} catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(con, ps, null);
+		}
+		return result;
+	}
 
+	
+	// 5. 게시글 수정
+	public int updateBoard(Board board) {
+		int result = 0;
+		try {
+			con = dataSource.getConnection();
+			sql = "UPDATE BOARD SET TITLE = ?, CONTENT = ? WHERE BOARD_NO = ?";
+			ps = con.prepareStatement(sql);
+			ps.setString(1, board.getTitle());
+			ps.setString(2, board.getContent());
+			ps.setInt(3, board.getBoard_no());
+			result = ps.executeUpdate();		// UPDATE문은 executeUpdate() 메소드 사용 (정해진것임)
+		} catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(con, ps, null);
+		}
+		return result;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 }

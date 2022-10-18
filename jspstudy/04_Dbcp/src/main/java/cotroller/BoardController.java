@@ -8,7 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import common.ActionForward;
+import service.BoardAddService;
+import service.BoardDetailService;
+import service.BoardEditService;
 import service.BoardListService;
+import service.BoardModifyService;
 import service.BoardService;
 
 @WebServlet({ "/BoardController", "*.do" })
@@ -33,8 +37,28 @@ public class BoardController extends HttpServlet {
 		
 		// 요청(urlMapping)에 따른 Service 생성
 		switch(urlMapping) {
+		// 비지니스 로직이 있는 경우  (해당 비지니스 로직을 위한 서비스 생성이 필요함)
 		case "board/list.do" : 
 			service = new BoardListService();
+			break;
+		case "board/detail.do" :
+			service = new BoardDetailService();
+			break;
+		case "board/add.do" : 
+			service = new BoardAddService();
+			break;
+		case "board/edit.do" : 
+			service = new BoardEditService();
+			break;
+		case "board/modify.do" :
+			service = new BoardModifyService();
+			break;
+		
+		// 비지니스 로직이 없는 경우 (단순 이동)
+		case "board/write.do" : 			// 단순 이동이기 때문에 액션포워드만
+			af = new ActionForward();
+			af.setView("/board/write.jsp");
+			af.setRedirect(false);			// 단순 이동은 forward
 			break;
 		}
 		
