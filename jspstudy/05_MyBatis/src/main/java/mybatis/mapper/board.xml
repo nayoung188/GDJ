@@ -36,5 +36,29 @@
 	  	 WHERE BOARD_NO = #{boardNo}
 	  </select>
 	  
+	  <!--  
+	  	3. 게시글 삽입
+	  		1) parameterType : Board board
+	  		2) resultType : 작성하면 안됩니다. 자동으로 int로 처리된다.
+	  -->
+	  <insert id="insertBoard" parameterType="Board">
+	  	  INSERT INTO BOARD
+	  	  	(BOARD_NO, TITLE, CONTENT, CREATE_DATE)
+	  	  VALUES
+	  	  	(BOARD_SEQ.NEXTVAL, #{title}, #{content}, SYSDATE)
+	  </insert>
+	  
+	  <!--  
+	  	3. 게시글 삭제
+	  		1) parameterType : int boardNo
+	  		2) resultType : 작성하면 안됩니다. 자동으로 int처리된다.	  		
+	  -->
+	  <delete id="deleteBoard" parameterType="int">
+	  	DELETE
+	  	  FROM BOARD
+	  	 WHERE BOARD_NO = #{boardNo}
+	  </delete>
+	  
+	  
 
 </mapper>
