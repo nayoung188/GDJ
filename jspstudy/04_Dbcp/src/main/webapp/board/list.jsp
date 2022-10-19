@@ -18,6 +18,13 @@
 		$('#btn_write').click(function(event){
 			location.href = '${contextPath}/board/write.do';	
 		});
+		
+		$('#remove_link').click(function(event){
+			if(!confirm('삭제할까요')){		// if(confirm('삭제할까요?')==false){ 와 같다
+				alert('취소되었습니다.');
+				event.preventDefault();				// <a>태그의 기본 이벤트는 링크 이동이므로 preventDefault()에 의해서 기본동작인 링크 이동이 막힌다.
+			}
+		});
 	});
 	
 </script>
@@ -46,7 +53,7 @@
 						<td><a href="${contextPath}/board/detail.do?board_no=${board.board_no}">${board.title}</a></td>
 						<td>${board.create_date}</td>
 						<td>
-							<a href=""><i class="fa-solid fa-trash"></i></a>
+							<a id="remove_link" href="${contextPath}/board/remove.do?board_no=${board.board_no}"><i class="fa-solid fa-trash"></i></a>
 						</td>
 					</tr>
 				</c:forEach>
