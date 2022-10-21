@@ -9,17 +9,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import common.ActionForward;
-import service.BoardAddService;
-import service.BoardDetailService;
-import service.BoardEditService;
-import service.BoardListService;
-import service.BoardModifyService;
-import service.BoardRemoveService;
-import service.BoardService;
+import service.StudentAddService;
+import service.StudentDetailService;
+import service.StudentFindService;
+import service.StudentListService;
+import service.StudentModifyService;
+import service.StudentRemoveService;
+import service.StudentService;
 
 
 @WebServlet({ "/BoardController", "*.do" })
-public class BoardController extends HttpServlet {
+public class StudentController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -33,39 +33,34 @@ public class BoardController extends HttpServlet {
 		String contextPath = request.getContextPath();
 		String urlMapping = requestURI.substring(contextPath.length());
 		
-		// BoarfServisce객체
-		BoardService service = null;
+		// StudentService객체
+		StudentService service = null;
 		
 		// ActionForward 객체
 		ActionForward af = null;
 		
 		//요청에 따른 Service 선택
 		switch(urlMapping) {
-		
-		// 비지니스 로직
-		case "/board/list.do" :
-			service = new BoardListService();
+		case "/student/list.do" :
+			service = new StudentListService();
 			break;
-		case "/board/detail.do" : 
-			service = new BoardDetailService();
+		case "/student/add.do" : 
+			service = new StudentAddService();
 			break;
-		case "/board/add.do" :
-			service = new BoardAddService();
+		case "/student/write.do" :
+			af = new ActionForward("/student/write.jsp", false);
 			break;
-		case "/board/remove.do" :
-			service = new BoardRemoveService();
+		case "/student/find.do" :
+			service = new StudentFindService();
 			break;
-		case "/board/edit.do" :
-			service = new BoardEditService();
+		case "/student/remove.do" : 
+			service = new StudentRemoveService();
 			break;
-		case "/board/modify.do" :
-			service = new BoardModifyService();
+		case "/student/detail.do" :
+			service = new StudentDetailService();
 			break;
-		// 단순이동(포워드)
-		case "/board/write.do":
-			af = new ActionForward();
-			af.setView("/board/write.jsp");
-			af.setRedirect(false);
+		case "/student/modify.do" :
+			service = new StudentModifyService();
 			break;
 		}
 		

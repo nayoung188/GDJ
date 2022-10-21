@@ -11,15 +11,7 @@
 <script>
 	$(document).ready(function(){
 		
-		$('#frm_edit').submit(function(event){
-			// 제목, 내용 모두 변경이 없는 경우
-			// 기존 제목, 내용		: ${board.title}, 		${board.content}
-			// 입력한 제목, 내용 	: $('#title').val(),	$('#content').val()
-			if('${board.title}' == $('#title').val() && '${board.content}' == $('#content').val()){
-				alert('변경된 내용이 없습니다.');
-				event.preventDefault();
-				return;
-			}			
+		$('#frm_edit').submit(function(event){		
 			// 제목이 비어있는 경우
 			if($('#title').val() == ''){
 				alert('제목은 필수입니다.');
