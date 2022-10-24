@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace="mapper의 패키지 경로" -->  
+  
+<mapper namespace="mybatis.mapper.member">		<!-- 패키지이름 + xml이름  -->
+
+	<!-- 1. 회원목록 -->
+	<select id="selectAllMembers" resultType="Member">
+		SELECT MEMBER_NO, ID, NAME, GENDER, GRADE, ADDRESS
+		  FROM MEMBER
+		 ORDER BY MEMBER_NO DESC 
+	</select>
+	
+	<!-- 2. 회원수 -->
+	<select id="selectAllMembersCount" resultType="int">
+	  SELECT COUNT(*)
+        FROM MEMBER
+   </select>
+   
+   <!-- 3. 회원상세 -->
+   <select id="selectMemberByNo" parameterType="int" resultType="Member">
+   		SELECT MEMBER_NO, ID, NAME, GENDER, GRADE, ADDRESS
+		  FROM MEMBER
+		 WHERE MEMBER_NO = #{memberNo}
+   </select>
+   
+   <!-- 4. 회원등록 -->
+   <insert id="insertMember" parameterType="Member">
+   		INSERT INTO MEMBER
+   			(MEMBER_NO, ID, NAME, GENDER, GRADE, ADDRESS)
+   		VALUES
+   			(MEMBER_SEQ.NEXTVAL, #{id}, #{name}, #{gender}, #{grade}, #{address})
+   </insert>
+</mapper>
