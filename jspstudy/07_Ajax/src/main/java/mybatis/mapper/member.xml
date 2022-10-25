@@ -34,4 +34,22 @@
    		VALUES
    			(MEMBER_SEQ.NEXTVAL, #{id}, #{name}, #{gender}, #{grade}, #{address})
    </insert>
+   
+   <!-- 5. 회원수정 -->
+   <update id="updateMember" parameterType="Member">
+   		UPDATE MEMBER
+   		   SET NAME = #{name}
+   		     , GENDER = #{gender}
+   		     , GRADE = #{grade}
+   		     , ADDRESS = #{address}
+   		 WHERE ID = #{id}
+   </update>
+   
+   <!-- 6. 회원삭제 -->
+   <delete id="deleteMember" parameterType="int">
+   		DELETE
+   		FROM MEMBER
+   		WHERE MEMBER_No = #{memberNo}     <!-- member_No 데이터베이스 칼러므이 이름이고 memberNo int값을 전달해줄 변수이름 -->
+   </delete>
+   
 </mapper>

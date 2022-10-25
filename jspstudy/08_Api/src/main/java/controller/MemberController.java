@@ -9,12 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import common.ActionForward;
-import service.MemberAddService;
-import service.MemberDetailService;
-import service.MemberListService;
-import service.MemberModifyService;
-import service.MemberRemoveService;
-import service.MemberService;
+import service.NaverCaptchaService;
+import service.NaverCaptchaServiceImpl;
 
 
 @WebServlet({"*.do" })
@@ -32,42 +28,19 @@ public class MemberController extends HttpServlet {
 		String contextPath = request.getContextPath();
 		String urlMapping = requestURI.substring(contextPath.length());
 		
-		// StudentService객체
-		MemberService service = null;
+		// NaverCaptchaServiceImpl 객체 생성
+		NaverCaptchaService service = new NaverCaptchaServiceImpl();
 		
 		// ActionForward 객체
 		ActionForward af = null;
 		
 		//요청에 따른 Service 선택
 		switch(urlMapping) {
-		case "/member/manage.do" :
-			af = new ActionForward("/member/manage.jsp", false);
-			break;
-		case "/member/list.do" : 
-			service = new MemberListService();
-			break;
-		case "/member/detail.do" :
-			service = new MemberDetailService();
-			break;
-		case "/member/add.do" :
-			service = new MemberAddService();
-			break;
-		case "/member/modify.do" :
-			service = new MemberModifyService();
-			break;
-		case "/member/remove.do" :
-			service = new MemberRemoveService();
-			break;
+		case "/member/loginPage.do":
+			String key = service.getCaptchaKey(request, response);
+			System.out.println(key);
 		}
-		
-		// 선택된 Service 실행
-		try {
-			if(service != null) {
-				service.execute(request, response);		// 서비스는 af를 반환하지 않는 void타입이기 때문에 af= 부분 지워준다
-			}
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+
 		
 		// 어디로 어떻게 이동하는가
 		if(af != null) {

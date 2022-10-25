@@ -70,6 +70,28 @@ public class MemberDao {
 		ss.close();
 		return result;
 	}
+	
+	// 5. 회원수정
+	public int updateMember(Member member) {
+		SqlSession ss = factory.openSession(false);
+		int result = ss.update(mapper + "updateMember", member);			// update / insert / delete 아무거나 써도 update로 들어가서 진행됨
+		if(result > 0) {
+			ss.commit();
+		}
+		ss.close();
+		return result;
+	}
+	
+	// 6. 회원삭제
+	public int deleteMember( int memberNo) {
+		SqlSession ss = factory.openSession(false);
+		int result = ss.delete(mapper + "deleteMember", memberNo);
+		if(result > 0) {
+			ss.commit();
+		}
+		ss.close();
+		return result;
+	}
 
 
 }
