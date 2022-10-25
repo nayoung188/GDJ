@@ -8,6 +8,23 @@
 <head>
 <meta charset="UTF-8">
 <title>로그인</title>
+<script src="../assets/js/jquery-3.6.1.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$('#btn_refresh').click(function(){
+			$.ajax({
+				/*요청*/
+				type: 'get',
+				url: '${contextPath}/member/refreshCaptcha.do',
+				/*응답*/
+				dataType: 'json',
+				success: function(resData){			// resData : {"dirname" : "", "filename" : ""}
+					$('#ncaptcha').prop('src', '../' + resData.dirname + '/' + resData.filename)					// prop  ==  attr 둘다 사용 가능
+				}
+			})
+		});
+	});
+</script>
 </head>
 <body>
 
@@ -22,12 +39,12 @@
 			</div>
 			<div>
 				<p>아래 이미지를 보이는 대로 입력해주세요.</p>
-				<div>
+				<div style="display: flex;">
 					<div>
-						<img>
+						<img src="../${dirname}/${filename}" id="ncaptcha">
 					</div>
 					<div>
-						<input type="button">
+						<input type="button" value="새로고침" id="btn_refresh">
 					</div>
 				</div>
 			</div>
