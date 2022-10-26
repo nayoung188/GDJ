@@ -18,8 +18,9 @@
 				url: '${contextPath}/member/refreshCaptcha.do',
 				/*응답*/
 				dataType: 'json',
-				success: function(resData){			// resData : {"dirname" : "", "filename" : ""}
-					$('#ncaptcha').prop('src', '../' + resData.dirname + '/' + resData.filename)					// prop  ==  attr 둘다 사용 가능
+				success: function(resData){			// resData : {"dirname" : "", "filename" : "", "key" : ""}
+					$('#ncaptcha').prop('src', '../' + resData.dirname + '/' + resData.filename);					// prop  ==  attr 둘다 사용 가능
+					$('#key').val(resData.key);
 				}
 			})
 		});
@@ -30,7 +31,7 @@
 
 	<div class="wrap">
 		<h1>로그인</h1>
-		<form>
+		<form action="${contextPath}/member/validateCaptcha.do" method="post">
 			<div>
 				<input type="text" name="id" id="id" placeholder="아이디">
 			</div>
@@ -48,8 +49,9 @@
 					</div>
 				</div>
 			</div>
-			<div>
-				<input type="text" name="user_input" placeholder="자동입력 방지문자">
+			<div>	
+				<input type="text" name="value" placeholder="자동입력 방지문자">			<!-- 서브밋하면 파라미터 형식으로 날아감 -->
+				<input type="hidden" name="key" id="key" value="${key}">
 			</div>
 			<div>
 				<button>로그인</button>
