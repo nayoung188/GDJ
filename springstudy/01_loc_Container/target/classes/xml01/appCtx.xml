@@ -25,9 +25,4 @@
 	 	</property>
 	 </bean>
 	 
-	 <!--  
-	 	2. 생성자(Generate Constructor using Fields)
-	 -->
-	 
-
 </beans>
