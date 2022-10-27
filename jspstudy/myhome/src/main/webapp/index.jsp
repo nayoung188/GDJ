@@ -7,6 +7,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script
+  src="https://code.jquery.com/jquery-3.6.1.min.js"
+  integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+  crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -22,6 +26,9 @@
 				<div>
 					<button>로그인</button>
 				</div>
+				<div>
+					<a href="${contextPath}/member/join.me">회원가입</a>
+				</div>
 			</form>
 		</div>	
 	</c:if>
@@ -30,6 +37,17 @@
 		<div>
 			${login.name}님 어서오세요
 			<input type="button" value="로그아웃" onclick="location.href='${contextPath}/member/logout.me';">
+		</div>
+		<div>
+			<a id="cancel_link" href="${contextPath}/member/cancel.me">회원탈퇴</a>
+			<script>
+				$('#cancel_link').click(function(event){
+					if(confirm('탈퇴하시겠습니까?') == false){
+						event.preventDefault();			// a태그의 기본 동작 (href로 이동)을 막는다.
+						return;
+					}
+				});
+			</script>
 		</div>
 	</c:if>
 
