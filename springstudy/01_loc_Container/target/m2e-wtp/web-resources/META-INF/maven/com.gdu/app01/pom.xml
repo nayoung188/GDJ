@@ -4,54 +4,58 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.gdu</groupId>
 	<artifactId>app01</artifactId>
-	<name>01_loc_Container</name>
+	<name>01_Ioc_Container</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	
-	
 	<!--
-		Maven 프로젝트  
+		Maven 프로젝트
 		
 		mvnrepository.com(중앙저장소, central)에 필요한 jar를 보관해 두고
-		pom.xml 파일에 디펜던시를 추가하면 해당 jar를 다운로드 한다.
+		pom.xml 파일에 디펜던시를 추가하면 해당 jar를 다운로드 하는 프로젝트
 	-->
-	<!--  
+	
+	<!--
 		pom.xml을 자주 저장하면 자주 다운로드를 진행하기 때문에 오류 확률이 높아진다.
-		pom.xml 파일을 저장한 뒤에ㅐ는 다운로드가 왼료될때까지 기다려야 한다.
-		pom.xml 파일의 변경 사항이 반영되지 않으면 [Maven] - [Update Project] 실행해야 한다.   // 간소화 시켜놓은 것이 부트
+		pom.xml 파일을 저장한 뒤에는 다운로드가 완료될때까지 기다려야 한다.
+		pom.xml 파일의 변경 사항이 반영되지 않으면 프로젝트 우클릭 - [Maven] - [Update Project] 실행해야 한다.
 	-->
-	<!--  
+	
+	<!--
 		다운로드 된 jar 파일은 C:\Users\계정명\.m2 디렉터리에 저장된다.
-		jar에 문제가 발생한 경우, 
-			1) STS를 끄고
-			2) 이 디렉터리에 저장된 모든 jar를 다 지우고
-			3) STS를 다시 켠다. (한참 기다려야 한다.)
+		jar에 문제가 발생한 경우,
+		  1) STS를 끄고
+		  2) 이 디렉터리에 저장된 모든 jar를 다 지우고
+		  3) STS를 다시 켠다. 켜지면 지워진 jar를 다 받을때까지 한참 기다려야 한다.
 	-->
+	
+	<!--
+		properties 태그에 작성해 둔 버전은 모두 ${}로 사용 가능하다.
+		${java-version}                -> 11로 치환
+		${org.springframework-version} -> 5.3.3으로 치환
+		${org.aspectj-version}         -> 1.9.6으로 치환
+		${org.slf4j-version}           -> 1.7.30으로 치환
+	-->
+	
 	<properties>
 		<java-version>11</java-version>
 		<org.springframework-version>5.3.3</org.springframework-version>
 		<org.aspectj-version>1.9.6</org.aspectj-version>
 		<org.slf4j-version>1.7.30</org.slf4j-version>
 	</properties>
-	<dependencies>
-	<!--  
-		properties 태그에 작성해 둔 버전은 모두 ${}로 사용 가능하다.
-		${java-version} 작성 				 -> 11로 치환
-		${org.springframework-version}	 -> 5.3.3으로 치환
-		${org.aspectj-version} 			 -> 1.9.6으로 치환
-		${org.slf4j-version}			 -> 1.7.30으로 치환
-	-->
-
-	<!--  
+	
+	<!--
 		디펜던시
 		
 		의존 관계를 파악해서 필요한 jar를 모두 받아 주기 때문에 dependency라고 한다.
 		한마디로 디펜던시는 jar이다.
 	-->
+	<dependencies>
+	
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId> <!-- 필요한 jar는 이미 다 들어가있기 때문에 따로 추가 안해줘도 됨 -->
+			<artifactId>spring-context</artifactId>
 			<version>${org.springframework-version}</version>
 			<exclusions>
 				<!-- Exclude Commons Logging in favor of SLF4j -->
@@ -61,6 +65,7 @@
 				 </exclusion>
 			</exclusions>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
@@ -72,7 +77,7 @@
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
 			<version>${org.aspectj-version}</version>
-		</dependency>	
+		</dependency>
 		
 		<!-- Logging -->
 		<dependency>
@@ -125,7 +130,7 @@
 		</dependency>
 				
 		<!-- Servlet -->
-		<!-- Servlet의 artifactId와 version을 수정 -->
+		<!-- servlet의 artifactId와 version 수정 -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -145,14 +150,16 @@
 		</dependency>
 	
 		<!-- Test -->
-		<!-- JUnit5는 JUnit Jupiter 하고 하고, 디펜던시를 통째로 바꿔야 한다. -->
+		<!-- JUnit5는 JUnit Jupiter라고 하고, 디펜던시를 통째로 바꿔야 한다. -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.13.2</version>
 			<scope>test</scope>
-		</dependency>        
+		</dependency>
+		
 	</dependencies>
+	
     <build>
         <plugins>
             <plugin>
