@@ -13,6 +13,12 @@
 	<div>
 		<a href="${contextPath}/member">회원관리</a>
 	</div>
+	
+	<hr>
+	
+	<div>
+		<a href="${contextPath}/board">게시판관리</a>
+	</div>
 
 </body>
 </html>

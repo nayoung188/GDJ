@@ -1,10 +1,16 @@
 package com.gdu.app05.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -39,8 +45,8 @@ public class MyController1 {
 	@ResponseBody			// 안붙어있으면 jsp로 인식, 붙어있으면 응답으로 인식
 	@GetMapping(value="member/detail1"
 				,produces="text/plain; charset=UTF-8")		// produces : 응답 데이터의 타입(MIME-TYPE)
-	public String detail1(HttpServletRequest request) {
-		String str = memberService.execute1(request);
+	public String detail1(HttpServletRequest request, HttpServletResponse response) {
+		String str = memberService.execute1(request, response);
 		return str;		
 	}
 	
@@ -57,5 +63,35 @@ public class MyController1 {
 		 * return obj.toString();
 		 */
 	}
+	
+	@ResponseBody
+	@GetMapping(value="member/detail3"
+				, produces=MediaType.APPLICATION_JSON_VALUE)
+	public Map<String, Object>detail3(Member member){
+		Map<String, Object> map = memberService.execute3(member);
+		return map;
+		// return memberService.execute3(member);		=> 이거로 만들어서 하는 것을 적극 추천
+	}
+	
+	
+	/*
+	  	@RequestBody
+	  	안녕. 난 요청 데이터가 body에 포함되어 있다고 알려주는 일을 해.
+	  	요청 파라미터에서는 사용할 수 없고, 
+	  	post 방식으로 파라미터 없이 데이터가 전달될 때 사용할 수 있어.
+	 */
+	
+	@ResponseBody
+	@PostMapping(value="member/detail4"
+				,produces=MediaType.APPLICATION_JSON_VALUE)
+	public Member detail4(@RequestBody Member member) {
+		return memberService.execute4(member);
+	}
+	
+	
+	
+	
+	
+	
 
 }
