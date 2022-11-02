@@ -16,6 +16,7 @@
 	<!-- domain.Board to Board -->
 	<typeAliases>
 		<typeAlias type="domain.Member" alias="Member" />
+		<typeAlias type="domain.Notice" alias="Notice" />
 	</typeAliases>
 
 	<environments default="development">
@@ -32,6 +33,7 @@
 	
 	<mappers>
 		<mapper resource="mybatis/mapper/member.xml"/>
+		<mapper resource="mybatis/mapper/notice.xml"/>
 	</mappers>
 	
 </configuration>
