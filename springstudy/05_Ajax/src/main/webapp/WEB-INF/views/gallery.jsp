@@ -11,9 +11,8 @@
 </head>
 <body>
 
-	<h1>예쁜 동물들 보고 가세요</h1>
+	<h1>레이왕자컬렉션</h1>
 	
-	<div>
 		<!-- 
 			절대 경로의 이미지를 img태그로 표시하기
 			
@@ -23,11 +22,19 @@
 				이미지의 byte[]로 받아오면 표시가 가능
 				
 		 -->
-		<img id="image" width="200px">
-		<script>
-			$('#image').attr('src','${contextPath}/image/display?path=' + encodeURIComponent('C:\\GDJ\\images') + '&filename=animal1.jpg')
-		</script>
-	</div>
+	<div id="galleries"></div>
+	<img id="image" width="200px">
+	
+	<script>
+		for(let n = 1; n <= 10; n++){
+			$('<div>')
+			.append($('<img>')
+					.attr('src','${contextPath}/image/display?path=' + encodeURIComponent('C:\\GDJ\\images') + '&filename=레이' + n +'.jpg')
+					.attr('width', '200px'))
+			.appendTo('#galleries');
+		}
+
+	</script>
 
 </body>
 </html>
