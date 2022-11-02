@@ -14,6 +14,5 @@ public interface MemberService {
 	public Member execute2(String id, String pw);
 	public Map<String, Object> execute3(Member member);		
 	
-	// 요청 JSON		( jackson은 map, member를 json으로 바꾸고 반대로 map,member를 json으로 바꿔줄 수 있다)
-	public Member execute4(Member member);
+
 }
