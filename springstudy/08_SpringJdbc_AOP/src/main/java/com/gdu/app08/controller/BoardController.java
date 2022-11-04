@@ -73,6 +73,11 @@ public class BoardController {
 		return "redirect:/brd/list";
 	}
 	
-	
+	// 트랜잭션 확인을 위해서 testTransaction() 메소드를 호출하는 매핑 작성
+	@GetMapping("brd/transaction")
+	public String transaction() {
+		boardService.testTransaction();
+		return "redirect:/brd/list";
+	}
 	
 }

@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.gdu</groupId>
 	<artifactId>app08</artifactId>
-	<name>08_SpringJdbc</name>
+	<name>08_SpringJdbc_AOP</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 
@@ -16,21 +16,21 @@
 	</properties>
 	
 	<dependencies>
-		<!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-dbcp -->
+
+		<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
 		<dependency>
-		    <groupId>org.apache.tomcat</groupId>
-		    <artifactId>tomcat-dbcp</artifactId>
-		    <version>9.0.68</version>
+		    <groupId>org.aspectj</groupId>
+		    <artifactId>aspectjweaver</artifactId>
+		    <version>${org.aspectj-version}</version>
+		    <scope>runtime</scope>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
 		<dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-jdbc</artifactId>
 		    <version>${org.springframework-version}</version>
 		</dependency>
-		
-			
 
 		<!-- https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc8 -->
 		<dependency>
@@ -79,7 +79,7 @@
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
 			<version>${org.aspectj-version}</version>
-		</dependency>	
+		</dependency>
 		
 		<!-- Logging -->
 		<dependency>
