@@ -10,7 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import common.ActionForward;
 import service.FreeAddService;
+import service.FreeDetailService;
 import service.FreeListService;
+import service.FreeModifyService;
+import service.FreeRemoveService;
 import service.FreeService;
 
 
@@ -39,6 +42,15 @@ public class FreeController extends HttpServlet {
 		case "/free/insert.do" :
 			service = new FreeAddService();
 			break;	
+		case "/free/detail.do" :
+			service = new FreeDetailService();
+			break;
+		case "/free/remove.do" :
+			service = new FreeRemoveService();
+			break;
+		case "/free/modify.do" :
+			service = new FreeModifyService();
+			break;
 		}
 		
 		try {

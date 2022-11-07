@@ -21,7 +21,7 @@
 
 	<h1>자유게시판 게시글 작성화면</h1>
 	<div>
-		<form id="frm_insert" action="${contextPath}/free/insert.do">
+		<form id="frm_insert" method="POST" action="${contextPath}/free/insert.do">
 			<div>
 				<label for="writer">작성자</label>
 				<input type="text" placeholder="작성자">

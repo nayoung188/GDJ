@@ -14,18 +14,15 @@ public class FreeAddService implements FreeService {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		Long freeNo = Long.parseLong(request.getParameter("freeNo"));
+		String writer = request.getParameter("writer");
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
-		String ip = request.getParameter("ip");
-		Long hit = Long.parseLong( request.getParameter("hit"));
+
 		
 		Free free = new Free();
-		free.setFreeNo(freeNo);
+		free.setWriter(writer);
 		free.setTitle(title);
 		free.setContent(content);
-		free.setIp(ip);
-		free.setHit(hit);
 		
 		int result = FreeDao.getInstance().insertFree(free);
 		

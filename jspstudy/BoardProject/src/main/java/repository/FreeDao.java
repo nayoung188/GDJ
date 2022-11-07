@@ -33,9 +33,9 @@ public class FreeDao {
 	
 	public List<Free> selectAllFrees(){
 		SqlSession ss = factory.openSession();
-		List<Free> boards = ss.selectList(mapper + "selectAllFrees");
+		List<Free> frees = ss.selectList(mapper + "selectAllFrees");
 		ss.close();
-		return boards;
+		return frees;
 	}
 	
 	public int insertFree(Free free) {
@@ -46,6 +46,33 @@ public class FreeDao {
 		}
 		ss.close();
 		return result;		
+	}
+	
+	public Free selectFreeNo(int freeNo) {
+		SqlSession ss = factory.openSession();
+		Free free = ss.selectOne(mapper + "selectFreeNo", freeNo);
+		ss.close();
+		return free;
+	}
+	
+	public int removeFree(int freeNo) {
+		SqlSession ss = factory.openSession(false);
+		int result = ss.delete(mapper + "removeFree", freeNo);
+		if(result > 0 ) {
+			ss.commit();
+		}
+		ss.close();
+		return result;
+	}
+	
+	public int modifyFree(Free free) {
+		SqlSession ss = factory.openSession(false);		 
+		int result = ss.update(mapper + "modifyFree", free);
+		if(result > 0) {
+			ss.commit();
+		}
+		ss.close();
+		return result;
 	}
 
 }

@@ -33,14 +33,14 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${free}" var="f">
+			<c:forEach items="${list}" var="f">
 				<tr>	
-					<td>${f.freedNo}</td>
-					<td>${f.title}</td>
+					<td>${f.freeNo}</td>
+					<td><a href="${contextPath}/free/detail.do?freeNo=${f.freeNo}">${f.title}</a></td>
 					<td>${f.writer}</td>
 					<td>${f.hit}</td>
 					<td>
-						<input type = "button" value="삭제" class="btn_remove" onclick="fn_remove(${f.freeNo})">
+						<input type="button" value="X" class="btn_remove" onclick="fn_remove(${f.freeNo})">
 					</td>
 				</tr>
 			</c:forEach>
