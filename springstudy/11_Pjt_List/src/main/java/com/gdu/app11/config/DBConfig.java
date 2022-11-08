@@ -23,7 +23,7 @@ import com.zaxxer.hikari.HikariDataSource;
 	안녕 난 @MApper로 등록된 인터페이스를 bean으로 등록할 수 있도록
 	@Mapper의 위치를 알려주는 애너테이션이야.
 */
-@MapperScan(basePackages = {"com.gdu.app10.mapper"})
+@MapperScan(basePackages = {"com.gdu.app11.mapper"})
 @PropertySource(value = {"classpath:mybatis/config/mybatis.properties"})
 @EnableTransactionManagement
 @EnableAspectJAutoProxy

@@ -4,19 +4,41 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.gdu.app11.mapper.EmpMapper">
+	
+	<!-- employees와 department의 조인을 위한 resultMap -->
+	<resultMap type = "DeptDTO" id="DeptMap">
+		<result column="DEPARTMENT_ID" property="departmentId" />
+		<result column="DEPARTMENT_NAME" property="departmentName" />
+		<result column="MANAGER_ID" property="managerId" />
+		<result column="LOCATION_ID" property="locationId" />
+	</resultMap>
+	<resultMap type="EmpDTO" id="EmpMap">
+		<result column="EMPLOYEE_ID" property="employeeId" />
+		<result column="FIRST_NAME" property="firstName" />
+		<result column="LAST_NAME" property="lastName" />
+		<result column="EMAIL" property="email" />
+		<result column="PHONE_NUMBER" property="phoneNumber" />
+		<result column="HIRE_DATE" property="hireDate" />
+		<result column="JOB_ID" property="jobId" />
+		<result column="COMMISSION_PCT" property="commissionPct" />
+		<result column="SALARY" property="salary" />
+		<result column="MANAGER_ID" property="managerId" />
+		<collection resultMap="DeptMap" property="deptDTO"></collection>
+	</resultMap>
 
 	<select id="selectAllEmployeesCount" resultType="int">
 		SELECT COUNT(*)
 		FROM EMPLOYEES
 	</select>
 	
-	<select id="selectEmployeesByPage"  resultType="EmpDTO"> <!-- 파라미터 타입 생략 가능 (있긴함) -->
+	<select id="selectEmployeesByPage"  resultMap="EmpMap"> <!-- 파라미터 타입 생략 가능 (있긴함) -->
 		SELECT b.*
 	     FROM (SELECT ROWNUM AS RN, a.*
-	             FROM (SELECT *
-	                     FROM EMPLOYEES
+	             FROM (SELECT E.*, D.DEPARTMENT_NAME, D.LOCATION_ID
+	                     FROM DEPARTMENTS D INNER JOIN EMPLOYEES E
+	                       ON D.DEPARTMENT_ID = E.DEPARTMENT_ID
 	                    ORDER BY HIRE_DATE DESC)a)b
-	    WHERE b.RN BETWEEN #{param1} AND #{param2};
+	    WHERE b.RN BETWEEN #{param1} AND #{param2}
 	</select>
 	
 </mapper>
