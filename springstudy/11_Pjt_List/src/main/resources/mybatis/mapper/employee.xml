@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gdu.app11.mapper.EmpMapper">
+
+	<select id="selectAllEmployeesCount" resultType="int">
+		SELECT COUNT(*)
+		FROM EMPLOYEES
+	</select>
+	
+	<select id="selectEmployeesByPage"  resultType="EmpDTO"> <!-- 파라미터 타입 생략 가능 (있긴함) -->
+		SELECT b.*
+	     FROM (SELECT ROWNUM AS RN, a.*
+	             FROM (SELECT *
+	                     FROM EMPLOYEES
+	                    ORDER BY HIRE_DATE DESC)a)b
+	    WHERE b.RN BETWEEN #{param1} AND #{param2};
+	</select>
+	
+</mapper>
