@@ -46,9 +46,11 @@ public class EmpServiceImpl implements EmpService {
 		
 		// begin~end 목록 가져오기
 		List<EmpDTO> employees = empMapper.selectEmployeesByPage(map);
-		model.addAttribute("employees", employees);
-		model.addAttribute("pageUtil", pageUtil);
 		
+		// 뷰로 보낼 데이터
+		model.addAttribute("employees", employees);
+		model.addAttribute("paging", pageUtil.getPaging(request.getContextPath() + "/emp/list"));
+		model.addAttribute("beginNo", totalRecord - (page - 1) * pageUtil.getRecordPerPage());
 	}
 
 }

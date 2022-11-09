@@ -35,7 +35,7 @@
 		SELECT b.*
 	     FROM (SELECT ROWNUM AS RN, a.*
 	             FROM (SELECT E.*, D.DEPARTMENT_NAME, D.LOCATION_ID
-	                     FROM DEPARTMENTS D INNER JOIN EMPLOYEES E
+	                     FROM DEPARTMENTS D RIGHT OUTER JOIN EMPLOYEES E
 	                       ON D.DEPARTMENT_ID = E.DEPARTMENT_ID
 	                    ORDER BY HIRE_DATE DESC)a)b
 	    WHERE b.RN BETWEEN #{begin} AND #{end}

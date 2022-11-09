@@ -46,5 +46,32 @@ public class PageUtil {
 		}
 		
 	}
-
+	
+	public String getPaging(String path) {
+		StringBuilder sb = new StringBuilder();      
+		// 이전블록 : 1block이 아니면 이전블록이 있다
+		if( beginPage != 1 ) {
+		//      <a href="path?page=beginPage-1">◀</a>
+			sb.append("<a href=\""+ path + "?page=" + (beginPage-1) + "\">◀</a>" );
+		}
+		     
+		// 페이지번호 : 현재 페이지는 링크가 없다
+		for(int p = beginPage; p <= endPage  ; p++) {
+			if(p == page) {
+				sb.append("<a class="+"blind"+"  href=\"#none"+ p+ "\">" +p+ "</a>");
+			}else {
+				sb.append("<a href=\"" +path+ "?page=" +p+ "\">" +p+ "</a>" );
+		    }       
+		}
+		 
+		// 다음블록 : 마지막 블록이 아니면 다음 블록이 있다.
+		if(endPage != totalPage) {
+		//   <a href="path?page=endPage+1">◀</a>
+			sb.append("<a href=\""  + path + "?page=" + (endPage+1) + "\">▶</a>" );
+		     
+		}
+		
+		return sb.toString();
+   }
+   
 }

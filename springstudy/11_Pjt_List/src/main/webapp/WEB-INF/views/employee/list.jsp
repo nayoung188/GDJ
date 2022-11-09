@@ -7,10 +7,95 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+
+.paginate {
+    padding: 10px 0;
+    position: relative;
+    min-height: 22px;
+    margin-top: 17px;
+    text-align: center;
+}
+.paginate a:hover, .paginate strong.page {
+    border: 1px solid #e0e0e0;
+    color: #00c73c;
+}
+
+.paginate a, .paginate strong.page, .low_btn {
+
+    position: relative;
+    min-width: 20px;
+    height: 20px;
+    margin: -1px 1px;
+    padding: 2px 2px 0;
+    border: 1px solid #fff;
+    font-family: tahoma,helvetica,sans-serif;
+    color: #999;
+    line-height: normal;
+    text-decoration: none;
+    vertical-align: top;
+    letter-spacing: -1px;
+}
+
+.blind {
+   border: 1px solid #e0e0e0 !important;
+    color: #00c73c !important;
+
+}
+</style>
+<script src="${contextPath}/resources/js/jquery-3.6.1.min.js"></script>
+<script>
+	$(document).ready(function(){
+		// area1, area2 표시
+		// 초기 상태 : area1, area2 둘다 숨김
+		$('#area1, #area2').css('display','none');
+		// column 선택에 따른 area1, area2 표시
+		$('#column').change(function(){
+			let combo = $(this);
+			if(combo.val() == '' ) {
+				$('#area1, #area2').css('display','none');
+			} else if(combo.val() == 'HIRE_DATE' || combo.val() == 'SALARY'){
+				$('#area1').css('display','none');
+				$('#area2').css('display','inline');
+			} else {
+				$('#area1').css('display','inline');
+				$('#area2').css('display','none');
+			}
+		});
+	});
+</script>
 </head>
 <body>
-
+	
 	<div>
+		<form id="frm_search">
+			<select id="column" name="column">
+				<option value="">|||선택|||</option>
+				<option value="EMPLOYEE_ID">사원번호</option>
+				<option value="DEPARTMENT_ID">부서번호</option>
+				<option value="LAST_NAME">성</option>
+				<option value="FIRST_NAME">이름</option>
+				<option value="PHONE_NUMBER">연락처</option>
+				<option value="HIRE_DATE">입사일</option>
+				<option value="SALARY">연봉</option>
+			</select>
+			<span id="area1">
+				<input type="text" id="query" name="query">
+			</span>
+			<span id="area2">
+				<input type="text" id="begin" name="begin">
+				~
+				<input type="text" id="end" name="end">
+			</span>
+			<span>
+				<input type="submit" value="검색">
+				<input type="button" value="전체사원조회" id="btn_all">
+			</span>
+		</form>
+	</div>
+
+
+	<div style="width:1000px; margin:0 auto;" >
 		<table border="1">
 			<thead>
 				<tr>
@@ -26,10 +111,10 @@
 					<td>부서명</td>
 				</tr>
 			</thead>
-			<tbody>
-				<c:forEach items="${employees}" var="emp">
+			<tbody>           
+				<c:forEach items="${employees}" var="emp" varStatus="vs">
 					<tr>
-						<td>순번자리</td>
+						<td>${beginNo - vs.index}</td>
 						<td>${emp.employeeId}</td>
 						<td>${emp.firstName} ${emp.lastName}</td>
 						<td>${emp.email}</td>
@@ -44,27 +129,8 @@
 			</tbody>
 			<tfoot>
 				<tr>
-					<td colspan="10">
-						<!-- 이번 블록 : 1block이 아니면 이전 블록이 있다 -->
-						<c:if test="${pageUtil.beginPage != 1}">
-							<a href="${contextPath}/emp/list?page=${pageUtil.beginPage - 1}">◀</a>
-						</c:if>
-						
-						<!-- 페이지 번호 : 현재 페이지는 링크가 없다 -->
-						<c:forEach var="p" begin="${pageUtil.beginPage}" end="${pageUtil.endPage}" step="1">
-							<c:if test="${ p == pageUtil.page}">
-								${p}
-							</c:if>
-							<c:if test="${p != pageUtil.page}">
-								<a href="${contextPath}/emp/list?page=${p}">${p}</a>
-							</c:if>
-						</c:forEach>
-						
-						<!-- 다음 블록 : 마지막 블록이 아니면 다음 블록이 있다 -->
-						<c:if test="${pageUtil.endPage != pageUtil.totalPage}">
-							<a href="${contextPath}/emp/list?page=${pageUtil.endPage + 1}">▶</a>
-						</c:if>
-						
+					<td colspan="10" class="paginate" >
+						${paging}
 					</td>
 				</tr>
 			</tfoot>
