@@ -11,11 +11,11 @@ import com.gdu.app11.service.EmpService;
 
 @Controller
 public class EmpController {
-	
+
 	@Autowired
 	private EmpService empService;
 	
-	@GetMapping ("/")
+	@GetMapping("/")
 	public String welcome() {
 		return "index";
 	}
@@ -25,5 +25,17 @@ public class EmpController {
 		empService.findAllEmployees(request, model);
 		return "employee/list";
 	}
+	
+	@GetMapping("/emp/search")
+	public String search(HttpServletRequest request, Model model) {
+		empService.findEmployees(request, model);
+		return "employee/list";
+	}
+	
+	
+	
+	
+	
+	
 	
 }

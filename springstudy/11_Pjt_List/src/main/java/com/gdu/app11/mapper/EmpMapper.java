@@ -9,8 +9,8 @@ import com.gdu.app11.domain.EmpDTO;
 
 @Mapper
 public interface EmpMapper {
-	
 	public int selectAllEmployeesCount();
 	public List<EmpDTO> selectEmployeesByPage(Map<String, Object> map);
-
+	public int selectFindEmployeesCount(Map<String, Object> map);
+	public List<EmpDTO> selectFindEmployees(Map<String, Object> map);
 }
