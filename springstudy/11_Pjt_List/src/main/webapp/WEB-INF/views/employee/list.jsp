@@ -11,7 +11,7 @@
 <body>
 
 	<div>
-		<table>
+		<table border="1">
 			<thead>
 				<tr>
 					<td>순번</td>
@@ -45,7 +45,26 @@
 			<tfoot>
 				<tr>
 					<td colspan="10">
-						1 2 3 4 5
+						<!-- 이번 블록 : 1block이 아니면 이전 블록이 있다 -->
+						<c:if test="${pageUtil.beginPage != 1}">
+							<a href="${contextPath}/emp/list?page=${pageUtil.beginPage - 1}">◀</a>
+						</c:if>
+						
+						<!-- 페이지 번호 : 현재 페이지는 링크가 없다 -->
+						<c:forEach var="p" begin="${pageUtil.beginPage}" end="${pageUtil.endPage}" step="1">
+							<c:if test="${ p == pageUtil.page}">
+								${p}
+							</c:if>
+							<c:if test="${p != pageUtil.page}">
+								<a href="${contextPath}/emp/list?page=${p}">${p}</a>
+							</c:if>
+						</c:forEach>
+						
+						<!-- 다음 블록 : 마지막 블록이 아니면 다음 블록이 있다 -->
+						<c:if test="${pageUtil.endPage != pageUtil.totalPage}">
+							<a href="${contextPath}/emp/list?page=${pageUtil.endPage + 1}">▶</a>
+						</c:if>
+						
 					</td>
 				</tr>
 			</tfoot>

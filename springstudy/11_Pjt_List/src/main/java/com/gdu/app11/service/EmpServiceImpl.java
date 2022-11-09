@@ -1,6 +1,8 @@
 package com.gdu.app11.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,12 +13,16 @@ import org.springframework.ui.Model;
 
 import com.gdu.app11.domain.EmpDTO;
 import com.gdu.app11.mapper.EmpMapper;
+import com.gdu.app11.util.PageUtil;
 
 @Service
 public class EmpServiceImpl implements EmpService {
 	
 	@Autowired
 	private EmpMapper empMapper;
+	
+	@Autowired
+	private PageUtil pageUtil;
 
 	@Override
 	public void findAllEmployees(HttpServletRequest request, Model model) {
@@ -27,17 +33,21 @@ public class EmpServiceImpl implements EmpService {
 		Optional<String> opt = Optional.ofNullable(request.getParameter("page"));
 		int page = Integer.parseInt(opt.orElse("1"));
 		
+		// 전체 레코드(직원) 개수 구하기
 		int totalRecord = empMapper.selectAllEmployeesCount();
+
+		// PageUtil 계산하기
+		pageUtil.setPageUtil(page, totalRecord);
 		
-		int recordPerPage = 10;
-		int begin = (page -1) * recordPerPage + 1;
-		int end = begin + recordPerPage -1 ;
-		if(end > totalRecord) {
-			end = totalRecord;
-		}
+		// Map 만들기 (begin, end)
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("begin", pageUtil.getBegin());
+		map.put("end", pageUtil.getEnd());
 		
-		List<EmpDTO> employees = empMapper.selectEmployeesByPage(begin, end);
+		// begin~end 목록 가져오기
+		List<EmpDTO> employees = empMapper.selectEmployeesByPage(map);
 		model.addAttribute("employees", employees);
+		model.addAttribute("pageUtil", pageUtil);
 		
 	}
 

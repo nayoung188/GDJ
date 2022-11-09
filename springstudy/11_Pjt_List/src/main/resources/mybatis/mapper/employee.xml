@@ -31,14 +31,14 @@
 		FROM EMPLOYEES
 	</select>
 	
-	<select id="selectEmployeesByPage"  resultMap="EmpMap"> <!-- 파라미터 타입 생략 가능 (있긴함) -->
+	<select id="selectEmployeesByPage" parameterType="Map" resultMap="EmpMap"> 
 		SELECT b.*
 	     FROM (SELECT ROWNUM AS RN, a.*
 	             FROM (SELECT E.*, D.DEPARTMENT_NAME, D.LOCATION_ID
 	                     FROM DEPARTMENTS D INNER JOIN EMPLOYEES E
 	                       ON D.DEPARTMENT_ID = E.DEPARTMENT_ID
 	                    ORDER BY HIRE_DATE DESC)a)b
-	    WHERE b.RN BETWEEN #{param1} AND #{param2}
+	    WHERE b.RN BETWEEN #{begin} AND #{end}
 	</select>
 	
 </mapper>
