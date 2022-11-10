@@ -26,5 +26,10 @@ public class BbsController {
 		return "bbs/list";
 	}
 	
+	@GetMapping("/bbs/write")
+	public String write() {
+		return "bbs/write";
+	}
+	
 	
 }

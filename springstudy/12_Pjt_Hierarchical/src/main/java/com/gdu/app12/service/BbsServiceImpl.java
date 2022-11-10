@@ -27,14 +27,18 @@ public class BbsServiceImpl implements BbsService {
 	public void findAllBbsList(HttpServletRequest request, Model model) {
 		
 		// 파라미터 page, 전달되지 않으면 page=1 처리
-		Optional<String> opt = Optional.ofNullable(request.getParameter("page"));
-		int page = Integer.parseInt(opt.orElse("1"));
+		Optional<String> opt1 = Optional.ofNullable(request.getParameter("page"));
+		int page = Integer.parseInt(opt1.orElse("1"));
 		
 		// 전체 게시글 개수
 		int totalRecord = bbsMapper.selectAllBbsCount();
 		
+		// 파라미터 recordPerPage, 전달되지 않으면 recordPerPage=10으로 처리
+		Optional<String> opt2 = Optional.ofNullable(request.getParameter("recordPerPage"));
+		int recordPerPage = Integer.parseInt(opt2.orElse("10"));
+		
 		// 페이징에 필요한 모든 계산 완료
-		pageUtil.setPageUtil(page, totalRecord);
+		pageUtil.setPageUtil(page, recordPerPage, totalRecord);
 
 		// DB로 보낼 Map(begin + end)
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -48,6 +52,7 @@ public class BbsServiceImpl implements BbsService {
 		model.addAttribute("bbsList",bbsList);
 		model.addAttribute("paging",pageUtil.getPaging(request.getContextPath() + "/bbs/list"));
 		model.addAttribute("beginNo", totalRecord - (page - 1) * pageUtil.getRecordPerPage());
+		model.addAttribute("recordPerPage", recordPerPage);
 	}
 
 	@Override
