@@ -57,8 +57,16 @@ public class BbsServiceImpl implements BbsService {
 
 	@Override
 	public int addBbs(HttpServletRequest request) {
-
-		return 0;
+		String writer = request.getParameter("writer");
+		String title = request.getParameter("title");
+		String ip = request.getRemoteAddr();
+		
+		BbsDTO bbs = new BbsDTO();
+		bbs.setWriter(writer);
+		bbs.setTitle(title);
+		bbs.setIp(ip);
+		
+		return bbsMapper.insertBbs(bbs);
 	}
 
 	@Override
@@ -69,8 +77,7 @@ public class BbsServiceImpl implements BbsService {
 
 	@Override
 	public int removeBbs(int bbsNo) {
-
-		return 0;
+		return bbsMapper.deleteBbs(bbsNo);
 	}
 
 }
