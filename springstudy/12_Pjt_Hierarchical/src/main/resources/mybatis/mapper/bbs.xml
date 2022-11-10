@@ -4,82 +4,42 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.gdu.app11.mapper.EmpMapper">
-
-	<!-- employees와 departments의 조인을 위한 resultMap -->
-	<resultMap type="DeptDTO" id="DeptMap">
-		<result column="DEPARTMENT_ID" property="departmentId" />
-		<result column="DEPARTMENT_NAME" property="departmentName" />
-		<result column="MANAGER_ID" property="managerId" />
-		<result column="LOCATION_ID" property="locationId" />
-	</resultMap>
-	<resultMap type="EmpDTO" id="EmpMap">
-		<result column="EMPLOYEE_ID" property="employeeId" />
-		<result column="FIRST_NAME" property="firstName" />
-		<result column="LAST_NAME" property="lastName" />
-		<result column="EMAIL" property="email" />
-		<result column="PHONE_NUMBER" property="phoneNumber" />
-		<result column="HIRE_DATE" property="hireDate" />
-		<result column="JOB_ID" property="jobId" />
-		<result column="COMMISSION_PCT" property="commissionPct" />
-		<result column="SALARY" property="salary" />
-		<result column="MANAGER_ID" property="managerId" />
-		<collection resultMap="DeptMap" property="deptDTO"></collection>
-	</resultMap>
-
-	<select id="selectAllEmployeesCount" resultType="int">
+<mapper namespace="com.gdu.app12.mapper.BbsMapper">
+	<select id="selectAllBbsCount" resultType="int">
 		SELECT COUNT(*)
-		  FROM EMPLOYEES
+		 FROM BBS
 	</select>
 	
-	<select id="selectEmployeesByPage" parameterType="Map" resultMap="EmpMap">
-		SELECT B.*
-		  FROM (SELECT ROWNUM AS RN, A.*
-		          FROM (SELECT E.*, D.DEPARTMENT_NAME, D.LOCATION_ID
-		                  FROM DEPARTMENTS D RIGHT OUTER JOIN EMPLOYEES E
-		                    ON D.DEPARTMENT_ID = E.DEPARTMENT_ID
-		                  ORDER BY HIRE_DATE DESC) A) B
-		 WHERE B.RN BETWEEN #{begin} AND #{end}		 
-	</select>
-	
-	<select id="selectFindEmployeesCount" parameterType="Map" resultType="int">
-		SELECT COUNT(*)
-		  FROM EMPLOYEES E
-		<where>
-		  <if test="column=='EMPLOYEE_ID' or column=='E.DEPARTMENT_ID'">${column} = #{query}</if>
-		  <if test="column=='LAST_NAME' or column=='FIRST_NAME' or column=='PHONE_NUMBER'">${column} LIKE '%' || #{query} || '%'</if>
-		  <if test="column=='HIRE_DATE'">${column} BETWEEN TO_DATE(#{start}, 'yyyy-mm-dd') AND TO_DATE(#{stop}, 'yyyy-mm-dd')</if>
-		  <if test="column=='SALARY'">${column} BETWEEN #{start} AND #{stop}</if>
-		</where>
-		<!--
-			WHERE #{column} = #{query}   #{}는 작은 따옴표(')로 묶어서 값을 치환
-	     	WHERE 'EMPLOYEE_ID' = '150'  잘못된 사용
-	     	
-	     	WHERE ${column} = #{query}   ${}는 그냥 치환
-			WHERE EMPLOYEE_ID = '150'    정상 동작
-		-->
-	</select>
-	
-	<select id="selectFindEmployees" parameterType="Map" resultMap="EmpMap">
-		SELECT B.*
-		  FROM (SELECT ROWNUM AS RN, A.*
-		          FROM (SELECT E.*, D.DEPARTMENT_NAME, D.LOCATION_ID
-		                  FROM DEPARTMENTS D RIGHT OUTER JOIN EMPLOYEES E
-		                    ON D.DEPARTMENT_ID = E.DEPARTMENT_ID
-		               <where>
-		                   <if test="column=='EMPLOYEE_ID' or column=='E.DEPARTMENT_ID'">${column} = #{query}</if>
-		                   <if test="column=='LAST_NAME' or column=='FIRST_NAME' or column=='PHONE_NUMBER'">${column} LIKE '%' || #{query} || '%'</if>
-		                   <if test="column=='HIRE_DATE'">${column} BETWEEN TO_DATE(#{start}, 'yyyy-mm-dd') AND TO_DATE(#{stop}, 'yyyy-mm-dd')</if>
-		                   <if test="column=='SALARY'">${column} BETWEEN #{start} AND #{stop}</if>
-		               </where>
-		                 ORDER BY HIRE_DATE DESC) A) B
-		 WHERE B.RN BETWEEN #{begin} AND #{end}
+	<!--  
+		원글 개수 : WHERE DEPTH = 0
+		답글 개수 : WHERE GROUP_ORDER = 원글번호 AND DEPTH > 0
+	-->
+
+	<select id="selectAllBbsList" parameterType="Map" resultType="BbsDTO">
+		  SELECT A.RN, A.BBS_NO, A.WRITER, A.TITLE, A.IP, A.CREATE_DATE, A.STATE, A.DEPTH, A.GROUP_NO, A.GROUP_ORDER
+			FROM (SELECT ROW_NUMBER() OVER(ORDER BY BBS_NO DESC) AS RN, BBS_NO, WRITER, TITLE, IP, CREATE_DATE, STATE, DEPTH, GROUP_NO, GROUP_ORDER
+		  		    FROM BBS) A
+		   WHERE A.RN BETWEEN #{begin} AND #{end}
 	</select>
 
-	<select id="selectAutoCompleteList" parameterType="Map" resultType="EmpDTO">
-		SELECT DISTINCT ${target}
-		  FROM EMPLOYEES
-		 WHERE ${target} LIKE CONCAT(#{param}, '%')
-	</select>
+	<insert id="insertBbs" parameterType="BbsDTO">
+
+	</insert>
+	
+	<update id="updatePreviousReply" parameterType="BbsDTO">
+
+	</update>
+
+	<insert id="insertReplay" parameterType="BbsDTO">
+
+	</insert>
+	
+	<delete id="deleteBbs" parameterType="int">
+
+	</delete>
+
+
+
+
 
 </mapper>

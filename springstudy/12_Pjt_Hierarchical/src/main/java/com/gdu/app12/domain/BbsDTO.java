@@ -20,5 +20,5 @@ public class BbsDTO {
 	private int depth;
 	private int groupNo;
 	private int groupOrder;
-
+	
 }

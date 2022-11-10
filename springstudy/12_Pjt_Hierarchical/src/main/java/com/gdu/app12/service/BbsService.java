@@ -9,4 +9,6 @@ public interface BbsService {
 	public int addBbs(HttpServletRequest request);
 	public int addReply(HttpServletRequest request);
 	public int removeBbs(int bbsNo);
+	
+
 }
