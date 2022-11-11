@@ -36,12 +36,18 @@ public class BbsController {
 	@PostMapping("/bbs/add")
 	public String add(HttpServletRequest request) {
 		bbsService.addBbs(request);
-		return "bbs/add";
+		return "redirect:/bbs/list";
 	}
 	
 	@PostMapping("/bbs/remove")
 	public String remove(@RequestParam("bbsNo") int bbsNo) {
 		bbsService.removeBbs(bbsNo);
+		return "redirect:/bbs/list";
+	}
+	
+	@PostMapping("/bbs/reply/add")
+	public String replyAdd(HttpServletRequest request) {
+		bbsService.addReply(request);
 		return "redirect:/bbs/list";
 	}
 	
