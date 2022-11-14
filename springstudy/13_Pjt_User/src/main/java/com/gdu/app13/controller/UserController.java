@@ -49,5 +49,11 @@ public class UserController {
 		return userService.isReduceEmail(email);
 	}
 	
+	@ResponseBody
+	@GetMapping(value="/user/sendAuthCode", produces=MediaType.APPLICATION_JSON_VALUE)
+	public Map<String, Object> sendAuthCode(String email){
+		return userService.sendAuthCode(email);
+	}
+	
 
 }
