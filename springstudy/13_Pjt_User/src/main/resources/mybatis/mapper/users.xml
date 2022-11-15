@@ -5,6 +5,23 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.gdu.app13.mapper.UserMapper">
+
+	<!-- 아이디 중복체크, 이메일 중복체크, 로그인 -->
+	<select id="selectUserByMap" parameterType="Map" resultType="UserDTO">
+		SELECT USER_NO, ID, PW, NAME, GENDER, EMAIL, MOBILE, BIRTHYEAR, BIRTHDAY, POSTCODE, ROAD_ADDRESS, JIBUN_ADDRESS, DETAIL_ADDRESS, EXTRA_ADDRESS, AGREE_CODE, SNS_TYPE, JOIN_DATE, PW_MODIFY_DATE, INFO_MODIFY_DATE, SESSION_ID, SESSION_LIMIT_DATE
+		FROM USERS
+		<where>
+			<if test="id != null">
+				ID = #{id}
+			</if>
+			<if test="pw != null">
+				AND PW = #{pw}
+			</if>
+			<if test="email != null">
+				AND EMAIL = #{email}
+			</if>
+		</where>
+	</select>
 	
 	<select id="selectUserById" parameterType="String" resultType="UserDTO">
 		SELECT USER_NO, ID, PW, NAME, GENDER, EMAIL, MOBILE, BIRTHYEAR, BIRTHDAY, POSTCODE, ROAD_ADDRESS, JIBUN_ADDRESS, DETAIL_ADDRESS, EXTRA_ADDRESS, AGREE_CODE, SNS_TYPE, JOIN_DATE, PW_MODIFY_DATE, INFO_MODIFY_DATE, SESSION_ID, SESSION_LIMIT_DATE
@@ -67,6 +84,8 @@
 		 WHERE ID = #{id}
 		   AND PW = #{pw}
 	</select>
+	
+
 	
 	
 	

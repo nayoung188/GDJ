@@ -1,5 +1,7 @@
 package com.gdu.app13.mapper;
 
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.gdu.app13.domain.RetireUserDTO;
@@ -8,11 +10,15 @@ import com.gdu.app13.domain.UserDTO;
 @Mapper
 public interface UserMapper {
 	
-	public UserDTO selectUserById(String id);
+	/* selectUserByMap로 통합된 쿼리들*/
+	
+	// public UserDTO selectUserById(String id);
+	// public UserDTO selectUserByIdPw(UserDTO user);
+	// public UserDTO selectUserByEmail(String email);
+	
+	public UserDTO selectUserByMap(Map<String, Object> map);	
 	
 	public RetireUserDTO selectRetireUserById(String id);
-	
-	public UserDTO selectUserByEmail(String email);
 	
 	public int insertUser(UserDTO user);
 	
@@ -24,6 +30,6 @@ public interface UserMapper {
 	
 	public int insertRetireUser(RetireUserDTO retireUser);
 	
-	public UserDTO selectUserByIdPw(UserDTO user);
+	
 
 }
