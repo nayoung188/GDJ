@@ -1,5 +1,7 @@
 package com.gdu.app13.service;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -11,12 +13,18 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.gdu.app13.domain.RetireUserDTO;
+import com.gdu.app13.domain.UserDTO;
 import com.gdu.app13.mapper.UserMapper;
 import com.gdu.app13.util.SecurityUtil;
 
@@ -108,5 +116,201 @@ public class UserServiceImpl implements UserService {
 		result.put("authCode", authCode);
 		return result;
 	}
+	
+	@Transactional			// INSERT, UPDATE, DELETE 중 2개 이상이 호출되는 서비스에서 필요함
+	@Override
+	public void join(HttpServletRequest request, HttpServletResponse response) {
+		
+		// 파라미터
+		String id = request.getParameter("id");
+		String pw = request.getParameter("pw");
+		String name = request.getParameter("name");
+		String gender = request.getParameter("gender");
+		String email = request.getParameter("email");
+		String mobile = request.getParameter("mobile");
+		String birthyear = request.getParameter("birthyear");
+		String birthmonth = request.getParameter("birthmonth");
+		String birthdate = request.getParameter("birthdate");
+		String postcode = request.getParameter("postcode");
+		String roadAddress = request.getParameter("roadAddress");
+		String jibunAddress = request.getParameter("jibunAddress");
+		String detailAddress = request.getParameter("detailAddress");
+		String extraAddress = request.getParameter("extraAddress");
+		String location = request.getParameter("location");
+		String promotion = request.getParameter("promotion");
+		
+		// 일부 파라미터는 DB에 넣을 수 있도록 가공
+		pw = securityUtil.sha256(pw);
+		name = securityUtil.preventXSS(name);
+		String birthday = birthmonth + birthdate;
+		detailAddress = securityUtil.preventXSS(detailAddress);
+		int agreeCode = 0;		// 필수 동의
+		if(!location.isEmpty() && promotion.isEmpty()) {
+			agreeCode = 1; 		// 필수 + 위치
+		} else if(location.isEmpty() && !promotion.isEmpty()) {
+			agreeCode = 2;		// 필수 + 마케팅
+		} else if ( !location.isEmpty() && !promotion.isEmpty()) {
+			agreeCode = 3;		// 필수 + 위치 + 프로모션
+		}
+		
+		// DB로 보낼 UserDTO 만들기
+		UserDTO user = UserDTO.builder()
+					  .id(id)
+					  .pw(pw)
+					  .name(name)
+					  .gender(gender)
+					  .email(email)
+					  .mobile(mobile)
+					  .birthyear(birthyear)
+					  .birthday(birthday)
+					  .postcode(postcode)
+					  .roadAddress(roadAddress)
+					  .jibunAddress(jibunAddress)
+					  .detailAddress(detailAddress)
+					  .extraAddress(extraAddress)
+					  .agreeCode(agreeCode)
+					  .build();
+		// 회원가입처리
+		int result = userMapper.insertUser(user);
+		try {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			if(result > 0) {
+				
+				// 로그인 처리를 위해서 session에 로그인 된 사용자 정보를 올려둠
+				request.getSession().setAttribute("loginUser", userMapper.selectUserById(id));
+				
+				// 로그인 기록 남기기
+				int updateResult = userMapper.updateAccessLog(id);
+				if(updateResult == 0) {
+					userMapper.insertAccessLog(id);
+				}
+				
+				out.println("<script>");
+				out.println("alert('회원 가입되었습니다.');");
+				out.println("location.href='" + request.getContextPath() + "';");
+				out.println("</script>");
+			} else {
+				out.println("<script>");
+				out.println("alert('회원 가입에 실패했습니다.');");
+				out.println("history.go(-2);");
+				out.println("</script>");
+			}
+			out.close();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 
+	}
+	
+	@Transactional			// INSERT, UPDATE, DELETE 중 2개 이상이 호출되는 서비스에서 필요함
+	@Override
+	public void retire(HttpServletRequest request, HttpServletResponse response) {
+		
+		// 탈퇴할 회원의 userNo, id, joinDate는 session의 loginUser에 저장되어 있다.
+		HttpSession session = request.getSession();
+		UserDTO loginUser = (UserDTO)session.getAttribute("loginUser");
+		
+		// 탈퇴할 회원 RetireUserDTO 생성
+		RetireUserDTO retireUser = RetireUserDTO.builder()
+								  .userNo(loginUser.getUserNo())
+								  .id(loginUser.getId())
+								  .joinDate(loginUser.getJoinDate())
+								  .build();
+		
+		// 탈퇴처리
+		int deleteResult = userMapper.deleteUser(loginUser.getUserNo());
+		int insertResult = userMapper.insertRetireUser(retireUser);
+		
+		// 응답
+		try {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			if(deleteResult > 0 && insertResult > 0) {
+				
+				// session 초기화 (로그인 사용자 loginUser 삭제를 위해서)  ★★★ 암기하기
+				session.invalidate();
+				
+				out.println("<script>");
+				out.println("alert('회원 탈퇴되었습니다.');");
+				out.println("location.href='" + request.getContextPath() + "';");
+				out.println("</script>");
+			} else {
+				out.println("<script>");
+				out.println("alert('회원 탈퇴에 실패했습니다.');");
+				out.println("history.back();");
+				out.println("</script>");
+			}
+			out.close();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Override
+	public void login(HttpServletRequest request, HttpServletResponse response) {   // 자기 스스로 이동할수있는 코드가 있기 떄문에 반환타입을 void로 함
+		
+		// 파라미터
+		String url = request.getParameter("url");
+		String id = request.getParameter("id");
+		String pw = request.getParameter("pw");
+		
+		// pw는 DB에 저장된 데이터와 동일한 형태로 가공 (암호화)
+		pw = securityUtil.sha256(pw);
+		
+		// DB로 보낼 UserDTO 생성
+		UserDTO user = UserDTO.builder()
+					  .id(id)
+					  .pw(pw)
+					  .build();
+					  
+		// id, pw가 일치하는 회원을 DB에서 조회하기
+		UserDTO loginUser = userMapper.selectUserByIdPw(user);
+		
+		// id, pw가 일치하는 회원이 있다 : 로그인 기록 남기기 + session에 loginUser 저장하기
+		if(loginUser != null) {			
+			// 로그인 기록 남기기
+			int updateResult = userMapper.updateAccessLog(id);
+			if(updateResult == 0) {
+				userMapper.insertAccessLog(id);
+			}		
+			// 로그인 처리를 위해서 session에 로그인 된 사용자 정보를 올려둠
+			request.getSession().setAttribute("loginUser", userMapper.selectUserById(id));
+			
+			// 이동 (로그인페이지 이전 페이지로 돌아가기)
+			try {
+				response.sendRedirect(url);
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+		}
+		// id, pw가 일치하는 회원이 없다 : 로그인 페이지로 돌려 보내기
+		else {		
+			// 응답
+			try {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>");
+				out.println("alert('일치하는 회원 정보가 없습니다..');");
+				out.println("location.href='" + request.getContextPath() + "';");
+				out.println("</script>");
+				out.close();			
+			} catch(Exception e) {
+				e.printStackTrace();
+			}	
+		}
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
