@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gdu.staff.mapper.StaffMapper">
+
+	<select id="selectStaffList" resultType="StaffDTO">
+		SELECT SNO, NAME, DEPT, SALARY
+		  FROM STAFF
+		 ORDER BY SNO DESC
+	</select>
+	
+	<insert id="insertStaff" parameterType="StaffDTO">
+		INSERT INTO STAFF
+		 	(SNO, NAME, DEPT, SALARY)
+		 VALUES
+		 	(#{sno}, #{name}, #{dept}, #{salary})
+	</insert>
+	
+	<select id="findStaffList" resultType="StaffDTO">
+		SELECT SNO, NAME, DEPT, SALARY
+		  FROM STAFF
+		 WHERE SNO = #{query}
+	</select>
+	
+	
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
