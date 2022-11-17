@@ -2,10 +2,8 @@ package com.gdu.app13.controller;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -17,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gdu.app13.service.UserService;
+
+import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
 public class UserController {
@@ -67,7 +67,7 @@ public class UserController {
 	}
 	
 	
-	@GetMapping("/user/retire")
+	@PostMapping("/user/retire")
 	public void retire(HttpServletRequest request, HttpServletResponse response) {
 		userService.retire(request, response);
 	}
@@ -100,23 +100,23 @@ public class UserController {
 	*/
 	
 	@GetMapping("/user/check/form")
-	public String checkForm() {
+	public String requiredLogin_checkForm() {
 		return "user/check";
 	}
 	
 	@ResponseBody
 	@PostMapping(value="/user/check/pw", produces="application/json")
-	public Map<String, Object> checkPw(HttpServletRequest request){
+	public Map<String, Object> requiredLogin_checkPw(HttpServletRequest request){
 		return userService.confirmPassword(request);
 	}
 	
 	@GetMapping("/user/mypage")
-	public String mypage() {
+	public String requiredLogin_mypage() {
 		return "user/mypage";
 	}
 	
 	@PostMapping("/user/modify/pw")
-	public void modifyPw(HttpServletRequest request, HttpServletResponse response) {
+	public void requiredLogin_modifyPw(HttpServletRequest request, HttpServletResponse response) {
 		userService.modifyPassword(request, response);
 	}
 	

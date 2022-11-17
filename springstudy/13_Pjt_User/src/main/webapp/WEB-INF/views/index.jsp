@@ -25,14 +25,14 @@
 		
 		<a href="${contextPath}/user/logout">로그아웃</a>
 		
-		<a id="lnk_retire" href="${contextPath}/user/retire">회원탈퇴</a>	
+		<a href="javascript:fn_abc()">회원탈퇴</a>	
+		<form id="lnk_retire" action=${contextPath}/user/retire" method="post"></form>
 		<script >
-			$('#lnk_retire').click(function(event){
-				if(confirm('탈퇴하시겠습니까?') == false){
-					event.preventDefault();		// a 태그의 기본 이벤트인 href 속성 실행을 막음
-					return;
+			function fn_abc(){
+				if(confirm('탈퇴하시겠습니까?')){
+					$('#lnk_retire').submit();
 				}
-			});
+			}
 		</script>
 	</c:if>
 
