@@ -30,6 +30,8 @@ public interface UserMapper {
 	
 	public int insertRetireUser(RetireUserDTO retireUser);
 	
+	public int updateSessionInfo(UserDTO user);
+	
 	
 
 }

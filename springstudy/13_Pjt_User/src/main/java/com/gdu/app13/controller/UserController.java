@@ -2,6 +2,7 @@ package com.gdu.app13.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -86,7 +87,7 @@ public class UserController {
 	
 	@GetMapping("/user/logout")
 	public String logout(HttpServletRequest request, HttpServletResponse response) {
-		request.getSession().invalidate();
+		userService.logout(request, response);
 		return "redirect:/";
 	}
 	
@@ -97,4 +98,24 @@ public class UserController {
 		return "redirect:/";
 	}
 	*/
+	
+	@GetMapping("/user/check/form")
+	public String checkForm() {
+		return "user/check";
+	}
+	
+	@ResponseBody
+	@PostMapping(value="/user/check/pw", produces="application/json")
+	public Map<String, Object> checkPw(HttpServletRequest request){
+		return userService.confirmPassword(request);
+	}
+	
+	@GetMapping("/user/mypage")
+	public String mypage() {
+		return "user/mypage";
+	}
+	
+	
+	
+	
 }

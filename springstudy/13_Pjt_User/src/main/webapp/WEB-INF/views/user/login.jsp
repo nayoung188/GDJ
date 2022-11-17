@@ -8,6 +8,41 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="${contextPath}/resources/js/jquery-3.6.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+	
+	$(function(){
+		fn_login();
+		fn_displayRememberId();
+	});
+	
+	function fn_login(){
+		$('#frm_login').submit(function(event){
+			if($('#id').val() == '' || $('#pw').val() == ''){
+				alert('아이디와 패스워드를 모두 입력하세요.');
+				event.preventDefault();
+				return;
+			}
+			if($('#rememberId').is(':checked')){
+				$.cookie('rememberId',$('#id').val());
+			} else {
+				$.cookie('rememberId','');
+			}
+		});
+	}
+	
+	function fn_displayRememberId(){
+		let rememberId = $.cookie('rememberId');
+		if(rememberId == ''){
+			$('#id').val('');
+			$('#rememberID').prop('checked', false);
+		}else {
+			$('#id').val(rememberId);
+			$('#rememberID').prop('checked', true);
+		}
+	}
+	
+</script>
 </head>
 <body>
 
