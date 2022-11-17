@@ -455,5 +455,70 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	
+	@Override
+	public void modifyPassword(HttpServletRequest request, HttpServletResponse response) {
+		
+		// 현재 로그인 된 사용자
+		HttpSession session = request.getSession();
+		UserDTO loginUser = (UserDTO)session.getAttribute("loginUser");
+		
+		// 파라미터
+		String pw = securityUtil.sha256(request.getParameter("pw"));
+		
+		// 동일한 비밀번호로 변경 금지
+		if(pw.equals(loginUser.getPw())) {
+			
+			try {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>");
+				out.println("alert('현재 비밀번호와 동일한 비밀번호로 변경할 수 없습니다.');");
+				out.println("history.back();");
+				out.println("</script>");
+				out.close();			
+			} catch(Exception e) {
+				e.printStackTrace();
+			}	
+		}
+		
+		// 사용자 번호
+		int userNo =loginUser.getUserNo();
+		
+		// DB로 보낼 UserDTO
+		UserDTO user = UserDTO.builder()
+					.userNo(userNo)
+					.pw(pw)
+					.build();
+		
+		// 비밀번호 수정
+		int result = userMapper.updateUserPassword(user);
+		
+		try {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			
+			if(result > 0) {
+				
+				// session에 저장된 loginUser 업데이트
+				loginUser.setPw(pw);
+				
+				out.println("<script>");
+				out.println("alert('비밀번호가 수정되었습니다.');");
+				out.println("location.href='" + request.getContextPath() + "';");
+				out.println("</script>");
+			} else {
+				out.println("<script>");
+				out.println("alert('비밀번호가 수정되지 않았습니다.');");
+				out.println("history.back();");
+				out.println("</script>");
+			}
+			out.close();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	
 }

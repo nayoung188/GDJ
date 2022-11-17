@@ -32,6 +32,6 @@ public interface UserMapper {
 	
 	public int updateSessionInfo(UserDTO user);
 	
-	
+	public int updateUserPassword(UserDTO user);
 
 }

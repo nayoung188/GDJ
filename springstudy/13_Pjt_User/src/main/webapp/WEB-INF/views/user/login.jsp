@@ -82,8 +82,8 @@
 		</form>
 			
 		<div>
-			<a href="${contextPath}/member/findId">아이디 찾기</a> | 
-			<a href="${contextPath}/member/findPw">비밀번호 찾기</a>
+			<a href="${contextPath}/user/findId">아이디 찾기</a> | 
+			<a href="${contextPath}/user/findPw">비밀번호 찾기</a>
 		</div>
 	
 	</div>

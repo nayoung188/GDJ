@@ -115,7 +115,10 @@ public class UserController {
 		return "user/mypage";
 	}
 	
-	
+	@PostMapping("/user/modify/pw")
+	public void modifyPw(HttpServletRequest request, HttpServletResponse response) {
+		userService.modifyPassword(request, response);
+	}
 	
 	
 }
