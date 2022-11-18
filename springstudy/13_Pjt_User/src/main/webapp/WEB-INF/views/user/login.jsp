@@ -85,6 +85,12 @@
 			<a href="${contextPath}/user/findId">아이디 찾기</a> | 
 			<a href="${contextPath}/user/findPw">비밀번호 찾기</a>
 		</div>
+		
+		<hr>
+		
+		<div>
+			<a href="${apiURL}"><img height="50" src="http://static.nid.naver.com/oauth/small_g_in.PNG"/></a>
+		</div>
 	
 	</div>
 	
