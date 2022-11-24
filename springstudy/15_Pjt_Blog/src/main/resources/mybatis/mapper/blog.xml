@@ -18,4 +18,11 @@
 		  WHERE A.ROW_NUM BETWEEN #{begin} AND #{end}
 	</select>
 	
+	<insert id="insertBlog" parameterType="BlogDTO">
+		INSERT INTO BLOG
+			(BLOG_NO, TITLE, CONTENT, HIT, IP, CREATE_DATE, MODIFY_DATE)
+		VALUES
+			(BLOG_SEQ.NEXTVAL, #{title}, #{content}, 0, #{ip}, SYSDATE, SYSDATE)
+	</insert>
+	
 </mapper>
