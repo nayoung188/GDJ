@@ -153,6 +153,78 @@ public class BlogServiceImpl implements BlogService {
 	}
 	
 	
+	@Override
+	public int increaseBlogHit(int blogNo) {
+		return blogMapper.updateHit(blogNo);
+	}
+	
+	
+	@Override
+	public BlogDTO getBlogByNo(int blogNo) {
+		return blogMapper.selectBlogByNo(blogNo);
+		
+	}
+	
+	@Override
+	public void modifyBlog(HttpServletRequest request, HttpServletResponse response) {
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
+		int blogNo = Integer.parseInt(request.getParameter("blogNo"));
+		
+		BlogDTO blog = BlogDTO.builder()
+						.title(title)
+						.content(content)
+						.blogNo(blogNo)
+						.build();
+		int result = blogMapper.updateBlog(blog);
+		
+		try {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			
+			out.println("<script>");
+			if(result >0 ) {
+				out.println("alert('수정성공');");
+				out.println("location.href='" + request.getContextPath() + "/blog/detail?blogNo=" + blogNo + "';");
+			} else {
+				out.println("alert('수정실패');");
+				out.println("history.back();");
+			}
+			out.println("</script>");
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+						
+		
+	}
+	
+	@Override
+	public void removeBlog(HttpServletRequest request, HttpServletResponse response) {
+		int blogNo = Integer.parseInt(request.getParameter("blogNo"));
+		
+		int result = blogMapper.deleteBlog(blogNo);
+		
+		try {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			
+			out.println("<script>");
+			if(result >0 ) {
+				out.println("alert('삭제성공');");
+				out.println("location.href='" + request.getContextPath() + "/blog/list';");
+			} else {
+				out.println("alert('삭제실패');");
+				out.println("history.back();");
+			}
+			out.println("</script>");
+			out.close();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	
 	
 	

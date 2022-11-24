@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -49,6 +50,42 @@ public class BlogController {
 	public Map<String, Object> uploadImage(MultipartHttpServletRequest multipartRequest){
 		return blogService.saveSummernoteImage(multipartRequest);
 	}
+	
+	@GetMapping("/blog/increase/hit")
+	public String increaseHit(@RequestParam(value="blogNo", required=false, defaultValue="0") int blogNo) {
+		int result = blogService.increaseBlogHit(blogNo);
+		if(result > 0) {			// 조회수 증가 성공하면 상세보기로 이동
+			return "redirect:/blog/detail?blogNo=" + blogNo;
+		}else {						// 조회수 증가 실패하면 목록보기로 이동
+			return "redirect:/blog/list";
+		}
+	}
+	
+	@GetMapping("/blog/detail")
+	public String detail(@RequestParam(value="blogNo", required=false, defaultValue="0") int blogNo, Model model) {
+		model.addAttribute("blog", blogService.getBlogByNo(blogNo));
+		return "blog/detail";
+	}
+	
+	@PostMapping("blog/edit")
+	public String edit(int blogNo, Model model) {
+		model.addAttribute("blog", blogService.getBlogByNo(blogNo));
+		return "blog/edit";
+	}
+	
+	@PostMapping("blog/modify")
+	public void modify(HttpServletRequest request, HttpServletResponse response) {
+		blogService.modifyBlog(request, response);				// 수정 후 상세보기로
+	}
+	
+	@PostMapping("blog/remove")
+	public void remove(HttpServletRequest request, HttpServletResponse response) {
+		blogService.removeBlog(request, response);				// 삭제 후 목록보기로
+	}
+	
+	
+	
+	
 	
 	
 	
