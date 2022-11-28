@@ -13,7 +13,7 @@
 <meta charset="UTF-8">
 <title>${title}</title>
 <script src="${contextPath}/resources/js/jquery-3.6.1.min.js"></script>
-<script src="${contextPath}/resources/js/moment-with-locales"></script>
+<script src="${contextPath}/resources/js/moment-with-locales.js"></script>
 <script src="${contextPath}/resources/summernote-0.8.18-dist/summernote-lite.js"></script>
 <script src="${contextPath}/resources/summernote-0.8.18-dist/lang/summernote-ko-KR.min.js"></script>
 <link rel="stylesheet" href="${contextPath}/resources/summernote-0.8.18-dist/summernote-lite.css">  <!-- css는 link로~ -->
