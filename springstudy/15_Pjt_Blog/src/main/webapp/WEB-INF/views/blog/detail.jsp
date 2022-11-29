@@ -97,6 +97,9 @@
 		fn_addComment();
 		fn_commentList();
 		fn_changePage();
+		fn_removeComment();
+		fn_switchReplyArea();
+		fn_addReply();
 		
 		// 함수정의
 		function fn_commentCount(){
@@ -171,7 +174,14 @@
 							div += '<div style="margin-left: 40px;">';
 						}
 						if(comment.state == 1){
-							div += '<div>' + comment.content + '</div>';
+							div += '<div>'; 
+							div += comment.content;
+							// 작성자만 삭제할 수 있도록 if 처리 필요
+							div += '<input type="button" value="삭제" class="btn_comment_remove" data-comment_no="' + comment.commentNo + '">';
+							if(comment.depth == 0){
+								div += '<input type="button" value="답글" class="btn_reply_area">';								
+							}
+							div += '</div>';
 						} else {
 							if(comment.depth == 0){
 								div += '<div>삭제된 댓글입니다.</div>';
@@ -182,6 +192,15 @@
 						div += '<div>';
 						moment.locale('ko-KR');
 						div += '<span style="font-size: 12px; color: silver;">' + moment(comment.createDate).format('YYYY. MM. DD hh:mm') + '</span>';
+						div += '</div>';
+						div += '<div style="margin-left: 40px;" class="reply_area blind">';		// 공백으로 구분했기 때문에 현재 class 는 2개임
+						div += '<form class="frm_reply">';
+						div += '<input type="hidden" name="blogNo" value="' + comment.blogNo + '">';
+						div += '<input type="hidden" name="groupNo" value="' + comment.groupNo + '">';
+						div += '<input type="text" name="content" placeholder="답글을 작성하려면 로그인을 해주세요">';
+						// 로그인한 사용자만 볼 수 있도록 if 처리
+						div += '<input type="button" value="답글 작성 완료" class="btn_reply_add">';
+						div += '</form>';
 						div += '</div>';
 						div += '</div>';
 						$('#comment_list').append(div);
@@ -220,13 +239,58 @@
 			});
 		}
 		
+		function fn_removeComment(){
+			$(document).on('click', '.btn_comment_remove', function(){
+				if(confirm('삭제된 댓글은 복구할 수 없습니다. 댓글을 삭제할까요?')){
+					$.ajax({
+						type: 'post',
+						url: '${contextPath}/comment/remove',
+						data: 'commentNo=' + $(this).data('comment_no'),
+						dataType: 'json',
+						success: function(resData){			// resData = {"isRemove" : true}
+							if(resData.isRemove){
+								alert('댓글이 삭제되었습니다.');
+								fn_commentList();
+								fn_commentCount();
+							}
+						}
+					});
+				}
+			});
+		}
+		
+		function fn_switchReplyArea(){
+			$(document).on('click', '.btn_reply_area', function(){
+				$(this).parent().next().next().toggleClass('blind');
+			});
+		}
+		
+		function fn_addReply(){
+			$(document).on('click', '.btn_reply_add', function(){
+				if($(this).prev().val() == ''){
+					alert('답글 내용을 입력하세요.');
+					return;
+				}
+				$.ajax({
+					type: 'post',
+					url: '${contextPath}/comment/reply/add',
+					data: $(this).closest('.frm_reply').serialize(),    // $('.frm_reply').serialize() form이 많아서 안됨
+					dataType: 'json',
+					success: function(resData){			// resData = {"isAdd", true}
+						if(resData.isAdd){
+							alert('답글이 등록되었습니다.');
+							fn_commentList();
+							fn_commentCount();
+						}
+					}
+				});
+			});
+		}
+		
 		
 		
 	</script>
-	
-	
-	
-	
+
 	
 	
 </div>

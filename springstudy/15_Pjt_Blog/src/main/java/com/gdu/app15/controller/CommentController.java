@@ -38,4 +38,16 @@ public class CommentController {
 		return commentService.getCommentList(request);
 	}
 	
+	@ResponseBody
+	@PostMapping(value="/comment/remove", produces="application/json")
+	public Map<String, Object> remove(@RequestParam("commentNo") int commentNo){
+		return commentService.removeComment(commentNo);
+	}
+	
+	@ResponseBody
+	@PostMapping(value="/comment/reply/add", produces="application/json")
+	public Map<String, Object> replyAdd(CommentDTO reply){
+		return commentService.addReply(reply);
+	}
+	
 }
