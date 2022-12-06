@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gdu.app02.mapper.BlogMapper">
+
+	<select id="selectBlogListCount" resultType="int">
+		SELECT COUNT(*)
+		  FROM BLOG
+	</select>
+	
+	<select id="selectBlogListByMap" parameterType="Map" resultType="BlogDTO">
+		SELECT A.ROW_NUM, A.BLOG_NO, A.TITLE, A.CONTENT, A.HIT, A.IP, A.CREATE_DATE, A.MODIFY_DATE
+		  FROM (SELECT ROW_NUMBER() OVER(ORDER BY BLOG_NO DESC) AS ROW_NUM, BLOG_NO, TITLE, CONTENT, HIT, IP, CREATE_DATE, MODIFY_DATE
+		          FROM BLOG) A
+		  WHERE A.ROW_NUM BETWEEN #{begin} AND #{end}
+	</select>
+	
+	<insert id="insertBlog" parameterType="BlogDTO">
+		INSERT INTO BLOG
+			(BLOG_NO, TITLE, CONTENT, HIT, IP, CREATE_DATE, MODIFY_DATE)
+		VALUES
+			(BLOG_SEQ.NEXTVAL, #{title}, #{content}, 0, #{ip}, SYSDATE, SYSDATE)
+	</insert>
+	
+	<update id="updateHit" parameterType="int">
+		UPDATE BLOG
+		   SET HIT = HIT + 1
+		 WHERE BLOG_NO = #{blogNo}
+	</update>
+	
+	<select id="selectBlogByNo" parameterType="int" resultType="BlogDTO">
+		SELECT BLOG_NO, TITLE, CONTENT, HIT, IP, CREATE_DATE, MODIFY_DATE
+		  FROM BLOG
+		 WHERE BLOG_NO = #{blogNo} 
+	</select>
+	
+	<update id="updateBlog" parameterType="BlogDTO">
+		UPDATE BLOG
+		   SET TITLE = #{title}
+		     , CONTENT = #{content}
+		     , MODIFY_DATE = SYSDATE
+		 WHERE BLOG_NO = #{blogNo}
+	</update>
+	
+	<delete id="deleteBlog" parameterType="int">
+		DELETE BLOG
+		WHERE BLOG_NO = #{blogNo}
+	</delete>
+	
+</mapper>
