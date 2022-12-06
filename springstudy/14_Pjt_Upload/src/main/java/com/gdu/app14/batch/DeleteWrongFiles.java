@@ -58,6 +58,11 @@ public class DeleteWrongFiles {
 			}
 		});
 		
+		/*
+		File dir = new File(path);
+		File[] wrongFiles = dir.listFiles((file -> pathList.contains(file.toPath()) == false));
+		*/
+		
 		System.out.println("2   " + Arrays.toString(wrongFiles));  // 어제 저장된 파일 중 DB에 기록되어 있지 않은 파일들
 		
 		// 삭제
