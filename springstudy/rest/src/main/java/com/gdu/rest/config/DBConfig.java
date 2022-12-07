@@ -1,4 +1,4 @@
-package com.gdu.app02.config;
+package com.gdu.rest.config;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -16,13 +16,13 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-@MapperScan(basePackages = {"com.gdu.app02.mapper"})
-@PropertySource(value = {"classpath:application.yml"})
+@MapperScan(basePackages = {"com.gdu.rest.mapper"})
+@PropertySource(value = {"classpath:application.properties"})
 @EnableTransactionManagement
 @Configuration
 public class DBConfig {
 
-	@Value(value = "${spring.datasource.hikari.driver-class-name}")
+	@Value(value = "${spring.datasource.driver-class-name}")
 	private String driverClassName;
 	
 	@Value(value="${spring.datasource.hikari.jdbc-url}")
@@ -73,5 +73,6 @@ public class DBConfig {
 	public TransactionManager transactionManager() {
 		return new DataSourceTransactionManager(dataSource());
 	}
+	
 	
 }

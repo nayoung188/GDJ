@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<!--/*  
+	조각이름 : head
+	파라미터 : title
+*/-->
+<head th:fragment="head(title)">
 <meta charset="UTF-8">
-<title>${title}</title>
+<title th:text="${title}"></title>
 <script src="@{/js/jquery-3.6.1.min.js}"></script>
 <script src="@{/js/moment-with-locales.js}"></script>
 <script src="@{/summernote-0.8.18-dist/summernote-lite.js}"></script>
@@ -11,8 +15,9 @@
 </head>
 <body>
 
-      <div>
+      <div th:fragment="body_title">
          <h1>Welcome To My Blog</h1>
+         <hr>
       </div>
       
 </body>

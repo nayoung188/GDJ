@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gdu.rest.mapper.MemberMapper">
+
+	<insert id="insertMember" parameterType="MemberDTO">
+		INSERT INTO MEMBER
+			(MEMBER_NO, ID, NAME, GENDER, ADDRESS)
+		VALUES
+			(MEMBER_SEQ.NEXTVAL, #{id}, #{name}, #{gender}, #{address})
+	</insert>
+
+</mapper>

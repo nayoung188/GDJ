@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
+<head th:replace="~{layout/header::head(|${blog.blogNo}번 게시글|)}"></head>
 <style>
 	.blind {
 		display: none;
 	}
 </style>
 
+<body>
 <div>
+	<div th:replace="~{layout/header::body_title}"></div>
 	<h1 th:text="${blog.title}"></h1>
 	<div>
 	<!--  

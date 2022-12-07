@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
+<head th:replace="~{layout/header::head(|${blog.blogNo}번 게시글|)}"></head>
 <script>
-
+	
 	$(document).ready(function(){
 		
 		// summernote
@@ -22,19 +22,25 @@
 			],
 			callbacks: {
 				onImageUpload: function(files){
-					var formData = new FormData();
-					formData.append('file', files[0]);
-					$.ajax({
-						type: 'post',
-						url: getContextPath() + '/blog/uploadImage',
-						data: formData,
-						contentType: false,
-						processData: false,
-						dataType: 'json',
-						success: function(resData){
-							$('#content').summernote('insertImage', resData.src);
-						}
-					});
+					// 동시에 여러 이미지를 올릴 수 있음
+					for(let i = 0; i < files.length; i++) {
+						// 이미지를 ajax를 이용해서 서버로 보낼 때 가상 form 데이터 사용 
+						var formData = new FormData();
+						formData.append('file', files[i]);  // 파라미터 file, summernote 편집기에 추가된 이미지가 files[i]임
+						// 이미지를 HDD에 저장하고 경로를 받아오는 ajax
+						$.ajax({
+							type: 'post',
+							url: '/blog/uploadImage',
+							data: formData,
+							contentType: false,  // ajax 이미지 첨부용
+							processData: false,  // ajax 이미지 첨부용
+							dataType: 'json',    // HDD에 저장된 이미지의 경로를 json으로 받아옴
+							success: function(resData){
+								$('#content').summernote('insertImage', resData.src);
+								$('#summernote_image_list').append($('<input type="hidden" name="summernoteImageNames" value="' + resData.filesystem + '">'))
+							}
+						});  // ajax
+					}  // for
 				}
 			}
 		});
@@ -57,18 +63,20 @@
 	
 </script>
 
-
+<body>
 <div>
+
+	<div th:replace="~{layout/header::body_title}"></div>
 
 	<h1>작성 화면</h1>
 	
-	<!--/*  
-		타임리프 주석
-		Selection Variable Expression :  *{}
-		객체(Object)와 필드(field)를 분리해서 표시하는 표현식
+	<!--/*
+		Selection Variable Expression : *{}
+		객체(object)와 필드(field)를 분리해서 표시하는 표현식
 		th:object="${객체}"
 		th:field="*{필드}"
 	*/-->
+	
 	
 	<form id="frm_edit" th:object="${blog}" th:action="@{/blog/modify}" method="post">
 	
@@ -76,13 +84,16 @@
 	
 		<div>
 			<label for="title">제목</label>
-			<input type="text" name="title" id="title" value="${title}">
+			<input type="text" name="title" id="title" th:field="*{title}">
 		</div>
 		
 		<div>
 			<label for="content">내용</label>
 			<textarea name="content" id="content" th:text="*{content}"></textarea>				
 		</div>
+		
+		<!-- 써머노트에서 사용한 이미지 목록(등록 후 삭제한 이미지도 우선은 모두 올라감: 서비스단에서 지움) -->
+		<div id="summernote_image_list"></div>
 		
 		<div>
 			<button>수정완료</button>
@@ -92,7 +103,7 @@
 		
 	</form>
 	
-</div>
+</div> 
 
 </body>
 </html>
