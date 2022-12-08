@@ -12,5 +12,44 @@
 		VALUES
 			(MEMBER_SEQ.NEXTVAL, #{id}, #{name}, #{gender}, #{address})
 	</insert>
+	
+	<select id="selectMemberCount" resultType="int">
+		SELECT COUNT(*)
+		  FROM MEMBER
+	</select>
+	
+	<select id="selectMemberListByMap" parameterType="map" resultType="MemberDTO">
+		SELECT A.ROW_NUM, A.MEMBER_NO, A.ID, A.NAME, A.GENDER, A.ADDRESS
+		  FROM (SELECT ROW_NUMBER() OVER(ORDER BY MEMBER_NO DESC) AS ROW_NUM, MEMBER_NO, ID, NAME, GENDER, ADDRESS
+		          FROM MEMBER) A
+		 WHERE A.ROW_NUM BETWEEN #{begin} AND #{end}
+	</select>
+	
+	<select id="selectMemberByNo" parameterType="int" resultType="MemberDTO">
+		SELECT MEMBER_NO, ID, NAME, GENDER, ADDRESS
+		  FROM MEMBER
+		 WHERE MEMBER_NO = #{memberNo}
+	</select>
+	
+	<update id="updateMember" parameterType="map">
+		UPDATE MEMBER
+		  SET NAME = #{name}
+		  	, GENDER = #{gender}
+		  	, ADDRESS = #{address}
+		  WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
+	<delete id="deleteMemberList" parameterType="List">
+		DELETE
+		  FROM MEMBER
+		<where>
+			MEMBER_NO IN
+			<foreach collection="list" item="memberNo" open="(" close=")" separator=",">
+				#{memberNo}
+			</foreach>
+		</where>
+	</delete>
+	
+	
 
 </mapper>

@@ -11,6 +11,11 @@
 <script>
 	$(function(){
 		fn_add();
+		fn_init();
+		fn_list();
+		fn_detail();
+		fn_modify();
+		fn_remove();
 	});
 	
 	function fn_add(){
@@ -31,20 +36,143 @@
 				/* 응답 */
 				dataType: 'json',
 				success: function(resData){
-					
+					if(resData.insertResult > 0){
+						alert('회원이 등록되었습니다.');
+						fn_list();
+						fn_init();
+					} else {
+						alert('회원이 등록되지 않았습니다.');
+					}
 				},
 				error: function(jqXHR){
-					
+					alert('에러코드(' + jqXHR.status + ') ' + jqXHR.responseText);
 				}
 			});
 		});
 	}
+	
+	function fn_init(){
+		$('#id').val('').prop('readonly', false);
+		$('#name').val('');
+		$(':radio[name=gender]').prop('checked', false);
+		$('#address').val('');
+	}
+	
+	// 전역변수
+	var page = 1;
+	
+	function fn_list(){
+		$.ajax({
+			type: 'get',
+			url: '${contextPath}/members/page/' + page,
+			dataType: 'json',
+			success: function(resData){
+				$('#member_list').empty();
+				$.each(resData.memberList, function(i, member){
+					var tr = '<tr>';
+					tr += '<td><input type="checkbox" class="check_one" value="'+ member.memberNo +'"></td>';
+					tr += '<td>' + member.id + '</td>';
+					tr += '<td>' + member.name + '</td>';
+					tr += '<td>' + (member.gender == 'M' ? '남자' : '여자') + '</td>';
+					tr += '<td>' + member.address + '</td>';
+					tr += '<td><input type="button" value="조회" class="btn_detail" data-member_no="'+ member.memberNo +'"></td>';
+					tr += '</tr>';
+					$('#member_list').append(tr);
+				});
+				
+			}
+		});
+	}
+	
+	function fn_detail(){
+		$(document).on('click', '.btn_detail', function(){
+			$.ajax({
+				type: 'get',
+				url: '${contextPath}/members/' + $(this).data('member_no'),
+				dataType: 'json',
+				success: function(resData){
+					let member = resData.member;
+					if(member == null){
+						alert('해당 회원을 찾을 수 없습니다.');
+					} else {
+						$('#memberNo').val(member.memberNo);
+						$('#id').val(member.id).prop('readonly', true);
+						$('#name').val(member.name);
+						$(':radio[name=gender][value='+ member.gender +']').prop('checked', true);
+						$('#address').val(member.address);
+					}
+				}
+			});
+		});
+	}
+	
+	function fn_modify(){
+		$('#btn_modify').click(function(){
+			// 수정할 회원정보를 JSON으로 만들기
+			let member = JSON.stringify({
+				memberNo: $('#memberNo').val(),
+				name: $('#name').val(),
+				gender: $(':radio[name=gender]:checked').val(),
+				address: $('#address').val()
+			});
+			// 수정
+			$.ajax({
+				type: 'put',
+				url: '${contextPath}/members',
+				data: member,
+				contentType: 'application/json',
+				dataType: 'json',
+				success: function(resData){
+					if(resData.updateResult > 0){
+						alert('회원 정보가 수정되었습니다.');
+						fn_list();
+					} else {
+						alert('회원 정보가 수정되지 않았습니다.');
+					}
+				},
+				error: function(jqXHR){
+					alert('에러코드(' + jqXHR.status + ') ' + jqXHR.responseText);
+				}
+			});
+			
+		});
+	}
+	
+	function fn_remove(){
+		$('#btn_remove').click(function(){
+			if(confirm('선택한 회원을 모두 삭제할까요?')){
+				// 삭제할 회원번호
+				let memberNoList = '';
+				for(let i = 0; i < $('.check_one').length; i++){
+					if($($('.check_one')[i]).is(':checked')){
+						memberNoList += $($('.check_one')[i]).val() + ',';		// 3,1, 마지막에 콤마 있음 주의
+					}
+				}
+				memberNoList = memberNoList.substr(0, memberNoList.length - 1);		// 3,1  마지막 콤마 자르기
+				$.ajax({
+					type: 'delete',
+					url: '${contextPath}/members/' + memberNoList,
+					dataType: 'json',
+					success: function(resData){
+						if(resData.deleteResult > 0){
+							alert('선택된 회원 정보가 삭제되었습니다.');
+							fn_list();
+						} else {
+							alert('선택된 회원 정보가 삭제되지 않았습니다.');
+						}
+					}
+				});
+			}
+		});
+	}
+	
 </script>
 </head>
 <body>
 
 	<h1>회원관리</h1>
 	<div>
+		<input type="hidden" id="memberNo">
 		<div>
 			<label for="id">
 				아이디 <input type="text" id="id">
@@ -76,7 +204,7 @@
 			</label>
 		</div>
 		<div>
-			<input type="button" value="초기화" id="btn_init">
+			<input type="button" value="초기화" onclick="fn_init()">
 			<input type="button" value="등록하기" id="btn_add">
 			<input type="button" value="수정하기" id="btn_modify">
 		</div>
