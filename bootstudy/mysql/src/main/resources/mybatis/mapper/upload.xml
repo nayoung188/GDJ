@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gdu.mysql.mapper.UploadMapper">
+
+   <select id="selectAllUploadCount" resultType="int">
+      SELECT COUNT(*)
+        FROM UPLOAD
+   </select>
+
+   <!-- 
+       begin과 end값이 필요한게 아니라 begin부터 recordPerPage 수 만큼 가져와달라!! 이거임. 
+       row_num도, 인라인뷰도 필요 없어짐!!! 
+       
+       begin과 recordPerPage를 담아줄 파라미터 Map!!
+   -->
+   <select id="selectUploadList" parameterType="Map" resultType="UploadDTO">
+      SELECT U.UPLOAD_NO, U.TITLE, U.CONTENT, U.CREATE_DATE, U.MODIFY_DATE, (SELECT COUNT(*) FROM ATTACH A WHERE U.UPLOAD_NO = A.UPLOAD_NO) AS ATTACH_CNT
+        FROM UPLOAD U
+       ORDER BY U.UPLOAD_NO DESC
+       LIMIT #{begin}, #{recordPerPage}
+   </select>
+   
+   <!-- 
+      1. selectKey로 시퀀스를 사용하고 있는데 시퀀스 없으니까 못 씀 
+          key값을 자동으로 만들어주는 useGeneratedKeys   
+           => mysql에 의해서 키가 자동으로 생성되는 값을 사용하고 있음을 true, 그 값은 uploadNo에 저장된다는 의미!
+             고로 uploadNo를 insert문에서 넣지 않음. <insert>태그에서 속성으로 넣어줬기 때문에.
+             
+          useGeneratedKeys/keyProperty : AUTO_INCREMENT된 값이 uploadNo에 저장된다. 
+          
+      2. NOW()함수
+         DATE 타입
+   -->
+   <insert id="insertUpload" parameterType="UploadDTO" useGeneratedKeys="true" keyProperty="uploadNo">
+
+      INSERT INTO UPLOAD
+         (TITLE, CONTENT, CREATE_DATE, MODIFY_DATE)
+      VALUES
+         (#{title}, #{content}, NOW(), NOW())
+   </insert>
+   
+   <!-- 우리가 시퀀스로 번호뽑아서 전달해주는게 아님. 사용자는 더이상 pk에 관여하지 않고 알아서 내부에서 동작함! -->
+   <insert id="insertAttach" parameterType="AttachDTO">
+      INSERT INTO ATTACH
+         (PATH, ORIGIN, FILESYSTEM, DOWNLOAD_CNT, HAS_THUMBNAIL, UPLOAD_NO)
+      VALUES
+         (#{path}, #{origin}, #{filesystem}, 0, #{hasThumbnail}, #{uploadNo})
+   </insert>
+   
+   <select id="selectUploadByNo" parameterType="int" resultType="UploadDTO">
+      SELECT UPLOAD_NO, TITLE, CONTENT, CREATE_DATE, MODIFY_DATE
+        FROM UPLOAD
+       WHERE UPLOAD_NO = #{uploadNo}
+   </select>
+   
+   <select id="selectAttachList" parameterType="int" resultType="AttachDTO">
+      SELECT ATTACH_NO, PATH, ORIGIN, FILESYSTEM, DOWNLOAD_CNT, HAS_THUMBNAIL, UPLOAD_NO
+        FROM ATTACH
+       WHERE UPLOAD_NO = #{uploadNo}
+   </select>
+   
+   <update id="updateDownloadCnt" parameterType="int">
+      UPDATE ATTACH
+         SET DOWNLOAD_CNT = DOWNLOAD_CNT + 1
+       WHERE ATTACH_NO = #{attachNo}
+   </update>
+   
+   <select id="selectAttachByNo" parameterType="int" resultType="AttachDTO">
+      SELECT ATTACH_NO, PATH, ORIGIN, FILESYSTEM, DOWNLOAD_CNT, HAS_THUMBNAIL, UPLOAD_NO
+        FROM ATTACH
+       WHERE ATTACH_NO = #{attachNo}
+   </select>
+   
+   <update id="updateUpload" parameterType="UploadDTO">
+      UPDATE UPLOAD
+         SET TITLE = #{title}
+           , CONTENT = #{content}
+           , MODIFY_DATE = NOW()
+       WHERE UPLOAD_NO = #{uploadNo}
+   </update>
+   
+   <delete id="deleteAttach" parameterType="int">
+      DELETE
+        FROM ATTACH
+       WHERE ATTACH_NO = #{attachNo}
+   </delete>
+   
+   <delete id="deleteUpload" parameterType="int">
+      DELETE
+        FROM UPLOAD
+       WHERE UPLOAD_NO = #{uploadNo}
+   </delete>
+   
+   <!-- 어제자 첨부 목록 가져오는 쿼리 -->
+   <!--
+       CONCAT  ==>  ||  문자열 연결  
+       - (빼기)가 없음 ==> NOW(), INTERVAL 1 DAY  -> 오늘로부터 하루 전
+   -->
+   <select id="selectAttachListInYesterday" resultType="AttachDTO">
+      SELECT ATTACH_NO, PATH, ORIGIN, FILESYSTEM, DOWNLOAD_CNT, HAS_THUMBNAIL, UPLOAD_NO
+        FROM ATTACH
+       WHERE PATH = CONCAT('/storage', DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 1 DAY), '%Y/%m/%d'))
+   </select>
+   
+</mapper>
