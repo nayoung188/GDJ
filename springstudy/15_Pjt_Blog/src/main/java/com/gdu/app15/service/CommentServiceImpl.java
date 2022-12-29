@@ -47,7 +47,7 @@ public class CommentServiceImpl implements CommentService {
 		map.put("blogNo", blogNo);
 		map.put("begin", pageUtil.getBegin());
 		map.put("end", pageUtil.getEnd());
-		System.out.println(map);
+
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("commentList", commentMapper.selectCommentList(map));
