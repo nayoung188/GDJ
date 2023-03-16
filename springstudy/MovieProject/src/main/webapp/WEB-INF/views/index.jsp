@@ -43,9 +43,9 @@
 		<form id="frm_search">
 			
 			<select id="column" name="column">
-				<option value="TITLE" <c:if test="${movie.column == 'title'}">selected</c:if>>제목</option>
-				<option value="GENRE"<c:if test="${movie.column == 'genre'}">selected</c:if>>장르</option>
-				<option value="DESCRIPTION"<c:if test="${movie.column == 'description'}">selected</c:if>>내용</option>
+				<option value="TITLE" <c:if test="${movie.column == 'title'}">selected</c:if>>영화 제목</option>
+				<option value="GENRE"<c:if test="${movie.column == 'genre'}">selected</c:if>>영화 장르</option>
+				<option value="DESCRIPTION"<c:if test="${movie.column == 'description'}">selected</c:if>>줄거리</option>
 			</select>
 			<input type="text" id="searchText" name="searchText">
 			<input type="button" id="btn_search" value="검색">
