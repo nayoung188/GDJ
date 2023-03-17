@@ -47,7 +47,7 @@
 	
 	<delete id="deleteBlog" parameterType="int">
 		DELETE BLOG
-		WHERE BLOG_NO = #{blogNo}
+		 WHERE BLOG_NO = #{blogNo}
 	</delete>
 	
 </mapper>
