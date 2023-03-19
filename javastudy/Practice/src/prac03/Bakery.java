@@ -18,23 +18,23 @@ public class Bakery {
 	}
 	
 	
-	// 판매 메소드
+	// 판매메소드
 	public BreadAndChange sell(int custMoney) throws RuntimeException{
 	
-			// 판매 불가
+			// 판매불가
 		if ( custMoney < price) {
 			throw new RuntimeException("판매불가");
 		}
 		
 		
-		// 판매할 수 있는 빵은 몇 개인가?
+		// 판매할 수 있는 빵은 몇개인가?
 		int sellcnt = custMoney / price;
 		
 		
 		// 잔돈은 얼마인가
 		int change = custMoney % price;
 		
-		// 매장 내부의 변화처리
+		// 매장 내부의 변화 처리
 		cnt -= sellcnt;
 		money += (custMoney - change);
 		
